@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Empowering individuals to take control through financial literacy, budgeting tools, and community support.">
+    <title>Financial Help & Empowerment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#budgeting">Budgeting Section</a></li>
+                <li><a href="#calculator">Loan Repayment Calculator</a></li>
+                <li><a href="#connect">Connect with Others</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="hero-container">
+            <!-- Video Background -->
+            <video autoplay muted loop id="bg-video">
+                <source src="assets/5849608-hd_1920_1080_30fps.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+    
+            <!-- Main Text Inside White Box -->
+            <div class="text-box">
+                <h1>Take Control of Your Finances</h1>
+                <p>We help you manage budgeting, loan repayments, and connect with others for financial advice.</p>
+                <button onclick="window.location.href='#budgeting'">Start Your Journey</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budgeting and Services Section -->
+    <section id="services">
+        <h2>Our Services</h2>
+        <div class="service-cards">
+            <!-- Budgeting Card -->
+            <div class="card">
+                <img src="assets/budgeting.png" alt="Budgeting Icon"> <!-- Budgeting Icon -->
+                <h3>Budgeting Section</h3>
+                <!-- <p>Personalized budgets to manage expenses and savings.</p> -->
+            </div>
+            <!-- Loan Calculator Card -->
+            <div class="card">
+                <img src="assets/calculator.png" alt="Loan Calculator Icon"> <!-- Loan Calculator Icon -->
+                <h3>Loan Repayment Calculator</h3>
+                <!-- <p>Understand how different repayment strategies impact your loan.</p> -->
+            </div>
+            <!-- Community Card -->
+            <div class="card">
+                <img src="assets/Connect.png" alt="Community Icon"> <!-- Community Icon -->
+                <h3>Connect with Others</h3>
+                <!-- <p>Join the community, ask questions, and share your financial journey.</p> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+<section id="contact">
+    <h2>Contact Us</h2>
+    <!-- <p>If you need more assistance, reach out to us for personalized advice. We're here to help!</p> -->
+    <form>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</section>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

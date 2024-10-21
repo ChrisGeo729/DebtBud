@@ -1,0 +1,195 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    color: #fff;
+}
+
+/* Header */
+header {
+    background-color: #005777; /* Dark Blue */
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Center the nav bar */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section with Background Video */
+.hero-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color:  #005777;
+    overflow: hidden;
+}
+
+#bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
+.text-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.hero-container h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #005777; /* Dark Blue */
+}
+
+.hero-container p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-container button {
+    background-color: #005777; /* Dark Blue */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.hero-container button:hover {
+    background-color: #003b56; /* Slightly darker blue on hover */
+}
+
+/* Service Cards Section */
+#services {
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.service-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Adjust image size here */
+.card img {
+    max-width: 80px;  /* Set a smaller width */
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #005777; /* Dark Blue */
+}
+
+.card p {
+    font-size: 1rem;
+    color: #333;
+}
+
+
+/* Contact Section */
+#contact {
+    padding: 60px 20px;
+    background-color: #f8f9fa; /* Light background */
+    text-align: center; /* Center the content */
+}
+
+#contact h2 {
+    font-size: 2.5rem;
+    color: #005777; /* More welcoming dark blue color */
+    font-family: 'Roboto', sans-serif; /* Change to a welcoming font */
+    margin-bottom: 20px;
+}
+
+#contact form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#contact label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333; /* Neutral text color */
+}
+
+#contact input, #contact textarea {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+
+#contact button {
+    background-color: #005777; /* Dark blue button */
+    color: #fff;
+    padding: 15px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+#contact button:hover {
+    background-color: #004466; /* Darker blue on hover */
+}
