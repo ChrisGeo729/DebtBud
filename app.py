@@ -1,17 +1,21 @@
 from flask import Flask, request, jsonify
-from budgeting import get_ai_advice  # Import the function from budgeting.py
+from flask_cors import CORS  # Import CORS
+from budgeting import get_ai_advice  # Import the AI advice function
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/get-advice', methods=['POST'])
 def get_advice():
     data = request.get_json()
-    income = data.get("income")
+    income = float(data.get("income"))
     expenses = data.get("expenses")
-    budget_goals = data.get("budget_goals")
-    balance = data.get("balance")
+    budget_goals = {"rent": 700, "groceries": 300, "entertainment": 150, "transportation": 100, "savings": 200}
 
-    # Use the imported function from budgeting.py
+    # Calculate remaining balance (simplified here for example)
+    balance = income - sum(map(float, expenses.values()))
+
+    # Get AI advice using the imported function
     advice = get_ai_advice(income, expenses, budget_goals, balance)
     return jsonify({"advice": advice})
 
