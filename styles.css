@@ -141,6 +141,34 @@ header nav ul li a:hover {
     color: #333;
 }
 
+/* Budgeting Section Styles */
+#budgeting {
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    color: #333333; /* Darker text color */
+}
+
+#budgeting h2 {
+    color: #222222; /* Darker shade for heading */
+}
+
+#budgeting label,
+#budgeting p,
+#budgeting input,
+#budgeting button {
+    color: #333333; /* Dark grey color for form labels, inputs, and button text */
+}
+
+/* Optional styling to ensure text stands out */
+#budgeting input,
+#budgeting button {
+    border: 1px solid #333333;
+}
+
+#budgeting button {
+    background-color: #f0f0f0; /* Light background for better contrast */
+    color: #333333; /* Dark text on button */
+}
 
 /* Contact Section */
 #contact {
