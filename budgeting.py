@@ -42,10 +42,6 @@ def display_budget_overview():
     print(f"Total Expenses: {sum(expenses.values())}")
     print(f"Remaining Balance: {calculate_balance()}")
 
-# add_expense("rent", 750)
-# add_expense("groceries", 200)
-# display_budget_overview()
-
 def get_ai_advice(income, expenses, budget_goals, balance):
     # Format the prompt for the AI
     prompt = f"""
@@ -75,21 +71,21 @@ def get_ai_advice(income, expenses, budget_goals, balance):
     advice = response.choices[0].message['content'].strip()
     return advice
 
-# Example usage of AI-driven advice
-balance = calculate_balance()
-advice = get_ai_advice(income, expenses, budget_goals, balance)
-print("\n--- AI Advice ---")
-print(advice)
+# # Example usage of AI-driven advice
+# balance = calculate_balance()
+# advice = get_ai_advice(income, expenses, budget_goals, balance)
+# print("\n--- AI Advice ---")
+# print(advice)
 
-# Add expenses
-add_expense("rent", 750)
-add_expense("groceries", 200)
+# # Add expenses
+# add_expense("rent", 750)
+# add_expense("groceries", 200)
 
-# Display budget overview
-display_budget_overview()
+# # Display budget overview
+# display_budget_overview()
 
-# Get AI-driven financial advice
-balance = calculate_balance()
-advice = get_ai_advice(income, expenses, budget_goals, balance)
-print("\n--- AI Advice ---")
-print(advice)
+# # Get AI-driven financial advice
+# balance = calculate_balance()
+# advice = get_ai_advice(income, expenses, budget_goals, balance)
+# print("\n--- AI Advice ---")
+# print(advice)
