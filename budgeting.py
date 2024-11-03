@@ -2,7 +2,7 @@ import openai
 import os
 
 # Set up OpenAI API Key
-api_key = os.getenv("API_KEY")
+api_key = os.getenv("api_key")
 print(api_key)
 
 # def get_ai_advice(expenses, budget_goals, balance):
