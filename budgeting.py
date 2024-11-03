@@ -2,9 +2,9 @@ import openai
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv('creds.env')
 # Set up OpenAI API Key
-openai.api_key = os.getenv("api_key")
+openai.api_key = os.getenv("openai_api_key")
 # print("API Key:", openai.api_key)  # Should print the actual API key
 
 
@@ -67,11 +67,12 @@ def get_ai_advice(income, expenses, budget_goals, balance):
         messages=[
             {"role": "system", "content": "You are a financial budgeting assistant."},
             {"role": "user", "content": prompt}
-    ],
-    max_tokens=150
-)
+        ],
+        max_tokens=150
+    )
 
-    advice = response.choices[0].text.strip()
+    # Extracting the message content from the response
+    advice = response.choices[0].message['content'].strip()
     return advice
 
 # Example usage of AI-driven advice
