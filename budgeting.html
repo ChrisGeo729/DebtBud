@@ -26,7 +26,7 @@
     <section id="budgeting">
         <h2>Welcome to the Budgeting Section</h2>
         <p>Enter your income, expenses, and budget goals to get personalized budgeting advice.</p>
-        <form id="budgetForm">
+        <form id="budgetForm" onsubmit="submitBudget(event)">
             <label for="income">Monthly Income</label>
             <input type="number" id="income" name="income" required>
 
@@ -46,14 +46,16 @@
             <label for="savings">Savings</label>
             <input type="number" id="savings" name="expenses[savings]" placeholder="Enter savings amount" required>
 
-            <button type="button" onclick="submitBudget()">Submit</button>
+            <button type="submit">Get Advice</button>
         </form>
         <div id="advice-output"></div>
     </section>
 
     <!-- Budgeting Script -->
     <script>
-        function submitBudget() {
+        async function submitBudget(event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+
             const income = document.getElementById('income').value;
             const expenses = {
                 rent: document.getElementById('rent').value,
@@ -63,16 +65,26 @@
                 savings: document.getElementById('savings').value
             };
 
-            console.log("Income:", income);
-            console.log("Expenses:", expenses);
+            // Sending data to the backend
+            try {
+                const response = await fetch('http://127.0.0.1:5000/get-advice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ income, expenses })
+                });
 
-            // Here you can add code to send the data to the backend (e.g., using fetch)
-            // fetch('/api/budget', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ income, expenses })
-            // }).then(response => response.json())
-            // .then(data => document.getElementById('advice-output').innerText = data.advice);
+                if (response.ok) {
+                    const result = await response.json();
+                    document.getElementById('advice-output').innerText = result.advice;
+                } else {
+                    document.getElementById('advice-output').innerText = 'Error fetching advice. Please try again.';
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('advice-output').innerText = 'Failed to connect to the server.';
+            }
         }
     </script>
 
