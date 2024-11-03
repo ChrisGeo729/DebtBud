@@ -13,14 +13,15 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#budgeting">Budgeting Section</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="budgeting.html">Budgeting Section</a></li> <!-- Updated link -->
                 <li><a href="#calculator">Loan Repayment Calculator</a></li>
                 <li><a href="#connect">Connect with Others</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
+    
 
     <!-- Hero Section -->
     <section id="home">
@@ -40,46 +41,49 @@
         </div>
     </section>
 
-    <!-- Budgeting and Services Section -->
+    <!-- Services Section -->
     <section id="services">
         <h2>Our Services</h2>
         <div class="service-cards">
             <!-- Budgeting Card -->
-            <div class="card">
-                <img src="assets/budgeting.png" alt="Budgeting Icon"> <!-- Budgeting Icon -->
-                <h3>Budgeting Section</h3>
-                <!-- <p>Personalized budgets to manage expenses and savings.</p> -->
-            </div>
+            <a href="budgeting.html"> <!-- Link to budgeting.html -->
+                <div class="card">
+                    <img src="assets/budgeting.png" alt="Budgeting Icon">
+                    <h3>Budgeting Section</h3>
+                    <!-- <p>Personalized budgets to manage expenses and savings.</p> -->
+                </div>
+            </a>
+    
             <!-- Loan Calculator Card -->
             <div class="card">
-                <img src="assets/calculator.png" alt="Loan Calculator Icon"> <!-- Loan Calculator Icon -->
+                <img src="assets/calculator.png" alt="Loan Calculator Icon">
                 <h3>Loan Repayment Calculator</h3>
                 <!-- <p>Understand how different repayment strategies impact your loan.</p> -->
             </div>
+    
             <!-- Community Card -->
             <div class="card">
-                <img src="assets/Connect.png" alt="Community Icon"> <!-- Community Icon -->
+                <img src="assets/connect.png" alt="Community Icon">
                 <h3>Connect with Others</h3>
                 <!-- <p>Join the community, ask questions, and share your financial journey.</p> -->
             </div>
         </div>
     </section>
+    
 
     <!-- Contact Section -->
-<section id="contact">
-    <h2>Contact Us</h2>
-    <!-- <p>If you need more assistance, reach out to us for personalized advice. We're here to help!</p> -->
-    <form>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-        <label for="message">Message</label>
-        <textarea id="message" name="message" required></textarea>
-        <button type="submit">Submit</button>
-    </form>
-</section>
-
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
 
     <script src="script.js"></script>
 </body>
