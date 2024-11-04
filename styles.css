@@ -9,37 +9,55 @@ body {
 }
 
 /* Header */
+/* Header */
 header {
-    background-color: #005777; /* Dark Blue */
-    padding: 20px;
     display: flex;
-    justify-content: center; /* Center the nav bar */
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px; /* Adjust padding for more compact header */
+    background-color: #005777; /* Dark Blue background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-header nav ul {
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 70px; /* Adjusted logo size */
+    height: auto;
+    margin-right: 10px;
+}
+
+.company-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.nav-links {
     list-style-type: none;
+    display: flex;
+    gap: 15px; /* Reduce spacing between links */
     margin: 0;
-    padding: 0;
 }
 
-header nav ul li {
+.nav-links li {
     display: inline;
-    margin: 0 20px;
 }
 
-header nav ul li a {
-    color: #fff;
+.nav-links li a {
+    color: #ffffff; /* White color for text */
     text-decoration: none;
     font-weight: bold;
+    padding: 5px 8px;
 }
 
-header nav ul li a:hover {
+.nav-links li a:hover {
     text-decoration: underline;
 }
+
 
 /* Hero Section with Background Video */
 .hero-container {
