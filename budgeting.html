@@ -7,29 +7,26 @@
     <title>Budgeting Section</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Styling for the progress bars */
-        .progress-bar-container {
-            width: 80%;
-            margin: 20px auto;
-            background-color: #f2f2f2;
-            border-radius: 8px;
-            padding: 10px;
+        /* Additional CSS for smaller chart and layout */
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
         }
-
-        .progress-bar {
-            height: 20px;
-            border-radius: 8px;
-            background-color: #005777; /* Progress color */
-            text-align: right;
-            padding-right: 5px;
-            color: white;
+        canvas {
+            width: 400px !important; /* Smaller width */
+            height: 400px !important; /* Smaller height */
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .legend p {
             font-size: 0.9rem;
-        }
-
-        .progress-label {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+            margin: 0;
         }
     </style>
 </head>
@@ -75,10 +72,23 @@
 
         <div id="advice-output"></div>
 
-        <!-- Progress bar container -->
-        <div id="progressBars"></div>
+        <!-- Circular Progress Chart container -->
+        <div class="chart-container">
+            <canvas id="budgetProgressChart"></canvas>
+            <div class="legend">
+                <p><span style="color: #FF6384;">●</span> Rent</p>
+                <p><span style="color: #36A2EB;">●</span> Groceries</p>
+                <p><span style="color: #FFCE56;">●</span> Entertainment</p>
+                <p><span style="color: #4BC0C0;">●</span> Transportation</p>
+                <p><span style="color: #9966FF;">●</span> Savings</p>
+            </div>
+        </div>
     </section>
 
+    <!-- Include Chart.js for the chart rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript to handle form submission and display the progress chart -->
     <script>
         async function submitBudget(event) {
             event.preventDefault();
@@ -102,7 +112,7 @@
                 if (response.ok) {
                     const result = await response.json();
                     document.getElementById('advice-output').innerText = result.advice;
-                    updateProgressBars(expenses);
+                    updateProgressChart(expenses);
                 } else {
                     document.getElementById('advice-output').innerText = 'Error fetching advice. Please try again.';
                 }
@@ -112,42 +122,56 @@
             }
         }
 
-        function updateProgressBars(expenses) {
+        // Initialize chart variable
+        let budgetProgressChart;
+
+        function updateProgressChart(expenses) {
             const budgetGoals = {
                 rent: 700,
                 groceries: 300,
                 entertainment: 150,
                 transportation: 100,
-                savings: 200
+                savings: 200,
             };
 
-            const progressBarsContainer = document.getElementById('progressBars');
-            progressBarsContainer.innerHTML = '';
+            const data = Object.keys(budgetGoals).map(category => Math.round((expenses[category] / budgetGoals[category]) * 100));
+            const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
 
-            Object.keys(budgetGoals).forEach(category => {
-                const spent = expenses[category];
-                const budget = budgetGoals[category];
-                const percentUsed = Math.min((spent / budget) * 100, 100);
+            const ctx = document.getElementById('budgetProgressChart').getContext('2d');
 
-                // Create progress label
-                const label = document.createElement('div');
-                label.classList.add('progress-label');
-                label.innerText = `${category.charAt(0).toUpperCase() + category.slice(1)}: ${spent} / ${budget}`;
+            if (budgetProgressChart) {
+                budgetProgressChart.destroy();
+            }
 
-                // Create progress bar container
-                const progressBarContainer = document.createElement('div');
-                progressBarContainer.classList.add('progress-bar-container');
-
-                // Create progress bar
-                const progressBar = document.createElement('div');
-                progressBar.classList.add('progress-bar');
-                progressBar.style.width = `${percentUsed}%`;
-                progressBar.innerText = `${Math.round(percentUsed)}%`;
-
-                // Append elements
-                progressBarContainer.appendChild(progressBar);
-                progressBarsContainer.appendChild(label);
-                progressBarsContainer.appendChild(progressBarContainer);
+            budgetProgressChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(budgetGoals),
+                    datasets: data.map((value, index) => ({
+                        data: [value, 100 - value],
+                        backgroundColor: [colors[index], '#e0e0e0'],
+                        hoverBackgroundColor: [colors[index], '#e0e0e0'],
+                        borderWidth: 3,
+                        circumference: 270,
+                        rotation: 0
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}% of budget used`;
+                                }
+                            }
+                        }
+                    }
+                }
             });
         }
     </script>
