@@ -118,12 +118,13 @@
         <div class="chart-container">
             <canvas id="budgetProgressChart"></canvas>
             <div class="legend">
-                <p><span style="color: #FF6384;">●</span> Rent</p>
-                <p><span style="color: #36A2EB;">●</span> Groceries</p>
-                <p><span style="color: #FFCE56;">●</span> Entertainment</p>
-                <p><span style="color: #4BC0C0;">●</span> Transportation</p>
-                <p><span style="color: #9966FF;">●</span> Savings</p>
-            </div>
+                <p><span style="color: #fa5858;">●</span> Income</p>
+                <p><span style="color: #6062f7;">●</span> Rent</p>
+                <p><span style="color: #4fc04b;">●</span> Groceries</p>
+                <p><span style="color: #fffc66;">●</span> Entertainment</p>
+                <p><span style="color: #ff60df;">●</span> Transportation</p>
+                <p><span style="color: #69ffe6;">●</span> Savings</p>
+            </div> 
         </div>
     </section>
 
@@ -144,6 +145,7 @@
                 transportation: parseFloat(document.getElementById('transportation-goal').value),
                 savings: parseFloat(document.getElementById('savings-goal').value)
             };
+
 
             document.getElementById('goals-section').classList.remove('active');
             document.getElementById('expenses-section').classList.add('active');
@@ -185,46 +187,68 @@
         let budgetProgressChart;
 
         function updateProgressChart(expenses) {
-            const data = Object.keys(budgetGoals).map(category => Math.round((expenses[category] / budgetGoals[category]) * 100));
-            const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+    // Calculate percentages for expenses relative to each category goal
+    const data = Object.keys(budgetGoals).map(category => {
+        if (category === 'income') {
+            return 100; // Display income as fully available or 100% of itself
+        }
+        return Math.round((expenses[category] / budgetGoals[category]) * 100);
+    });
+    
+    const colors = ['#fa5858', '#6062f7', '#4fc04b', '#fffc66', '#ff60df', '#69ffe6'];
+    
+    // Update legend to include income
+    const legendContainer = document.querySelector('.legend');
+    legendContainer.innerHTML = ''; // Clear existing legend
 
-            const ctx = document.getElementById('budgetProgressChart').getContext('2d');
+    Object.keys(budgetGoals).forEach((category, index) => {
+        const percentage = data[index];
+        const color = colors[index];
+        const legendItem = document.createElement('p');
+        legendItem.innerHTML = `<span style="color: ${color};">●</span> ${category.charAt(0).toUpperCase() + category.slice(1)}: ${percentage}%${category !== 'income' ? ' used' : ''}`;
+        legendContainer.appendChild(legendItem);
 
-            if (budgetProgressChart) {
-                budgetProgressChart.destroy();
-            }
+        legendContainer.appendChild(legendItem);
+    });
 
-            budgetProgressChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(budgetGoals),
-                    datasets: data.map((value, index) => ({
-                        data: [value, 100 - value],
-                        backgroundColor: [colors[index], '#e0e0e0'],
-                        hoverBackgroundColor: [colors[index], '#e0e0e0'],
-                        borderWidth: 3,
-                        circumference: 270,
-                        rotation: 0
-                    }))
+    const ctx = document.getElementById('budgetProgressChart').getContext('2d');
+
+    if (budgetProgressChart) {
+        budgetProgressChart.destroy();
+    }
+
+    budgetProgressChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(budgetGoals),
+            datasets: data.map((value, index) => ({
+                data: [value, 100 - value],
+                backgroundColor: [colors[index], '#e0e0e0'],
+                hoverBackgroundColor: [colors[index], '#e0e0e0'],
+                borderWidth: 4,
+                circumference: 300,
+                rotation: -30
+            }))
+        },
+        options: {
+            responsive: true,
+            cutout: '70%',
+            plugins: {
+                legend: {
+                    display: false // Hide built-in legend since we have a custom one
                 },
-                options: {
-                    responsive: true,
-                    cutout: '70%',
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.label}: ${context.raw}% of budget used`;
-                                }
-                            }
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw}% of budget used`;
                         }
                     }
                 }
-            });
+            }
         }
+    });
+}
+
     </script>
 </body>
 </html>
