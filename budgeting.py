@@ -43,7 +43,6 @@ def display_budget_overview():
     print(f"Remaining Balance: {calculate_balance()}")
 
 def get_ai_advice(income, expenses, budget_goals, balance):
-    # Format the prompt for the AI
     prompt = f"""
     Here is the budget summary:
     - Monthly Income: ${income}
@@ -57,19 +56,18 @@ def get_ai_advice(income, expenses, budget_goals, balance):
     and suggest actionable advice to help the user save more effectively.
     """
 
-    # Call OpenAI's API
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a financial budgeting assistant."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=250
+        max_tokens=450
     )
 
-    # Extracting the message content from the response
     advice = response.choices[0].message['content'].strip()
     return advice
+
 
 # # Example usage of AI-driven advice
 # balance = calculate_balance()

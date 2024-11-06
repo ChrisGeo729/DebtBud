@@ -152,36 +152,37 @@
         }
 
         async function submitExpenses(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            const income = document.getElementById('income').value;
-            const expenses = {
-                rent: parseFloat(document.getElementById('rent').value),
-                groceries: parseFloat(document.getElementById('groceries').value),
-                entertainment: parseFloat(document.getElementById('entertainment').value),
-                transportation: parseFloat(document.getElementById('transportation').value),
-                savings: parseFloat(document.getElementById('savings').value)
-            };
+    const income = parseFloat(document.getElementById('income').value);
+    const expenses = {
+        rent: parseFloat(document.getElementById('rent').value),
+        groceries: parseFloat(document.getElementById('groceries').value),
+        entertainment: parseFloat(document.getElementById('entertainment').value),
+        transportation: parseFloat(document.getElementById('transportation').value),
+        savings: parseFloat(document.getElementById('savings').value)
+    };
 
-            try {
-                const response = await fetch('http://127.0.0.1:5000/get-advice', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ income, expenses, budgetGoals })
-                });
+    try {
+        const response = await fetch('http://127.0.0.1:5000/get-advice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ income, expenses, budgetGoals })
+        });
 
-                if (response.ok) {
-                    const result = await response.json();
-                    document.getElementById('advice-output').innerText = result.advice;
-                    updateProgressChart(expenses);
-                } else {
-                    document.getElementById('advice-output').innerText = 'Error fetching advice. Please try again.';
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                document.getElementById('advice-output').innerText = 'Failed to connect to the server.';
-            }
+        if (response.ok) {
+            const result = await response.json();
+            document.getElementById('advice-output').innerText = result.advice;
+            updateProgressChart(expenses);
+        } else {
+            document.getElementById('advice-output').innerText = 'Error fetching advice. Please try again.';
         }
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById('advice-output').innerText = 'Failed to connect to the server.';
+    }
+}
+
 
         // Initialize chart variable
         let budgetProgressChart;
