@@ -30,12 +30,12 @@
             display: block;
         }
         .calculator-form input {
-            width: 100%;
+            width: 96%;
             padding: 10px;
             margin-top: 5px;
             margin-bottom: 15px;
             border-radius: 5px;
-            border: 1px solid #c0c0c0;
+            border: 1px solid #000000;
         }
         .calculator-form button {
             width: 100%;
@@ -50,13 +50,24 @@
         .calculator-form button:hover {
             background-color: #003b56;
         }
+        h2 {
+            color: #005777; /* Darker color for title */
+            font-size: 2rem;
+            text-align: center;
+            font-weight: bold;
+        }
         .result-container {
             margin-top: 20px;
             text-align: center;
         }
         .result-container h3 {
-            color: #005777;
-            font-size: 1.5rem;
+            color: #005777; /* Darker color for result heading */
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .result-container p {
+            color: #005777; /* Darker color for result text */
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -72,13 +83,12 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="budgeting.html">Budgeting Section</a></li>
-                <li><a href="loan_calculator.html">Loan Repayment Calculator</a></li> <!-- Updated link here -->
+                <li><a href="loan_calculator.html">Loan Repayment Calculator</a></li>
                 <li><a href="#connect">Connect with Others</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
-    
 
     <!-- Loan Repayment Calculator Section -->
     <section class="calculator-container">
