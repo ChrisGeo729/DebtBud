@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate your loan repayment options easily.">
+    <title>Loan Repayment Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <style>
+        /* Additional CSS for form layout */
+        .calculator-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .calculator-form {
+            max-width: 500px;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .calculator-form label {
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+            display: block;
+        }
+        .calculator-form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #c0c0c0;
+        }
+        .calculator-form button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            background-color: #005777;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calculator-form button:hover {
+            background-color: #003b56;
+        }
+        .result-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result-container h3 {
+            color: #005777;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo-container">
+            <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="logo">
+            <span class="company-name">DebtBud</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="budgeting.html">Budgeting Section</a></li>
+                <li><a href="loan_calculator.html">Loan Repayment Calculator</a></li> <!-- Updated link here -->
+                <li><a href="#connect">Connect with Others</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+
+    <!-- Loan Repayment Calculator Section -->
+    <section class="calculator-container">
+        <h2>Loan Repayment Calculator</h2>
+        <div class="calculator-form">
+            <form id="loanForm" onsubmit="calculateLoan(event)">
+                <label for="loan-amount">Loan Amount:</label>
+                <input type="number" id="loan-amount" name="loan-amount" required placeholder="Enter loan amount">
+
+                <label for="interest-rate">Annual Interest Rate (%):</label>
+                <input type="number" id="interest-rate" name="interest-rate" required placeholder="Enter interest rate">
+
+                <label for="loan-term">Loan Term (years):</label>
+                <input type="number" id="loan-term" name="loan-term" required placeholder="Enter loan term in years">
+
+                <button type="submit">Calculate Repayment</button>
+            </form>
+        </div>
+
+        <!-- Results Display -->
+        <div id="loan-results" class="result-container"></div>
+    </section>
+
+    <!-- JavaScript for Loan Calculation -->
+    <script>
+        function calculateLoan(event) {
+            event.preventDefault();
+
+            // Get values from the form
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            const annualInterestRate = parseFloat(document.getElementById('interest-rate').value);
+            const loanTermYears = parseFloat(document.getElementById('loan-term').value);
+
+            // Monthly interest rate and total number of payments
+            const monthlyInterestRate = (annualInterestRate / 100) / 12;
+            const totalPayments = loanTermYears * 12;
+
+            // Calculate monthly payment
+            const monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+
+            // Calculate total payment and total interest
+            const totalPayment = monthlyPayment * totalPayments;
+            const totalInterest = totalPayment - loanAmount;
+
+            // Display results
+            const resultsContainer = document.getElementById('loan-results');
+            resultsContainer.innerHTML = `
+                <h3>Repayment Results</h3>
+                <p>Monthly Payment: <strong>$${monthlyPayment.toFixed(2)}</strong></p>
+                <p>Total Payment: <strong>$${totalPayment.toFixed(2)}</strong></p>
+                <p>Total Interest: <strong>$${totalInterest.toFixed(2)}</strong></p>
+            `;
+        }
+    </script>
+
+</body>
+</html>

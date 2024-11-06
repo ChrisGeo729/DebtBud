@@ -12,19 +12,20 @@
 
     <header>
         <div class="logo-container">
-            <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="logo"> <!-- Adjust path if necessary -->
+            <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="logo">
             <span class="company-name">DebtBud</span>
         </div>
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="budgeting.html">Budgeting Section</a></li>
-                <li><a href="#calculator">Loan Repayment Calculator</a></li>
+                <li><a href="loan_calculator.html">Loan Repayment Calculator</a></li> <!-- Updated link here -->
                 <li><a href="#connect">Connect with Others</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
+    
 
     <!-- Hero Section -->
     <section id="home">
@@ -49,29 +50,25 @@
         <h2>Our Services</h2>
         <div class="service-cards">
             <!-- Budgeting Card -->
-            <a href="budgeting.html"> <!-- Link to budgeting.html -->
-                <div class="card">
-                    <img src="assets/budgeting.png" alt="Budgeting Icon">
-                    <h3>Budgeting Section</h3>
-                    <!-- <p>Personalized budgets to manage expenses and savings.</p> -->
-                </div>
+            <a href="budgeting.html" class="card"> <!-- Link to Budgeting Page -->
+                <img src="assets/budgeting.png" alt="Budgeting Icon">
+                <h3>Budgeting Section</h3>
             </a>
     
             <!-- Loan Calculator Card -->
-            <div class="card">
+            <a href="loan_calculator.html" class="card"> <!-- Updated link to Loan Calculator Page -->
                 <img src="assets/calculator.png" alt="Loan Calculator Icon">
                 <h3>Loan Repayment Calculator</h3>
-                <!-- <p>Understand how different repayment strategies impact your loan.</p> -->
-            </div>
+            </a>
     
             <!-- Community Card -->
-            <div class="card">
+            <a href="#connect" class="card">
                 <img src="assets/connect.png" alt="Community Icon">
                 <h3>Connect with Others</h3>
-                <!-- <p>Join the community, ask questions, and share your financial journey.</p> -->
-            </div>
+            </a>
         </div>
     </section>
+    
     
 
     <!-- Contact Section -->
