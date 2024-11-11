@@ -8,30 +8,92 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <style>
-        /* Additional CSS for smaller chart and layout */
+        /* Container styles for the forms and outputs */
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            background-color: #005777;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container button:hover {
+            background-color: #003b56;
+        }
+
+        #advice-output {
+            text-align: center;
+            font-size: 1rem;
+            color: #333;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7f9;
+            border-radius: 10px;
+        }
+
+        /* Chart container styling */
         .chart-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
         }
-        canvas {
-            width: 400px !important; /* Smaller width */
-            height: 400px !important; /* Smaller height */
+
+        .chart-container canvas {
+            width: 300px !important;
+            height: 300px !important;
         }
+
         .legend {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-top: 10px;
         }
+
         .legend p {
             font-size: 0.9rem;
             margin: 0;
+            color: #333;
         }
+
         .form-section {
-            display: none; 
+            display: none; /* Hidden by default */
         }
+
         .form-section.active {
             display: block;
         }
@@ -49,7 +111,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="budgeting.html">Budgeting Section</a></li>
-                <li><a href="loan_calculator.html">Loan Repayment Calculator</a></li> <!-- Updated link here -->
+                <li><a href="loan_calculator.html">Loan Repayment Calculator</a></li>
                 <li><a href="#connect">Connect with Others</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -60,8 +122,8 @@
     <section id="budgeting">
         <h2>Budgeting Section</h2>
 
-        <!-- Budget Goals Form -->
-        <div id="goals-section" class="form-section active">
+        <!-- Budget Goals Form in Container -->
+        <div id="goals-section" class="form-section active container">
             <h3>Step 1: Enter Your Budget Goals</h3>
             <form id="goalsForm" onsubmit="submitGoals(event)">
                 <label for="income-goal">Monthly Income Goal:</label>
@@ -86,8 +148,8 @@
             </form>
         </div>
 
-        <!-- Current Expenses Form -->
-        <div id="expenses-section" class="form-section">
+        <!-- Current Expenses Form in Container -->
+        <div id="expenses-section" class="form-section container">
             <h3>Step 2: Enter Your Current Expenses</h3>
             <form id="expensesForm" onsubmit="submitExpenses(event)">
                 <label for="income">Monthly Income:</label>
@@ -112,10 +174,12 @@
             </form>
         </div>
 
-        <div id="advice-output"></div>
+        <!-- AI Advice Output -->
+        <div id="advice-output" class="container"></div>
 
         <!-- Circular Progress Chart container -->
-        <div class="chart-container">
+        <div class="chart-container container">
+            <h3>Budget Usage Overview</h3>
             <canvas id="budgetProgressChart"></canvas>
             <div class="legend">
                 <p><span style="color: #fa5858;">●</span> Income</p>
@@ -146,45 +210,42 @@
                 savings: parseFloat(document.getElementById('savings-goal').value)
             };
 
-
             document.getElementById('goals-section').classList.remove('active');
             document.getElementById('expenses-section').classList.add('active');
         }
 
         async function submitExpenses(event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    const income = parseFloat(document.getElementById('income').value);
-    const expenses = {
-        rent: parseFloat(document.getElementById('rent').value),
-        groceries: parseFloat(document.getElementById('groceries').value),
-        entertainment: parseFloat(document.getElementById('entertainment').value),
-        transportation: parseFloat(document.getElementById('transportation').value),
-        savings: parseFloat(document.getElementById('savings').value)
-    };
+            const income = parseFloat(document.getElementById('income').value);
+            const expenses = {
+                rent: parseFloat(document.getElementById('rent').value),
+                groceries: parseFloat(document.getElementById('groceries').value),
+                entertainment: parseFloat(document.getElementById('entertainment').value),
+                transportation: parseFloat(document.getElementById('transportation').value),
+                savings: parseFloat(document.getElementById('savings').value)
+            };
 
-    try {
-        const response = await fetch('http://127.0.0.1:5000/get-advice', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ income, expenses, budgetGoals })
-        });
+            try {
+                const response = await fetch('http://127.0.0.1:5000/get-advice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ income, expenses, budgetGoals })
+                });
 
-        if (response.ok) {
-            const result = await response.json();
-            document.getElementById('advice-output').innerText = result.advice;
-            updateProgressChart(expenses);
-        } else {
-            document.getElementById('advice-output').innerText = 'Error fetching advice. Please try again.';
+                if (response.ok) {
+                    const result = await response.json();
+                    document.getElementById('advice-output').innerText = result.advice;
+                    updateProgressChart(expenses);
+                } else {
+                    document.getElementById('advice-output').innerText = 'Error fetching advice. Please try again.';
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('advice-output').innerText = 'Failed to connect to the server.';
+            }
         }
-    } catch (error) {
-        console.error("Error:", error);
-        document.getElementById('advice-output').innerText = 'Failed to connect to the server.';
-    }
-}
 
-
-        // Initialize chart variable
         let budgetProgressChart;
 
         function updateProgressChart(expenses) {
@@ -249,7 +310,6 @@
         }
     });
 }
-
     </script>
 </body>
 </html>
