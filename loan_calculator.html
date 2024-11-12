@@ -99,10 +99,25 @@
                 <input type="number" id="loan-amount" name="loan-amount" required placeholder="Enter loan amount">
 
                 <label for="interest-rate">Annual Interest Rate (%):</label>
-                <input type="number" id="interest-rate" name="interest-rate" required placeholder="Enter interest rate">
+                <input type="number" id="interest-rate" name="interest-rate" step="0.01" required placeholder="Enter interest rate as a decimal (e.g., 3.75)">
 
-                <label for="loan-term">Loan Term (years):</label>
-                <input type="number" id="loan-term" name="loan-term" required placeholder="Enter loan term in years">
+                <label>Choose a Repayment Option:</label>
+                <input type="radio" id="option-term" name="repayment-option" value="term" checked onchange="toggleInput()">
+                <label for="option-term">Specify Loan Term (years)</label>
+                
+                <input type="radio" id="option-payment" name="repayment-option" value="payment" onchange="toggleInput()">
+                <label for="option-payment">Specify Desired Monthly Payment</label>
+
+                <div id="term-input">
+                    <label for="loan-term">Loan Term (years):</label>
+                    <input type="number" id="loan-term" name="loan-term" placeholder="Enter loan term in years">
+                </div>
+                
+
+                <div id="payment-input" style="display: none;">
+                    <label for="monthly-payment">Desired Monthly Payment:</label>
+                    <input type="number" id="monthly-payment" name="monthly-payment" placeholder="Enter desired monthly payment">
+                </div>
 
                 <button type="submit">Calculate Repayment</button>
             </form>
@@ -114,32 +129,51 @@
 
     <!-- JavaScript for Loan Calculation -->
     <script>
+        function toggleInput() {
+            const optionTerm = document.getElementById('option-term').checked;
+            document.getElementById('term-input').style.display = optionTerm ? 'block' : 'none';
+            document.getElementById('payment-input').style.display = optionTerm ? 'none' : 'block';
+        }
+
         function calculateLoan(event) {
             event.preventDefault();
 
             // Get values from the form
             const loanAmount = parseFloat(document.getElementById('loan-amount').value);
             const annualInterestRate = parseFloat(document.getElementById('interest-rate').value);
-            const loanTermYears = parseFloat(document.getElementById('loan-term').value);
+            const isTermOption = document.getElementById('option-term').checked;
 
-            // Monthly interest rate and total number of payments
-            const monthlyInterestRate = (annualInterestRate / 100) / 12;
-            const totalPayments = loanTermYears * 12;
+            let monthlyPayment, totalPayment, totalInterest, loanTermYears;
 
-            // Calculate monthly payment
-            const monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+            if (isTermOption) {
+                // Loan term in years option
+                loanTermYears = parseFloat(document.getElementById('loan-term').value);
+                const monthlyInterestRate = (annualInterestRate / 100) / 12;
+                const totalPayments = loanTermYears * 12;
 
-            // Calculate total payment and total interest
-            const totalPayment = monthlyPayment * totalPayments;
-            const totalInterest = totalPayment - loanAmount;
+                // Calculate monthly payment
+                monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+                totalPayment = monthlyPayment * totalPayments;
+                totalInterest = totalPayment - loanAmount;
+            } else {
+                // Desired monthly payment option
+                monthlyPayment = parseFloat(document.getElementById('monthly-payment').value);
+                const monthlyInterestRate = (annualInterestRate / 100) / 12;
+
+                // Calculate loan term based on desired monthly payment
+                loanTermYears = Math.log(1 - (loanAmount * monthlyInterestRate) / monthlyPayment) / Math.log(1 + monthlyInterestRate) / -12;
+                totalPayment = monthlyPayment * loanTermYears * 12;
+                totalInterest = totalPayment - loanAmount;
+            }
 
             // Display results
             const resultsContainer = document.getElementById('loan-results');
             resultsContainer.innerHTML = `
                 <h3>Repayment Results</h3>
-                <p>Monthly Payment: <strong>$${monthlyPayment.toFixed(2)}</strong></p>
-                <p>Total Payment: <strong>$${totalPayment.toFixed(2)}</strong></p>
-                <p>Total Interest: <strong>$${totalInterest.toFixed(2)}</strong></p>
+                <p>Monthly Payment: <strong>€${monthlyPayment.toFixed(2)}</strong></p>
+                <p>Total Payment: <strong>€${totalPayment.toFixed(2)}</strong></p>
+                <p>Total Interest: <strong>€${totalInterest.toFixed(2)}</strong></p>
+                <p>Loan Term: <strong>${loanTermYears.toFixed(1)} years</strong></p>
             `;
         }
     </script>

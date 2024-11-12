@@ -53,7 +53,8 @@ def get_ai_advice(income, expenses, budget_goals, balance):
     {budget_goals}
 
     Analyze the expenses, identify categories that exceed budget goals, 
-    and suggest actionable advice to help the user save more effectively. Make sure that the expenses exceeding the budget goals are actually bigger than the goals
+    and suggest actionable advice to help the user save more effectively. 
+    Make sure that the expenses exceeding the budget goals are actually bigger than the goals.
     """
 
     response = openai.ChatCompletion.create(
