@@ -57,12 +57,12 @@ def get_ai_advice(income, expenses, budget_goals, balance):
     """
 
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": "You are a financial budgeting assistant."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=250
+        max_tokens=450
     )
 
     advice = response.choices[0].message['content'].strip()
