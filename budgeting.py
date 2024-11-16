@@ -63,7 +63,7 @@ def get_ai_advice(income, expenses, budget_goals, balance):
             {"role": "system", "content": "You are a financial budgeting assistant."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=450
+        max_tokens=250
     )
 
     advice = response.choices[0].message['content'].strip()
