@@ -1,6 +1,7 @@
 creds.env 
-myenv/
-my-website/
-node_modules/
-package-lock.json/
+myenv
+my-website
+node_modules
+contact-submissions.json
+
 
