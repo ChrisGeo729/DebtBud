@@ -7,19 +7,32 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const DATA_FILE = './forum-data.json';
+const DATA_FILE = '/absolute/path/to/forum-data.json';
 
-// Helper function to read and write JSON data
+
+// Helper function to read JSON data
 const readData = () => {
-    if (!fs.existsSync(DATA_FILE)) {
+    try {
+        if (!fs.existsSync(DATA_FILE)) {
+            console.log('JSON file not found, initializing a new file.');
+            return { threads: [] };
+        }
+        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error('Error reading data file:', err);
         return { threads: [] };
     }
-    const data = fs.readFileSync(DATA_FILE, 'utf8');
-    return JSON.parse(data);
 };
 
+// Helper function to write JSON data
 const writeData = (data) => {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+    try {
+        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+        console.log('Data written successfully to file.');
+    } catch (err) {
+        console.error('Error writing data file:', err);
+    }
 };
 
 // Route to get all threads
@@ -31,6 +44,7 @@ app.get('/api/threads', (req, res) => {
 // Route to create a new thread
 app.post('/api/threads', (req, res) => {
     const { title, description } = req.body;
+
     if (!title || !description) {
         return res.status(400).json({ error: 'Title and description are required.' });
     }
