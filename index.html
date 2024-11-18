@@ -62,7 +62,7 @@
       </a>
       <!-- Connect with Others Service Card -->
 <a href="connect.html" class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
-    <img src="assets/connect.png" alt="Community Icon" class="w-20 h-20 mx-auto mb-4">
+    <img src="assets/Connect.png" alt="Community Icon" class="w-20 h-20 mx-auto mb-4">
     <h3 class="text-xl font-semibold text-blue-800">Connect with Others</h3>
   </a>
   
@@ -108,7 +108,7 @@
   
       try {
         // Send data to the backend
-        const response = await fetch('http://localhost:5000/api/contact', {
+        const response = await fetch('http://localhost:5004/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, message }),
