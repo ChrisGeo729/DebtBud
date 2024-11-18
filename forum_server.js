@@ -7,38 +7,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const DATA_FILE = '/absolute/path/to/forum-data.json';
-
-
-// Helper function to read JSON data
-const readData = () => {
-    try {
-        if (!fs.existsSync(DATA_FILE)) {
-            console.log('JSON file not found, initializing a new file.');
-            return { threads: [] };
-        }
-        const data = fs.readFileSync(DATA_FILE, 'utf8');
-        return JSON.parse(data);
-    } catch (err) {
-        console.error('Error reading data file:', err);
-        return { threads: [] };
-    }
-};
-
-// Helper function to write JSON data
-const writeData = (data) => {
-    try {
-        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
-        console.log('Data written successfully to file.');
-    } catch (err) {
-        console.error('Error writing data file:', err);
-    }
-};
+const DATA_FILE = './forum-data.json';
 
 // Route to get all threads
 app.get('/api/threads', (req, res) => {
-    const data = readData();
-    res.json(data.threads);
+    fs.readFile(DATA_FILE, 'utf8', (err, fileData) => {
+        if (err) {
+            console.error('Error reading data file:', err);
+            return res.status(500).json({ error: 'Failed to read data.' });
+        }
+        const threads = fileData ? JSON.parse(fileData) : [];
+        res.json(threads);
+    });
 });
 
 // Route to create a new thread
@@ -49,17 +29,33 @@ app.post('/api/threads', (req, res) => {
         return res.status(400).json({ error: 'Title and description are required.' });
     }
 
-    const data = readData();
-    const newThread = {
-        id: data.threads.length + 1,
-        title,
-        description,
-        replies: [],
-    };
-    data.threads.push(newThread);
-    writeData(data);
+    // Read existing data
+    fs.readFile(DATA_FILE, 'utf8', (err, fileData) => {
+        if (err) {
+            console.error('Error reading data file:', err);
+            return res.status(500).json({ error: 'Failed to read data.' });
+        }
 
-    res.status(201).json(newThread);
+        const threads = fileData ? JSON.parse(fileData) : [];
+        const newThread = {
+            id: threads.length + 1,
+            title,
+            description,
+            replies: [],
+            createdAt: new Date().toISOString(),
+        };
+
+        threads.push(newThread);
+
+        // Write updated data back to file
+        fs.writeFile(DATA_FILE, JSON.stringify(threads, null, 2), (writeErr) => {
+            if (writeErr) {
+                console.error('Error writing data file:', writeErr);
+                return res.status(500).json({ error: 'Failed to save data.' });
+            }
+            res.status(201).json(newThread);
+        });
+    });
 });
 
 // Route to add a reply to a thread
@@ -71,20 +67,34 @@ app.post('/api/threads/:id/replies', (req, res) => {
         return res.status(400).json({ error: 'Reply is required.' });
     }
 
-    const data = readData();
-    const thread = data.threads.find((t) => t.id === parseInt(id, 10));
+    // Read existing data
+    fs.readFile(DATA_FILE, 'utf8', (err, fileData) => {
+        if (err) {
+            console.error('Error reading data file:', err);
+            return res.status(500).json({ error: 'Failed to read data.' });
+        }
 
-    if (!thread) {
-        return res.status(404).json({ error: 'Thread not found.' });
-    }
+        const threads = fileData ? JSON.parse(fileData) : [];
+        const thread = threads.find((t) => t.id === parseInt(id, 10));
 
-    thread.replies.push(reply);
-    writeData(data);
+        if (!thread) {
+            return res.status(404).json({ error: 'Thread not found.' });
+        }
 
-    res.status(201).json({ message: 'Reply added successfully.', thread });
+        thread.replies.push({ reply, createdAt: new Date().toISOString() });
+
+        // Write updated data back to file
+        fs.writeFile(DATA_FILE, JSON.stringify(threads, null, 2), (writeErr) => {
+            if (writeErr) {
+                console.error('Error writing data file:', writeErr);
+                return res.status(500).json({ error: 'Failed to save data.' });
+            }
+            res.status(201).json({ message: 'Reply added successfully.', thread });
+        });
+    });
 });
 
-const PORT = 5000;
+const PORT = 5003;
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });

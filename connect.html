@@ -3,9 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Connect with others in our community forum.">
-  <title>Connect with Others</title>
+  <meta name="description" content="Join our discussion forum to share and learn about managing finances.">
+  <title>DebtBud - Discussion Forum</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    /* Additional custom styles */
+    .sticky-sidebar {
+      position: sticky;
+      top: 1rem;
+    }
+    .interactive:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s ease-in-out;
+    }
+    .active-tab {
+      background-color: #2563eb;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body class="font-sans bg-gray-50 text-gray-800">
 
@@ -20,189 +36,165 @@
         <li><a href="index.html" class="hover:underline">Home</a></li>
         <li><a href="budgeting.html" class="hover:underline">Budgeting</a></li>
         <li><a href="loan_calculator.html" class="hover:underline">Calculator</a></li>
-        <li><a href="connect.html" class="hover:underline">Connect</a></li>
+        <li><a href="connect.html" class="hover:underline active-tab">Connect</a></li>
         <li><a href="#contact" class="hover:underline">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Main Section -->
-  <div class="flex flex-col lg:flex-row">
-    <!-- Sidebar -->
-    <aside class="w-full lg:w-1/4 bg-gray-100 p-4 sticky top-4 h-screen">
-      <h4 class="font-bold text-blue-800 mb-4">Popular Threads</h4>
+  <!-- Main Content -->
+  <div class="flex flex-col lg:flex-row gap-8 p-8">
+    
+    <!-- Sticky Sidebar -->
+    <aside class="hidden lg:block w-1/4 sticky-sidebar bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-xl font-bold text-blue-800 mb-4">Forum Navigation</h3>
       <ul class="space-y-2">
-        <!-- Placeholder for popular threads -->
-        <li><a href="#" class="text-gray-700 hover:underline">How to save on groceries?</a></li>
-        <li><a href="#" class="text-gray-700 hover:underline">Loan repayment strategies</a></li>
-        <li><a href="#" class="text-gray-700 hover:underline">Best budgeting apps</a></li>
+        <li><a href="#threadForm" class="text-blue-600 hover:underline">Create a New Thread</a></li>
+        <li><a href="#threadsContainer" class="text-blue-600 hover:underline">View Threads</a></li>
+        <li><a href="#contact" class="text-blue-600 hover:underline">Contact Us</a></li>
       </ul>
     </aside>
 
-    <!-- Main Content -->
-    <main class="w-full lg:w-3/4 p-6">
-      <section id="forum" class="bg-gray-100 rounded-lg p-6 shadow-md">
-        <h2 class="text-3xl font-bold text-blue-800 mb-8">Community Forum</h2>
+    <!-- Main Forum Section -->
+    <main class="flex-1">
+      <section id="forum" class="py-8">
+        <h2 class="text-3xl font-bold text-blue-800 mb-8">Discussion Forum</h2>
 
-        <!-- New Thread Form -->
-        <div class="bg-white p-6 rounded-lg shadow mb-8">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">Start a New Discussion</h3>
-          <form id="newThreadForm" class="space-y-4">
-            <div>
-              <label for="thread-title" class="block text-left font-medium text-gray-700">Thread Title</label>
-              <input type="text" id="thread-title" name="thread-title" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
-                placeholder="Enter thread title">
+        <!-- Thread Submission Form -->
+        <div id="threadForm" class="bg-white p-6 rounded-lg shadow-md interactive">
+          <h3 class="text-2xl font-semibold text-gray-800 mb-4">Create a New Thread</h3>
+          <form>
+            <div class="mb-4">
+              <label for="thread-title" class="block text-left font-medium text-gray-700">Title</label>
+              <input type="text" id="thread-title" name="title" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800">
             </div>
-            <div>
+            <div class="mb-4">
               <label for="thread-description" class="block text-left font-medium text-gray-700">Description</label>
-              <textarea id="thread-description" name="thread-description" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
-                placeholder="Enter thread description"></textarea>
+              <textarea id="thread-description" name="description" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"></textarea>
             </div>
             <button type="submit" class="px-6 py-3 text-lg font-semibold text-white bg-blue-800 rounded hover:bg-blue-900">
-              Create Thread
+              Submit Thread
             </button>
           </form>
         </div>
 
-        <!-- Threads List -->
-        <div id="threadsList" class="space-y-4">
-          <!-- Threads will be dynamically inserted here -->
+        <!-- Threads and Replies -->
+        <div id="threadsContainer" class="mt-8 space-y-6">
+          <!-- Threads will be dynamically added here -->
         </div>
       </section>
-
-      <!-- Thread Details Modal -->
-      <div id="threadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white w-full max-w-2xl p-6 rounded-lg shadow-lg relative">
-          <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
-            <!-- Close Icon -->
-            &times;
-          </button>
-          <div id="threadContent">
-            <!-- Thread content will be loaded here -->
-          </div>
-        </div>
-      </div>
     </main>
   </div>
 
+  <!-- Footer -->
+  <footer class="bg-blue-800 text-white text-center py-4">
+    <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
+  </footer>
+
   <!-- JavaScript -->
   <script>
-    const threadsList = document.getElementById('threadsList');
-    const newThreadForm = document.getElementById('newThreadForm');
-    const threadModal = document.getElementById('threadModal');
-    const threadContent = document.getElementById('threadContent');
+    const apiUrl = 'http://localhost:5003/api/threads';
 
-    // Initialize an empty array to hold threads
-    let threads = [];
+    // Fetch and display threads
+    async function fetchThreads() {
+      try {
+        const response = await fetch(apiUrl);
+        const threads = await response.json();
+        renderThreads(threads);
+      } catch (error) {
+        console.error('Error fetching threads:', error);
+      }
+    }
 
-    // Function to display threads
-    function displayThreads() {
-      threadsList.innerHTML = '';
+    // Render threads and replies
+    function renderThreads(threads) {
+      const threadsContainer = document.getElementById('threadsContainer');
+      threadsContainer.innerHTML = ''; // Clear existing threads
+
       threads.forEach((thread) => {
         const threadElement = document.createElement('div');
-        threadElement.classList.add('bg-white', 'p-6', 'rounded-lg', 'shadow', 'hover:bg-blue-50', 'hover:shadow-lg', 'transition');
+        threadElement.classList.add('bg-white', 'p-6', 'rounded-lg', 'shadow-md', 'interactive');
+
         threadElement.innerHTML = `
           <h3 class="text-xl font-semibold text-blue-800">${thread.title}</h3>
-          <p class="text-gray-700 mt-2">${thread.description}</p>
-          <div class="mt-4 flex justify-between items-center">
-            <span class="text-gray-500 text-sm">Posted by User123</span>
-            <button class="text-blue-800 font-medium hover:underline" onclick="viewThread(${thread.id})">View Discussion</button>
+          <p class="text-gray-700 my-2">${thread.description}</p>
+          <div class="mt-4 space-y-2">
+            <h4 class="text-lg font-semibold text-blue-600">Replies</h4>
+            <div id="replies-${thread.id}">
+              ${thread.replies.map((reply) => `<p class="text-gray-600">- ${reply.reply}</p>`).join('')}
+            </div>
+            <form data-thread-id="${thread.id}" class="replyForm mt-4">
+              <textarea class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
+                placeholder="Add a reply..." required></textarea>
+              <button type="submit" class="mt-2 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-900">
+                Submit Reply
+              </button>
+            </form>
           </div>
         `;
-        threadsList.appendChild(threadElement);
+
+        threadsContainer.appendChild(threadElement);
+      });
+
+      document.querySelectorAll('.replyForm').forEach((form) => {
+        form.addEventListener('submit', handleReplySubmit);
       });
     }
 
-    // Handle new thread submission
-    newThreadForm.addEventListener('submit', (event) => {
+    // Handle thread submission
+    async function handleThreadSubmit(event) {
       event.preventDefault();
+      const title = document.getElementById('thread-title').value;
+      const description = document.getElementById('thread-description').value;
 
-      const title = document.getElementById('thread-title').value.trim();
-      const description = document.getElementById('thread-description').value.trim();
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, description }),
+        });
 
-      if (title && description) {
-        const newThread = {
-          id: threads.length + 1,
-          title,
-          description,
-          replies: [],
-        };
-        threads.unshift(newThread); // Add new thread to the beginning
-        displayThreads();
-        newThreadForm.reset();
-      }
-    });
-
-    // Function to view a thread and its replies
-    function viewThread(threadId) {
-      const thread = threads.find((t) => t.id === threadId);
-      if (!thread) return;
-
-      // Build the thread content
-      threadContent.innerHTML = `
-        <h3 class="text-2xl font-bold text-blue-800 mb-2">${thread.title}</h3>
-        <p class="text-gray-700 mb-4">${thread.description}</p>
-        <div id="repliesSection">
-          <h4 class="text-xl font-semibold text-gray-800 mb-2">Replies:</h4>
-          <div id="repliesList" class="space-y-4">
-            ${thread.replies.length > 0 ? thread.replies.map(replyTemplate).join('') : '<p class="text-gray-500">No replies yet.</p>'}
-          </div>
-        </div>
-        <form id="replyForm" class="mt-6">
-          <label for="reply-text" class="block text-left font-medium text-gray-700 mb-2">Add a Reply:</label>
-          <textarea id="reply-text" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800" placeholder="Write your reply here..." required></textarea>
-          <button type="submit" class="mt-4 px-6 py-2 text-lg font-semibold text-white bg-blue-800 rounded hover:bg-blue-900">Submit Reply</button>
-        </form>
-      `;
-
-      // Show the modal
-      threadModal.classList.remove('hidden');
-
-      // Handle reply submission
-      const replyForm = document.getElementById('replyForm');
-      replyForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const replyText = document.getElementById('reply-text').value.trim();
-        if (replyText) {
-          thread.replies.push({
-            text: replyText,
-            user: 'User123', // Placeholder user
-            timestamp: new Date(),
-          });
-          viewThread(threadId); // Refresh the thread view
+        if (response.ok) {
+          document.getElementById('threadForm').reset();
+          fetchThreads();
+        } else {
+          const errorData = await response.json();
+          alert(errorData.error || 'Failed to submit thread.');
         }
-      });
-    }
-
-    // Function to close the modal
-    function closeModal() {
-      threadModal.classList.add('hidden');
-    }
-
-    // Template for rendering a reply
-    function replyTemplate(reply) {
-      return `
-        <div class="bg-gray-100 p-4 rounded-lg">
-          <p class="text-gray-800">${reply.text}</p>
-          <div class="flex justify-between mt-2 text-sm text-gray-600">
-            <span>Posted by ${reply.user}</span>
-            <span>${reply.timestamp.toLocaleString()}</span>
-          </div>
-        </div>
-      `;
-    }
-
-    // Initial display
-    displayThreads();
-
-    // Close modal when clicking outside the content
-    window.addEventListener('click', (event) => {
-      if (event.target === threadModal) {
-        closeModal();
+      } catch (error) {
+        console.error('Error submitting thread:', error);
       }
-    });
+    }
+
+    // Handle reply submission
+    async function handleReplySubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const threadId = form.getAttribute('data-thread-id');
+      const reply = form.querySelector('textarea').value;
+
+      try {
+        const response = await fetch(`${apiUrl}/${threadId}/replies`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reply }),
+        });
+
+        if (response.ok) {
+          form.reset();
+          fetchThreads();
+        } else {
+          const errorData = await response.json();
+          alert(errorData.error || 'Failed to submit reply.');
+        }
+      } catch (error) {
+        console.error('Error submitting reply:', error);
+      }
+    }
+
+    // Initialize
+    document.getElementById('threadForm').addEventListener('submit', handleThreadSubmit);
+    fetchThreads();
   </script>
 </body>
 </html>
