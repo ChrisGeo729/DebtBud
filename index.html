@@ -9,20 +9,32 @@
 </head>
 <body class="font-sans bg-gray-50 text-gray-800">
 
-    <header class="flex items-center justify-between p-4 bg-blue-800 text-white">
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center space-x-2">
-            <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-10 h-10">
-            <span class="text-xl font-bold">DebtBud</span>
-          </a>
+    <header class="flex items-center justify-between px-6 py-4 bg-blue-800 text-white">
+        <!-- Logo and Name -->
+        <a href="index.html" class="flex items-center space-x-3">
+          <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+          <span class="text-xl font-semibold">DebtBud</span>
+        </a>
       
         <!-- Menu Button -->
-        <button id="menuButton" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+        <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-700">
           <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
       </header>
+      
+      <!-- Navigation Overlay -->
+      <div id="navOverlay" class="fixed inset-0 bg-blue-900 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+        <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
+          &times;
+        </button>
+        <a href="index.html" class="text-2xl font-bold hover:text-blue-300">Home</a>
+        <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-300">Budgeting</a>
+        <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-300">Calculator</a>
+        <a href="#connect" class="text-2xl font-bold hover:text-blue-300">Connect</a>
+        <a href="#contact" class="text-2xl font-bold hover:text-blue-300">Contact</a>
+      </div>
       
       <!-- Navigation Overlay -->
     <div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
@@ -34,13 +46,7 @@
         <a href="loan_calculator.html" class="text-2xl font-bold hover:underline">Calculator</a>
         <a href="connect.html" class="text-2xl font-bold hover:underline">Connect</a>
         <a href="#contact" class="text-2xl font-bold hover:underline">Contact</a>
-    </div>
-  
-      
-      
-      
-      
-      
+    </div>    
 
   <!-- Hero Section -->
   <section id="home" class="relative flex items-center justify-center h-screen bg-gray-800 text-white">
@@ -58,26 +64,27 @@
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section id="services" class="py-16 bg-gray-100 text-center">
-    <h2 class="text-3xl font-bold text-blue-800 mb-8">Our Services</h2>
+  <section id="services" class="py-16 bg-gray-50 text-center">
+    <h2 class="text-4xl font-bold text-blue-800 mb-10">Our Services</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
-      <a href="budgeting.html" class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
-        <img src="assets/budgeting.png" alt="Budgeting Icon" class="w-20 h-20 mx-auto mb-4">
-        <h3 class="text-xl font-semibold text-blue-800">Budgeting Section</h3>
-      </a>
-      <a href="loan_calculator.html" class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
-        <img src="assets/calculator.png" alt="Loan Calculator Icon" class="w-20 h-20 mx-auto mb-4">
-        <h3 class="text-xl font-semibold text-blue-800">Loan Repayment Calculator</h3>
-      </a>
-      <!-- Connect with Others Service Card -->
-<a href="connect.html" class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
-    <img src="assets/Connect.png" alt="Community Icon" class="w-20 h-20 mx-auto mb-4">
-    <h3 class="text-xl font-semibold text-blue-800">Connect with Others</h3>
-  </a>
-  
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+        <img src="assets/budgeting.png" alt="Budgeting" class="w-16 h-16 mx-auto mb-4">
+        <h3 class="text-xl font-semibold mb-2">Budgeting</h3>
+        <p class="text-sm text-gray-500">Set and manage your monthly budgets effortlessly.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+        <img src="assets/calculator.png" alt="Loan Calculator" class="w-16 h-16 mx-auto mb-4">
+        <h3 class="text-xl font-semibold mb-2">Loan Calculator</h3>
+        <p class="text-sm text-gray-500">Calculate your loan repayments easily.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+        <img src="assets/connect.png" alt="Connect" class="w-16 h-16 mx-auto mb-4">
+        <h3 class="text-xl font-semibold mb-2">Connect with Others</h3>
+        <p class="text-sm text-gray-500">Join a community to share financial advice.</p>
+      </div>
     </div>
   </section>
+  
 
   <!-- Contact Form -->
 <section id="contact" class="py-16 bg-white text-center">
@@ -138,9 +145,10 @@
       }
     });
   </script>
-  <footer class="bg-blue-800 text-white text-center py-4">
+ <footer class="py-6 bg-blue-800 text-center text-white">
     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
   </footer>
+  
   <script>
     const menuButton = document.getElementById('menuButton');
     const closeButton = document.getElementById('closeButton');

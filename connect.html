@@ -26,20 +26,32 @@
 <body class="font-sans bg-gray-50 text-gray-800">
 
   <!-- Header -->
-  <header class="flex items-center justify-between p-4 bg-blue-800 text-white">
-    <!-- Logo -->
-    <a href="index.html" class="flex items-center space-x-2">
-        <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-10 h-10">
-        <span class="text-xl font-bold">DebtBud</span>
-      </a>
+  <<header class="flex items-center justify-between px-6 py-4 bg-blue-800 text-white">
+    <!-- Logo and Name -->
+    <a href="index.html" class="flex items-center space-x-3">
+      <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+      <span class="text-xl font-semibold">DebtBud</span>
+    </a>
   
     <!-- Menu Button -->
-    <button id="menuButton" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+    <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-700">
       <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
     </button>
   </header>
+  
+  <!-- Navigation Overlay -->
+  <div id="navOverlay" class="fixed inset-0 bg-blue-900 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+    <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
+      &times;
+    </button>
+    <a href="index.html" class="text-2xl font-bold hover:text-blue-300">Home</a>
+    <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-300">Budgeting</a>
+    <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-300">Calculator</a>
+    <a href="#connect" class="text-2xl font-bold hover:text-blue-300">Connect</a>
+    <a href="#contact" class="text-2xl font-bold hover:text-blue-300">Contact</a>
+  </div>
   
   <!-- Navigation Overlay -->
 <div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
