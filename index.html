@@ -9,27 +9,37 @@
 </head>
 <body class="font-sans bg-gray-50 text-gray-800">
 
-    <header class="flex items-center justify-between p-4 bg-blue-800 text-white shadow-md">
-        <div class="flex items-center space-x-2">
-          <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-10 h-10">
-          <span class="text-xl font-bold">DebtBud</span>
-        </div>
-        <nav>
-          <ul class="flex space-x-4 items-center">
-            <li><a href="index.html" class="hover:underline">Home</a></li>
-            <li><a href="budgeting.html" class="hover:underline">Budgeting</a></li>
-            <li><a href="loan_calculator.html" class="hover:underline">Calculator</a></li>
-            <li><a href="connect.html" class="hover:underline">Connect</a></li> <!-- Updated Link -->
-            <li><a href="#contact" class="hover:underline">Contact</a></li>
-            <!-- Try Demo Button -->
-            <li>
-              <button onclick="tryDemo()" class="px-4 py-2 font-semibold text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white transition">
-                Try Demo
-              </button>
-            </li>
-          </ul>
-        </nav>
+    <header class="flex items-center justify-between p-4 bg-blue-800 text-white">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center space-x-2">
+            <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-10 h-10">
+            <span class="text-xl font-bold">DebtBud</span>
+          </a>
+      
+        <!-- Menu Button -->
+        <button id="menuButton" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
       </header>
+      
+      <!-- Navigation Overlay -->
+    <div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
+        <button id="closeButton" class="absolute top-4 right-4 text-2xl">
+        &times;
+        </button>
+        <a href="index.html" class="text-2xl font-bold hover:underline">Home</a>
+        <a href="budgeting.html" class="text-2xl font-bold hover:underline">Budgeting</a>
+        <a href="loan_calculator.html" class="text-2xl font-bold hover:underline">Calculator</a>
+        <a href="connect.html" class="text-2xl font-bold hover:underline">Connect</a>
+        <a href="#contact" class="text-2xl font-bold hover:underline">Contact</a>
+    </div>
+  
+      
+      
+      
+      
       
 
   <!-- Hero Section -->
@@ -131,5 +141,21 @@
   <footer class="bg-blue-800 text-white text-center py-4">
     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
   </footer>
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const closeButton = document.getElementById('closeButton');
+    const navOverlay = document.getElementById('navOverlay');
+
+    // Open the navigation overlay
+    menuButton.addEventListener('click', () => {
+    navOverlay.classList.remove('hidden');
+    });
+
+    // Close the navigation overlay
+    closeButton.addEventListener('click', () => {
+    navOverlay.classList.add('hidden');
+    });
+
+  </script>
 </body>
 </html>
