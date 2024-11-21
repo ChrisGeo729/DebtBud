@@ -8,9 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body class="font-sans bg-gray-50 text-gray-800">
+<body class="font-sans bg-gray-900 text-white">
 
-    <header class="flex items-center justify-between px-6 py-4 bg-blue-800 text-white shadow-md sticky top-0 z-50">
+    <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
         <!-- Logo and Name -->
         <a href="index.html" class="flex items-center space-x-3">
           <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
@@ -18,146 +18,155 @@
         </a>
       
         <!-- Menu Button -->
-        <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-700">
+        <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
           <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
       </header>
+      <script>
+        // Get the navbar element
+    const navbar = document.getElementById('navbar');
+    
+    // Listen to the scroll event
+    window.addEventListener('scroll', () => {
+      // Get the scroll position
+      const scrollPosition = window.scrollY;
+    
+      // Change the background transparency based on scroll position
+      if (scrollPosition > 50) {
+        navbar.classList.remove('bg-transparent');
+        navbar.classList.add('bg-black', 'bg-opacity-90');
+      } else {
+        navbar.classList.remove('bg-black', 'bg-opacity-90');
+        navbar.classList.add('bg-transparent');
+      }
+    });
+    
+      </script>
       
+    
       <!-- Navigation Overlay -->
-      <div id="navOverlay" class="fixed inset-0 bg-blue-900 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+      <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
         <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
           &times;
         </button>
-        <a href="index.html" class="text-2xl font-bold hover:text-blue-300">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-300">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-300">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:text-blue-300">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:text-blue-300">Contact</a>
+        <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+        <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-500">Budgeting</a>
+        <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-500">Calculator</a>
+        <a href="connect.html" class="text-2xl font-bold hover:text-blue-500">Connect</a>
+        <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
       </div>
       
-      <!-- Navigation Overlay -->
-    <div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
-        <button id="closeButton" class="absolute top-4 right-4 text-2xl">
-        &times;
-        </button>
-        <a href="index.html" class="text-2xl font-bold hover:underline">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:underline">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:underline">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:underline">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:underline">Contact</a>
-    </div>
+
+      <section id="budgeting" class="py-16 px-8 bg-gray-900 text-white">
+        <h2 class="text-5xl font-bold text-center text-blue-600 mb-10">Budgeting Tools</h2>
       
-
-    <!-- Budgeting Section -->
-    <section id="budgeting" class="p-8">
-        <h2 class="text-3xl font-bold text-center text-blue-800 mb-6">Budgeting Section</h2>
-
         <!-- Grid Layout for Top Sections -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Left: Forms -->
-            <div class="space-y-6">
-                <!-- Budget Goals Form -->
-                <div id="goals-section" class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Enter Your Budget Goals</h3>
-                    <form id="goalsForm" onsubmit="submitGoals(event)" class="space-y-4">
-                        <div>
-                            <label for="income-goal" class="block font-medium text-gray-700">Monthly Income Goal:</label>
-                            <input type="number" id="income-goal" name="income-goal" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="rent-goal" class="block font-medium text-gray-700">Rent Goal:</label>
-                            <input type="number" id="rent-goal" name="rent-goal" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="groceries-goal" class="block font-medium text-gray-700">Groceries Goal:</label>
-                            <input type="number" id="groceries-goal" name="groceries-goal" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="entertainment-goal" class="block font-medium text-gray-700">Entertainment Goal:</label>
-                            <input type="number" id="entertainment-goal" name="entertainment-goal" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="transportation-goal" class="block font-medium text-gray-700">Transportation Goal:</label>
-                            <input type="number" id="transportation-goal" name="transportation-goal" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="savings-goal" class="block font-medium text-gray-700">Savings Goal:</label>
-                            <input type="number" id="savings-goal" name="savings-goal" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-900 transition">Save Goals</button>
-                    </form>
+          <!-- Left: Forms -->
+          <div class="space-y-6">
+            <!-- Budget Goals Form -->
+            <div id="goals-section" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h3 class="text-xl font-semibold text-center text-white mb-4">Enter Your Budget Goals</h3>
+              <form id="goalsForm" onsubmit="submitGoals(event)" class="space-y-4">
+                <div>
+                  <label for="income-goal" class="block font-medium text-gray-300">Monthly Income Goal:</label>
+                  <input type="number" id="income-goal" name="income-goal" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-
-                <!-- Current Expenses Form -->
-                <div id="expenses-section" class="bg-white p-6 rounded-lg shadow-md hidden">
-                    <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Enter Your Current Expenses</h3>
-                    <form id="expensesForm" onsubmit="submitExpenses(event)" class="space-y-4">
-                        <div>
-                            <label for="income" class="block font-medium text-gray-700">Monthly Income:</label>
-                            <input type="number" id="income" name="income" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="rent" class="block font-medium text-gray-700">Rent:</label>
-                            <input type="number" id="rent" name="rent" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="groceries" class="block font-medium text-gray-700">Groceries:</label>
-                            <input type="number" id="groceries" name="groceries" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="entertainment" class="block font-medium text-gray-700">Entertainment:</label>
-                            <input type="number" id="entertainment" name="entertainment" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="transportation" class="block font-medium text-gray-700">Transportation:</label>
-                            <input type="number" id="transportation" name="transportation" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <div>
-                            <label for="savings" class="block font-medium text-gray-700">Savings:</label>
-                            <input type="number" id="savings" name="savings" required
-                                class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-800">
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-900 transition">Submit Expenses</button>
-                    </form>
+                <div>
+                  <label for="rent-goal" class="block font-medium text-gray-300">Rent Goal:</label>
+                  <input type="number" id="rent-goal" name="rent-goal" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
+                <div>
+                  <label for="groceries-goal" class="block font-medium text-gray-300">Groceries Goal:</label>
+                  <input type="number" id="groceries-goal" name="groceries-goal" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="entertainment-goal" class="block font-medium text-gray-300">Entertainment Goal:</label>
+                  <input type="number" id="entertainment-goal" name="entertainment-goal" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="transportation-goal" class="block font-medium text-gray-300">Transportation Goal:</label>
+                  <input type="number" id="transportation-goal" name="transportation-goal" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="savings-goal" class="block font-medium text-gray-300">Savings Goal:</label>
+                  <input type="number" id="savings-goal" name="savings-goal" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="submit"
+                  class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition">Save Goals</button>
+              </form>
             </div>
-
-            <!-- Right: AI Advice -->
-            <div id="advice-output" class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-semibold text-gray-800">AI Advice</h3>
-                <p id="advice-text" class="text-gray-600 mt-4"></p>
+      
+            <!-- Current Expenses Form -->
+            <div id="expenses-section" class="bg-gray-800 p-6 rounded-lg shadow-lg hidden">
+              <h3 class="text-xl font-semibold text-center text-white mb-4">Enter Your Current Expenses</h3>
+              <form id="expensesForm" onsubmit="submitExpenses(event)" class="space-y-4">
+                <div>
+                  <label for="income" class="block font-medium text-gray-300">Monthly Income:</label>
+                  <input type="number" id="income" name="income" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="rent" class="block font-medium text-gray-300">Rent:</label>
+                  <input type="number" id="rent" name="rent" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="groceries" class="block font-medium text-gray-300">Groceries:</label>
+                  <input type="number" id="groceries" name="groceries" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="entertainment" class="block font-medium text-gray-300">Entertainment:</label>
+                  <input type="number" id="entertainment" name="entertainment" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="transportation" class="block font-medium text-gray-300">Transportation:</label>
+                  <input type="number" id="transportation" name="transportation" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                  <label for="savings" class="block font-medium text-gray-300">Savings:</label>
+                  <input type="number" id="savings" name="savings" required
+                    class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="submit"
+                  class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">Submit Expenses</button>
+              </form>
             </div>
+          </div>
+      
+          <!-- AI Advice -->
+          <div id="advice-output" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold text-white">AI Advice</h3>
+            <p id="advice-text" class="text-gray-300 mt-4">Your advice will appear here after submitting expenses.</p>
+          </div>
         </div>
-
+      
         <!-- Bottom Section: Chart -->
-        <div class="bg-white p-6 rounded-lg shadow-md mt-6">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Budget Usage Overview</h3>
-            <canvas id="budgetProgressChart" class="w-full max-w-md mx-auto" style="height: 300px;"></canvas>
-            <div class="legend mt-4">
-                <p><span style="color: #fa5858;">●</span> Income</p>
-                <p><span style="color: #6062f7;">●</span> Rent</p>
-                <p><span style="color: #4fc04b;">●</span> Groceries</p>
-                <p><span style="color: #fffc66;">●</span> Entertainment</p>
-                <p><span style="color: #ff60df;">●</span> Transportation</p>
-                <p><span style="color: #69ffe6;">●</span> Savings</p>
-            </div>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-8">
+          <h3 class="text-xl font-semibold text-white mb-4">Budget Usage Overview</h3>
+          <canvas id="budgetProgressChart" class="w-full max-w-md mx-auto" style="height: 300px;"></canvas>
+          <div class="legend text-gray-300 mt-4">
+            <p><span style="color: #fa5858;">●</span> Income</p>
+            <p><span style="color: #6062f7;">●</span> Rent</p>
+            <p><span style="color: #4fc04b;">●</span> Groceries</p>
+            <p><span style="color: #fffc66;">●</span> Entertainment</p>
+            <p><span style="color: #ff60df;">●</span> Transportation</p>
+            <p><span style="color: #69ffe6;">●</span> Savings</p>
+          </div>
         </div>
-    </section>
+      </section>
+      
 
     <!-- Include Chart.js for the chart rendering -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -287,7 +296,7 @@ function submitGoals(event) {
     });
 }
     </script>
-    <footer class="bg-blue-800 text-white text-center py-4">
+    <footer class="bg-black text-white text-center py-4">
         <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
       </footer>
       <script>

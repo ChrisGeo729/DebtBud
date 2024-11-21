@@ -7,173 +7,171 @@
   <title>Loan Repayment Calculator</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body class="font-sans bg-gray-50 text-gray-800">
+<body class="font-sans bg-black text-white">
 
-    <header class="flex items-center justify-between px-6 py-4 bg-blue-800 text-white shadow-md sticky top-0 z-50">
-        <!-- Logo and Name -->
-        <a href="index.html" class="flex items-center space-x-3">
-          <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
-          <span class="text-xl font-semibold">DebtBud</span>
-        </a>
-      
-        <!-- Menu Button -->
-        <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-700">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-          </svg>
-        </button>
-      </header>
-      
-      <!-- Navigation Overlay -->
-      <div id="navOverlay" class="fixed inset-0 bg-blue-900 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
-        <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
-          &times;
-        </button>
-        <a href="index.html" class="text-2xl font-bold hover:text-blue-300">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-300">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-300">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:text-blue-300">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:text-blue-300">Contact</a>
-      </div>
-      
-      <!-- Navigation Overlay -->
-    <div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
-        <button id="closeButton" class="absolute top-4 right-4 text-2xl">
+    <!-- Header -->
+    <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
+      <a href="index.html" class="flex items-center space-x-3">
+        <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+        <span class="text-xl font-semibold">DebtBud</span>
+      </a>
+  
+      <!-- Menu Button -->
+      <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </header>
+  
+    <!-- Navigation Overlay -->
+    <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+      <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
         &times;
-        </button>
-        <a href="index.html" class="text-2xl font-bold hover:underline">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:underline">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:underline">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:underline">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:underline">Contact</a>
+      </button>
+      <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+      <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-500">Budgeting</a>
+      <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-500">Calculator</a>
+      <a href="connect.html" class="text-2xl font-bold hover:text-blue-500">Connect</a>
+      <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
     </div>
-      
-
-  <!-- Loan Calculator Section -->
-  <section class="py-16 px-6 bg-gray-100">
-    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-      <h2 class="text-3xl font-bold text-blue-800 text-center mb-8">Loan Repayment Calculator</h2>
-      <form id="loanForm" onsubmit="calculateLoan(event)" class="space-y-6">
-        <!-- Loan Amount -->
-        <div>
-          <label for="loan-amount" class="block text-gray-700 font-medium">Loan Amount:</label>
-          <input type="number" id="loan-amount" name="loan-amount" required
-            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
-            placeholder="Enter loan amount">
-        </div>
-
-        <!-- Annual Interest Rate -->
-        <div>
-          <label for="interest-rate" class="block text-gray-700 font-medium">Annual Interest Rate (%):</label>
-          <input type="number" id="interest-rate" name="interest-rate" step="0.01" required
-            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
-            placeholder="Enter interest rate (e.g., 3.75)">
-        </div>
-
-        <!-- Repayment Options -->
-        <div>
-          <label class="block text-gray-700 font-medium mb-2">Repayment Option:</label>
-          <div class="flex items-center space-x-4">
-            <div>
-              <input type="radio" id="option-term" name="repayment-option" value="term" checked
-                class="text-blue-800 focus:ring-blue-800" onchange="toggleInput()">
-              <label for="option-term" class="text-gray-700">Specify Loan Term (years)</label>
-            </div>
-            <div>
-              <input type="radio" id="option-payment" name="repayment-option" value="payment"
-                class="text-blue-800 focus:ring-blue-800" onchange="toggleInput()">
-              <label for="option-payment" class="text-gray-700">Specify Desired Monthly Payment</label>
+  
+    <!-- Loan Calculator Section -->
+    <section class="py-16 px-6 bg-black text-white">
+      <div class="max-w-3xl mx-auto bg-gray-800 p-8 rounded-lg shadow-lg">
+        <h2 class="text-4xl font-bold text-center text-blue-700 mb-8">Loan Repayment Calculator</h2>
+        <form id="loanForm" onsubmit="calculateLoan(event)" class="space-y-6">
+          <!-- Loan Amount -->
+          <div>
+            <label for="loan-amount" class="block text-gray-300 font-medium">Loan Amount:</label>
+            <input type="number" id="loan-amount" name="loan-amount" required
+              class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter loan amount">
+          </div>
+  
+          <!-- Annual Interest Rate -->
+          <div>
+            <label for="interest-rate" class="block text-gray-300 font-medium">Annual Interest Rate (%):</label>
+            <input type="number" id="interest-rate" name="interest-rate" step="0.01" required
+              class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter interest rate (e.g., 3.75)">
+          </div>
+  
+          <!-- Repayment Options -->
+          <div>
+            <label class="block text-gray-300 font-medium mb-2">Repayment Option:</label>
+            <div class="flex items-center space-x-4">
+              <div>
+                <input type="radio" id="option-term" name="repayment-option" value="term" checked
+                  class="text-blue-500 focus:ring-blue-500" onchange="toggleInput()">
+                <label for="option-term" class="text-gray-300">Specify Loan Term (years)</label>
+              </div>
+              <div>
+                <input type="radio" id="option-payment" name="repayment-option" value="payment"
+                  class="text-blue-500 focus:ring-blue-500" onchange="toggleInput()">
+                <label for="option-payment" class="text-gray-300">Specify Desired Monthly Payment</label>
+              </div>
             </div>
           </div>
+  
+          <!-- Loan Term Input -->
+          <div id="term-input" class="mt-4">
+            <label for="loan-term" class="block text-gray-300 font-medium">Loan Term (years):</label>
+            <input type="number" id="loan-term" name="loan-term"
+              class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter loan term in years">
+          </div>
+  
+          <!-- Monthly Payment Input -->
+          <div id="payment-input" class="hidden mt-4">
+            <label for="monthly-payment" class="block text-gray-300 font-medium">Desired Monthly Payment:</label>
+            <input type="number" id="monthly-payment" name="monthly-payment"
+              class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-700"
+              placeholder="Enter desired monthly payment">
+          </div>
+  
+          <!-- Submit Button -->
+          <button type="submit" class="w-full px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600">
+            Calculate Repayment
+          </button>
+        </form>
+  
+        <!-- Results Section -->
+        <div id="loan-results" class="mt-8 p-4 bg-gray-700 rounded-lg shadow hidden">
+          <h3 class="text-xl font-semibold text-blue-700 mb-4">Results:</h3>
+          <p id="monthly-payment-result" class="text-gray-300"></p>
+          <p id="total-payment-result" class="text-gray-300"></p>
+          <p id="total-interest-result" class="text-gray-300"></p>
         </div>
-
-        <!-- Loan Term Input -->
-        <div id="term-input" class="mt-4">
-          <label for="loan-term" class="block text-gray-700 font-medium">Loan Term (years):</label>
-          <input type="number" id="loan-term" name="loan-term"
-            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
-            placeholder="Enter loan term in years">
-        </div>
-
-        <!-- Monthly Payment Input -->
-        <div id="payment-input" class="hidden mt-4">
-          <label for="monthly-payment" class="block text-gray-700 font-medium">Desired Monthly Payment:</label>
-          <input type="number" id="monthly-payment" name="monthly-payment"
-            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
-            placeholder="Enter desired monthly payment">
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="w-full px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-900">
-          Calculate Repayment
-        </button>
-      </form>
-
-      <!-- Results Section -->
-      <div id="loan-results" class="mt-8 p-4 bg-gray-100 rounded shadow hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-4">Results:</h3>
-        <p id="monthly-payment-result" class="text-gray-700"></p>
-        <p id="total-payment-result" class="text-gray-700"></p>
-        <p id="total-interest-result" class="text-gray-700"></p>
       </div>
-    </div>
-  </section>
-
-  <!-- JavaScript for Loan Calculation -->
-  <script>
-    function toggleInput() {
-      const isTermOption = document.getElementById('option-term').checked;
-      document.getElementById('term-input').classList.toggle('hidden', !isTermOption);
-      document.getElementById('payment-input').classList.toggle('hidden', isTermOption);
-    }
-
-    function calculateLoan(event) {
-      event.preventDefault();
-
-      const loanAmount = parseFloat(document.getElementById('loan-amount').value);
-      const annualInterestRate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
-      const isTermOption = document.getElementById('option-term').checked;
-
-      let monthlyPayment, totalPayment, totalInterest, loanTerm;
-
-      if (isTermOption) {
-        loanTerm = parseFloat(document.getElementById('loan-term').value) * 12; // Convert years to months
-        monthlyPayment = (loanAmount * annualInterestRate) / (1 - Math.pow(1 + annualInterestRate, -loanTerm));
-        totalPayment = monthlyPayment * loanTerm;
-        totalInterest = totalPayment - loanAmount;
-      } else {
-        monthlyPayment = parseFloat(document.getElementById('monthly-payment').value);
-        loanTerm = Math.log(1 - (loanAmount * annualInterestRate) / monthlyPayment) / Math.log(1 + annualInterestRate);
-        loanTerm = Math.abs(loanTerm); // In months
-        totalPayment = monthlyPayment * loanTerm;
-        totalInterest = totalPayment - loanAmount;
+    </section>
+  
+    <!-- Footer -->
+    <footer class="py-6 bg-black text-center text-white">
+      <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
+    </footer>
+  
+    <script>
+      const navbar = document.getElementById('navbar');
+      const menuButton = document.getElementById('menuButton');
+      const closeButton = document.getElementById('closeButton');
+      const navOverlay = document.getElementById('navOverlay');
+  
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY;
+        if (scrollPosition > 50) {
+          navbar.classList.remove('bg-transparent');
+          navbar.classList.add('bg-black', 'bg-opacity-90');
+        } else {
+          navbar.classList.remove('bg-black', 'bg-opacity-90');
+          navbar.classList.add('bg-transparent');
+        }
+      });
+  
+      // Menu button functionality
+      menuButton.addEventListener('click', () => {
+        navOverlay.classList.remove('hidden');
+      });
+  
+      closeButton.addEventListener('click', () => {
+        navOverlay.classList.add('hidden');
+      });
+  
+      // Existing Loan Calculator Logic
+      function toggleInput() {
+        const isTermOption = document.getElementById('option-term').checked;
+        document.getElementById('term-input').classList.toggle('hidden', !isTermOption);
+        document.getElementById('payment-input').classList.toggle('hidden', isTermOption);
       }
-
-      // Update Results Section
-      document.getElementById('loan-results').classList.remove('hidden');
-      document.getElementById('monthly-payment-result').innerText = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
-      document.getElementById('total-payment-result').innerText = `Total Payment: $${totalPayment.toFixed(2)}`;
-      document.getElementById('total-interest-result').innerText = `Total Interest: $${totalInterest.toFixed(2)}`;
-    }
-  </script>
-  <footer class="bg-blue-800 text-white text-center py-4">
-    <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
-  </footer>
-  <script>
-    const menuButton = document.getElementById('menuButton');
-    const closeButton = document.getElementById('closeButton');
-    const navOverlay = document.getElementById('navOverlay');
-
-    // Open the navigation overlay
-    menuButton.addEventListener('click', () => {
-    navOverlay.classList.remove('hidden');
-    });
-
-    // Close the navigation overlay
-    closeButton.addEventListener('click', () => {
-    navOverlay.classList.add('hidden');
-    });
-
-  </script>
-</body>
+  
+      function calculateLoan(event) {
+        event.preventDefault();
+  
+        const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+        const annualInterestRate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
+        const isTermOption = document.getElementById('option-term').checked;
+  
+        let monthlyPayment, totalPayment, totalInterest, loanTerm;
+  
+        if (isTermOption) {
+          loanTerm = parseFloat(document.getElementById('loan-term').value) * 12;
+          monthlyPayment = (loanAmount * annualInterestRate) / (1 - Math.pow(1 + annualInterestRate, -loanTerm));
+          totalPayment = monthlyPayment * loanTerm;
+          totalInterest = totalPayment - loanAmount;
+        } else {
+          monthlyPayment = parseFloat(document.getElementById('monthly-payment').value);
+          loanTerm = Math.log(1 - (loanAmount * annualInterestRate) / monthlyPayment) / Math.log(1 + annualInterestRate);
+          totalPayment = monthlyPayment * loanTerm;
+          totalInterest = totalPayment - loanAmount;
+        }
+  
+        document.getElementById('loan-results').classList.remove('hidden');
+        document.getElementById('monthly-payment-result').innerText = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
+        document.getElementById('total-payment-result').innerText = `Total Payment: $${totalPayment.toFixed(2)}`;
+        document.getElementById('total-interest-result').innerText = `Total Interest: $${totalInterest.toFixed(2)}`;
+      }
+    </script>
+  </body>
+  
 </html>

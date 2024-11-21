@@ -23,10 +23,10 @@
     }
   </style>
 </head>
-<body class="font-sans bg-gray-50 text-gray-800">
+<body class="font-sans bg-gray-900 text-gray-800">
 
   <!-- Header -->
-  <header class="flex items-center justify-between px-6 py-4 bg-blue-800 text-white shadow-md sticky top-0 z-50">
+  <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
     <!-- Logo and Name -->
     <a href="index.html" class="flex items-center space-x-3">
       <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
@@ -34,42 +34,51 @@
     </a>
   
     <!-- Menu Button -->
-    <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-700">
+    <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
       <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
     </button>
   </header>
+  <script>
+    // Get the navbar element
+const navbar = document.getElementById('navbar');
+
+// Listen to the scroll event
+window.addEventListener('scroll', () => {
+  // Get the scroll position
+  const scrollPosition = window.scrollY;
+
+  // Change the background transparency based on scroll position
+  if (scrollPosition > 50) {
+    navbar.classList.remove('bg-transparent');
+    navbar.classList.add('bg-black', 'bg-opacity-90');
+  } else {
+    navbar.classList.remove('bg-black', 'bg-opacity-90');
+    navbar.classList.add('bg-transparent');
+  }
+});
+
+  </script>
   
+
   <!-- Navigation Overlay -->
-  <div id="navOverlay" class="fixed inset-0 bg-blue-900 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+  <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
     <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
       &times;
     </button>
-    <a href="index.html" class="text-2xl font-bold hover:text-blue-300">Home</a>
-    <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-300">Budgeting</a>
-    <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-300">Calculator</a>
-    <a href="connect.html" class="text-2xl font-bold hover:text-blue-300">Connect</a>
-    <a href="#contact" class="text-2xl font-bold hover:text-blue-300">Contact</a>
+    <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+    <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-500">Budgeting</a>
+    <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-500">Calculator</a>
+    <a href="connect.html" class="text-2xl font-bold hover:text-blue-500">Connect</a>
+    <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
   </div>
-  
-  <!-- Navigation Overlay -->
-<div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
-    <button id="closeButton" class="absolute top-4 right-4 text-2xl">
-    &times;
-    </button>
-    <a href="index.html" class="text-2xl font-bold hover:underline">Home</a>
-    <a href="budgeting.html" class="text-2xl font-bold hover:underline">Budgeting</a>
-    <a href="loan_calculator.html" class="text-2xl font-bold hover:underline">Calculator</a>
-    <a href="connect.html" class="text-2xl font-bold hover:underline">Connect</a>
-    <a href="#contact" class="text-2xl font-bold hover:underline">Contact</a>
-</div>
 
   <!-- Main Content -->
   <div class="flex flex-col lg:flex-row gap-8 p-8">
     
     <!-- Sticky Sidebar -->
-    <aside class="hidden lg:block w-1/4 sticky-sidebar bg-white p-6 rounded-lg shadow-md">
+    <aside class="hidden lg:block w-1/4 sticky-sidebar bg-gray-800 p-6 rounded-lg shadow-md">
       <h3 class="text-xl font-bold text-blue-800 mb-4">Forum Navigation</h3>
       <ul class="space-y-2">
         <li><a href="#threadForm" class="text-blue-600 hover:underline">Create a New Thread</a></li>
@@ -81,36 +90,39 @@
     <!-- Main Forum Section -->
     <main class="flex-1">
       <section id="forum" class="py-8">
-        <h2 class="text-3xl font-bold text-blue-800 mb-8">Discussion Forum</h2>
+        <h2 class="text-3xl font-bold text-blue-700 mb-8">Discussion Forum</h2>
 
         <!-- Thread Submission Form -->
-        <div id="threadForm" class="bg-white p-6 rounded-lg shadow-md interactive">
-          <h3 class="text-2xl font-semibold text-gray-800 mb-4">Create a New Thread</h3>
-          <form>
-            <div class="mb-4">
-              <label for="thread-title" class="block text-left font-medium text-gray-700">Title</label>
-              <input type="text" id="thread-title" name="title" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800">
-            </div>
-            <div class="mb-4">
-              <label for="thread-description" class="block text-left font-medium text-gray-700">Description</label>
-              <textarea id="thread-description" name="description" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"></textarea>
-            </div>
-            <button type="submit" class="px-6 py-3 text-lg font-semibold text-white bg-blue-800 rounded hover:bg-blue-900">
-              Submit Thread
-            </button>
-          </form>
-        </div>
+        <div id="threadForm" class="bg-gray-800 p-6 rounded-lg shadow-lg interactive">
+            <h3 class="text-2xl font-semibold text-white mb-4">Create a New Thread</h3>
+            <form>
+              <div class="mb-4">
+                <label for="thread-title" class="block text-left font-medium text-gray-300">Title</label>
+                <input type="text" id="thread-title" name="title" required
+                  class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div class="mb-4">
+                <label for="thread-description" class="block text-left font-medium text-gray-300">Description</label>
+                <textarea id="thread-description" name="description" required
+                  class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              </div>
+              <button type="submit" class="px-6 py-3 bg-blue-700 rounded text-white font-semibold hover:bg-blue-600">
+                Submit Thread
+              </button>
+            </form>
+          </div>
 
         <!-- Threads and Replies -->
         <div id="threadsContainer" class="mt-8 space-y-6">
-          <!-- Threads will be dynamically added here -->
-        </div>
-      </section>
-    </main>
-  </div>
+            <!-- Threads will be dynamically added here -->
+          </div>
+        </section>
+      </main>
+    </div>
+  
 
   <!-- Footer -->
-  <footer class="bg-blue-800 text-white text-center py-4">
+  <footer class="bg-black text-white text-center py-4">
     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
   </footer>
 
@@ -130,31 +142,37 @@
     }
 
     // Render threads and replies
-    function renderThreads(threads) {
-      const threadsContainer = document.getElementById('threadsContainer');
-      threadsContainer.innerHTML = ''; // Clear existing threads
+function renderThreads(threads) {
+  const threadsContainer = document.getElementById('threadsContainer');
+  threadsContainer.innerHTML = ''; // Clear existing threads
 
-      threads.forEach((thread) => {
-        const threadElement = document.createElement('div');
-        threadElement.classList.add('bg-white', 'p-6', 'rounded-lg', 'shadow-md', 'interactive');
+  threads.forEach((thread) => {
+    const threadElement = document.createElement('div');
+    threadElement.classList.add('bg-gray-800', 'p-6', 'rounded-lg', 'shadow-md', 'interactive', 'text-white');
 
-        threadElement.innerHTML = `
-          <h3 class="text-xl font-semibold text-blue-800">${thread.title}</h3>
-          <p class="text-gray-700 my-2">${thread.description}</p>
-          <div class="mt-4 space-y-2">
-            <h4 class="text-lg font-semibold text-blue-600">Replies</h4>
-            <div id="replies-${thread.id}">
-              ${thread.replies.map((reply) => `<p class="text-gray-600">- ${reply.reply}</p>`).join('')}
-            </div>
-            <form data-thread-id="${thread.id}" class="replyForm mt-4">
-              <textarea class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"
-                placeholder="Add a reply..." required></textarea>
-              <button type="submit" class="mt-2 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-900">
-                Submit Reply
-              </button>
-            </form>
-          </div>
-        `;
+    threadElement.innerHTML = `
+      <h3 class="text-xl font-semibold text-blue-400">${thread.title}</h3>
+      <p class="text-gray-300 my-2">${thread.description}</p>
+      <div class="mt-4 space-y-4">
+        <h4 class="text-lg font-semibold text-blue-500">Replies</h4>
+        <div id="replies-${thread.id}" class="space-y-2">
+          ${thread.replies.map((reply) => `
+            <p class="bg-gray-700 p-3 rounded shadow text-gray-300">- ${reply.reply}</p>
+          `).join('')}
+        </div>
+        <form data-thread-id="${thread.id}" class="replyForm mt-4 space-y-2">
+          <textarea 
+            class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Add a reply..." 
+            required></textarea>
+          <button 
+            type="submit" 
+            class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Submit Reply
+          </button>
+        </form>
+      </div>
+    `;
 
         threadsContainer.appendChild(threadElement);
       });
