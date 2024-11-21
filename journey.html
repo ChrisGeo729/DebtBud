@@ -4,135 +4,180 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Learn about our story and mission to help students manage finances and reduce debt.">
-  <title>Our Journey</title>
+  <title>DebtBud - Our Journey</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body class="font-sans bg-gray-50 text-gray-800">
+<body class="font-sans bg-black text-white">
 
-    <header class="flex items-center justify-between px-6 py-4 bg-blue-800 text-white shadow-md sticky top-0 z-50">
-        <!-- Logo and Name -->
-        <a href="index.html" class="flex items-center space-x-3">
-          <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
-          <span class="text-xl font-semibold">DebtBud</span>
-        </a>
-      
-        <!-- Menu Button -->
-        <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-700">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-          </svg>
+  <!-- Header -->
+  <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
+    <a href="index.html" class="flex items-center space-x-3">
+      <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+      <span class="text-xl font-semibold">DebtBud</span>
+    </a>
+
+    <!-- Menu Button -->
+    <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
+      <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+  </header>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 50) {
+        navbar.classList.remove('bg-transparent');
+        navbar.classList.add('bg-black', 'bg-opacity-90');
+      } else {
+        navbar.classList.remove('bg-black', 'bg-opacity-90');
+        navbar.classList.add('bg-transparent');
+      }
+    });
+  </script>
+
+  <!-- Navigation Overlay -->
+  <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+    <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
+      &times;
+    </button>
+    <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+    <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-500">Budgeting</a>
+    <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-500">Calculator</a>
+    <a href="connect.html" class="text-2xl font-bold hover:text-blue-500">Connect</a>
+    <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
+  </div>
+
+  <!-- Our Journey Section -->
+  <section id="our-journey" class="py-16 bg-black text-center">
+    <h1 class="text-5xl font-bold text-white mb-6">Our Journey</h1>
+    <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+      At DebtBud, we believe that every student deserves the tools and knowledge to achieve financial independence. 
+      Our journey began with a simple mission: to empower students to manage their finances effectively and navigate the challenges of student debt.
+    </p>
+  </section>
+
+  <!-- Our Mission Section -->
+  <section id="our-mission" class="py-16 bg-gray-900 text-center">
+    <h2 class="text-4xl font-bold text-white mb-6">Our Mission</h2>
+    <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+      Our goal is to provide accessible, user-friendly tools that simplify budgeting, offer personalized advice on loan repayments, 
+      and foster a community where students can learn from each other. We aim to help students achieve financial stability and build 
+      a secure future, free from overwhelming debt.
+    </p>
+  </section>
+
+  <!-- Explore Services Section -->
+  <section id="services" class="py-16 bg-black text-center">
+    <h2 class="text-4xl font-bold text-white mb-8">Explore Our Services</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
+      <!-- Service Cards -->
+      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+        <h3 class="text-xl font-semibold mb-2">Budgeting Tools</h3>
+        <p class="text-sm text-gray-400 mb-4">Create and manage your budget with ease using our AI-driven tools.</p>
+        <button onclick="window.location.href='budgeting.html'" class="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600">
+          Explore Budgeting
         </button>
-      </header>
-      
-      <!-- Navigation Overlay -->
-      <div id="navOverlay" class="fixed inset-0 bg-blue-900 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
-        <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
-          &times;
-        </button>
-        <a href="index.html" class="text-2xl font-bold hover:text-blue-300">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-300">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-300">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:text-blue-300">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:text-blue-300">Contact</a>
       </div>
-      
-      <!-- Navigation Overlay -->
-    <div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
-        <button id="closeButton" class="absolute top-4 right-4 text-2xl">
-        &times;
+
+      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+        <h3 class="text-xl font-semibold mb-2">Loan Calculator</h3>
+        <p class="text-sm text-gray-400 mb-4">Plan your loan repayment strategy with our tailored calculator.</p>
+        <button onclick="window.location.href='loan_calculator.html'" class="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600">
+          Access Calculator
         </button>
-        <a href="index.html" class="text-2xl font-bold hover:underline">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:underline">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:underline">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:underline">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:underline">Contact</a>
+      </div>
+
+      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+        <h3 class="text-xl font-semibold mb-2">Community Forum</h3>
+        <p class="text-sm text-gray-400 mb-4">Join a community of students sharing financial tips and advice.</p>
+        <button onclick="window.location.href='connect.html'" class="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600">
+          Join the Forum
+        </button>
+      </div>
     </div>
+  </section>
 
-  <!-- Main Content -->
-  <main class="py-16 px-6">
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-      <!-- Our Story -->
-      <section class="mb-8">
-        <h1 class="text-3xl font-bold text-blue-800 mb-4">Our Journey</h1>
-        <p class="text-lg text-gray-700 leading-relaxed">
-          At DebtBud, we believe that every student deserves the tools and knowledge to achieve financial independence. 
-          Our journey began with a simple mission: to empower students to manage their finances effectively and navigate the challenges of student debt.
-        </p>
-      </section>
+  <!-- Contact Us Section -->
+  <section id="contact" class="py-16 bg-gray-900 text-center">
+    <h2 class="text-4xl font-bold text-white mb-8">Contact Us</h2>
+    <form id="contactForm" class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+      <div class="mb-4">
+        <label for="name" class="block text-left font-medium text-gray-300">Name</label>
+        <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-left font-medium text-gray-300">Email</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="message" class="block text-left font-medium text-gray-300">Message</label>
+        <textarea id="message" name="message" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+      <button type="submit" class="px-6 py-3 bg-blue-500 rounded text-white font-semibold hover:bg-blue-600">
+        Submit
+      </button>
+    </form>
+  </section>
+  <!-- Confirmation Message -->
+  <div id="confirmationMessage" class="hidden mt-6 text-green-400 font-semibold">
+    Thank you for contacting us! We will get back to you shortly.
+  </div>
+</section>
 
-      <!-- Our Mission -->
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-blue-800 mb-4">Our Mission</h2>
-        <p class="text-lg text-gray-700 leading-relaxed">
-          Our goal is to provide accessible, user-friendly tools that simplify budgeting, offer personalized advice on loan repayments, 
-          and foster a community where students can learn from each other. We aim to help students achieve financial stability and build 
-          a secure future, free from overwhelming debt.
-        </p>
-      </section>
+<!-- JavaScript for Form Submission -->
+<script>
+  const form = document.getElementById('contactForm');
+  const confirmationMessage = document.getElementById('confirmationMessage');
 
-      <!-- Services -->
-      <section>
-        <h2 class="text-2xl font-bold text-blue-800 mb-6">Explore Our Services</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Budgeting Service -->
-          <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 class="text-xl font-semibold text-blue-800 mb-4">Budgeting Tools</h3>
-            <p class="text-gray-700 mb-4">
-              Create and manage your budget with ease using our AI-driven tools designed to adapt to your financial needs.
-            </p>
-            <button onclick="window.location.href='budgeting.html'" 
-              class="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-900">
-              Explore Budgeting
-            </button>
-          </div>
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-          <!-- Loan Calculator Service -->
-          <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 class="text-xl font-semibold text-blue-800 mb-4">Loan Repayment Calculator</h3>
-            <p class="text-gray-700 mb-4">
-              Plan your loan repayment strategy with our easy-to-use calculator, tailored to your financial goals.
-            </p>
-            <button onclick="window.location.href='loan_calculator.html'" 
-              class="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-900">
-              Access Calculator
-            </button>
-          </div>
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
 
-          <!-- Connect Service -->
-          <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 class="text-xl font-semibold text-blue-800 mb-4">Community Forum</h3>
-            <p class="text-gray-700 mb-4">
-              Join a community of students sharing tips, advice, and experiences to help each other succeed financially.
-            </p>
-            <button onclick="window.location.href='connect.html'" 
-              class="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-900">
-              Join the Forum
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
+    try {
+      const response = await fetch('http://localhost:5004/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (response.ok) {
+        confirmationMessage.classList.remove('hidden');
+        form.reset();
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      alert('Failed to send your message. Please try again later.');
+    }
+  });
+</script>
 
   <!-- Footer -->
-  <footer class="bg-blue-800 text-white text-center py-4">
+  <footer class="py-6 bg-black text-center text-white">
     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
   </footer>
-  <script>
+<!-- JavaScript for Navigation Overlay -->
+<script>
     const menuButton = document.getElementById('menuButton');
     const closeButton = document.getElementById('closeButton');
     const navOverlay = document.getElementById('navOverlay');
-
+  
     // Open the navigation overlay
     menuButton.addEventListener('click', () => {
-    navOverlay.classList.remove('hidden');
+      navOverlay.classList.remove('hidden');
     });
-
+  
     // Close the navigation overlay
     closeButton.addEventListener('click', () => {
-    navOverlay.classList.add('hidden');
+      navOverlay.classList.add('hidden');
     });
-
   </script>
+  
 </body>
 </html>

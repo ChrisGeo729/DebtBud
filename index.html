@@ -7,110 +7,165 @@
   <title>DebtBud - Home</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body class="font-sans bg-gray-50 text-gray-800">
+<body class="font-sans bg-black text-white">
 
-    <header class="flex items-center justify-between px-6 py-4 bg-blue-800 text-white shadow-md sticky top-0 z-50">
-        <!-- Logo and Name -->
-        <a href="index.html" class="flex items-center space-x-3">
-          <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
-          <span class="text-xl font-semibold">DebtBud</span>
-        </a>
-      
-        <!-- Menu Button -->
-        <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-700">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-          </svg>
-        </button>
-      </header>
-      
-      <!-- Navigation Overlay -->
-      <div id="navOverlay" class="fixed inset-0 bg-blue-900 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
-        <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
-          &times;
-        </button>
-        <a href="index.html" class="text-2xl font-bold hover:text-blue-300">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-300">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-300">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:text-blue-300">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:text-blue-300">Contact</a>
-      </div>
-      
-      <!-- Navigation Overlay -->
-    <div id="navOverlay" class="fixed inset-0 bg-blue-800 bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 z-50 hidden">
-        <button id="closeButton" class="absolute top-4 right-4 text-2xl">
-        &times;
-        </button>
-        <a href="index.html" class="text-2xl font-bold hover:underline">Home</a>
-        <a href="budgeting.html" class="text-2xl font-bold hover:underline">Budgeting</a>
-        <a href="loan_calculator.html" class="text-2xl font-bold hover:underline">Calculator</a>
-        <a href="connect.html" class="text-2xl font-bold hover:underline">Connect</a>
-        <a href="#contact" class="text-2xl font-bold hover:underline">Contact</a>
-    </div>    
+  <!-- Header -->
+  <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
+    <!-- Logo and Name -->
+    <a href="index.html" class="flex items-center space-x-3">
+      <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+      <span class="text-xl font-semibold">DebtBud</span>
+    </a>
+  
+    <!-- Menu Button -->
+    <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
+      <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+  </header>
+  <script>
+    // Get the navbar element
+const navbar = document.getElementById('navbar');
+
+// Listen to the scroll event
+window.addEventListener('scroll', () => {
+  // Get the scroll position
+  const scrollPosition = window.scrollY;
+
+  // Change the background transparency based on scroll position
+  if (scrollPosition > 50) {
+    navbar.classList.remove('bg-transparent');
+    navbar.classList.add('bg-black', 'bg-opacity-90');
+  } else {
+    navbar.classList.remove('bg-black', 'bg-opacity-90');
+    navbar.classList.add('bg-transparent');
+  }
+});
+
+  </script>
+  
+
+  <!-- Navigation Overlay -->
+  <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+    <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
+      &times;
+    </button>
+    <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+    <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-500">Budgeting</a>
+    <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-500">Calculator</a>
+    <a href="connect.html" class="text-2xl font-bold hover:text-blue-500">Connect</a>
+    <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
+  </div>
 
   <!-- Hero Section -->
-  <section id="home" class="relative flex items-center justify-center h-screen bg-gray-800 text-white">
+  <section id="home" class="relative flex items-center justify-center h-screen bg-black text-white">
     <video autoplay muted loop class="absolute top-0 left-0 w-full h-full object-cover z-0">
-      <source src="assets/5849608-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="assets/7762075-hd_1920_1080_25fps.mp4" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
-    <div class="relative z-10 p-6 bg-white bg-opacity-80 rounded-lg shadow-lg text-center">
-      <h1 class="text-4xl font-bold text-blue-800">Take Control of Your Finances</h1>
-      <p class="text-lg text-gray-700 my-4">We help you manage budgeting, loan repayments, and connect with others for financial advice.</p>
-      <button onclick="window.location.href='journey.html'" class="px-6 py-3 text-lg font-semibold text-white bg-blue-800 rounded hover:bg-blue-900">
+    <div class="relative z-10 p-6 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg text-center">
+      <h1 class="text-5xl font-bold text-white">Take Control of Your Finances</h1>
+      <p class="text-lg text-gray-300 my-4">We help you manage budgeting, loan repayments, and connect with others for financial advice.</p>
+      <button onclick="window.location.href='journey.html'" class="px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded hover:bg-blue-600">
         Start Your Journey
       </button>
-      
     </div>
   </section>
 
-  <section id="services" class="py-16 bg-gray-50 text-center">
-    <h2 class="text-4xl font-bold text-blue-800 mb-10">Our Services</h2>
+<!-- About Us Section -->
+<section id="about-us" class="py-16 bg-black text-center">
+    <p class="text-lg font-semibold text-white uppercase mb-2">About Us</p>
+    <p class="text-lg text-white max-w-3xl mx-auto">
+      We are five third-year university students from different fields of study who share a common goal: to help students
+      like us take charge of their financial well-being. DebtBud was created to empower students by offering practical
+      tools, financial insights, and a supportive community. Together, we aim to make financial literacy accessible and
+      manageable for everyone.
+    </p>
+  </section>
+  
+  
+  <!-- Services Section -->
+  <section id="services" class="py-16 bg-gray-900 text-center">
+    <h2 class="text-4xl font-bold text-white mb-10">Our Services</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
-      <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
-        <img src="assets/budgeting.png" alt="Budgeting" class="w-16 h-16 mx-auto mb-4">
+      <!-- Card 1 -->
+      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+        <div class="w-16 h-16 mx-auto mb-4">
+          <img src="assets/budgeting.png" alt="Budgeting" class="object-contain">
+        </div>
         <h3 class="text-xl font-semibold mb-2">Budgeting</h3>
-        <p class="text-sm text-gray-500">Set and manage your monthly budgets effortlessly.</p>
+        <p class="text-sm text-gray-400">Set and manage your monthly budgets effortlessly.</p>
       </div>
-      <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
-        <img src="assets/calculator.png" alt="Loan Calculator" class="w-16 h-16 mx-auto mb-4">
+      <!-- Card 2 -->
+      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+        <div class="w-16 h-16 mx-auto mb-4">
+          <img src="assets/calculator.png" alt="Loan Calculator" class="object-contain">
+        </div>
         <h3 class="text-xl font-semibold mb-2">Loan Calculator</h3>
-        <p class="text-sm text-gray-500">Calculate your loan repayments easily.</p>
+        <p class="text-sm text-gray-400">Calculate your loan repayments easily.</p>
       </div>
-      <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
-        <img src="assets/connect.png" alt="Connect" class="w-16 h-16 mx-auto mb-4">
+      <!-- Card 3 -->
+      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+        <div class="w-16 h-16 mx-auto mb-4">
+          <img src="assets/connect.png" alt="Connect" class="object-contain">
+        </div>
         <h3 class="text-xl font-semibold mb-2">Connect with Others</h3>
-        <p class="text-sm text-gray-500">Join a community to share financial advice.</p>
+        <p class="text-sm text-gray-400">Join a community to share financial advice.</p>
       </div>
     </div>
   </section>
   
+  
+  
+  <script>
+ // Select all individual cards
+const cards = document.querySelectorAll('#services div.bg-gray-800');
 
-  <!-- Contact Form -->
-<section id="contact" class="py-16 bg-white text-center">
-    <h2 class="text-3xl font-bold text-blue-800 mb-8">Contact Us</h2>
-    <form id="contactForm" class="max-w-lg mx-auto bg-gray-100 p-6 rounded-lg shadow-md">
+cards.forEach((card) => {
+  card.addEventListener('mouseover', () => {
+    // Apply the glow only to the hovered card
+    card.style.boxShadow = '0 0 20px 5px rgba(255, 255, 255, 0.6)';
+  });
+  card.addEventListener('mouseout', () => {
+    // Remove the glow when not hovering
+    card.style.boxShadow = 'none';
+  });
+});
+
+
+  </script>
+  
+  
+
+  <!-- Contact Form Section -->
+<section id="contact" class="py-16 bg-gray-800 text-center">
+    <h2 class="text-4xl font-bold text-white mb-8">Contact Us</h2>
+    <form id="contactForm" class="max-w-lg mx-auto bg-gray-900 p-6 rounded-lg shadow-md">
       <div class="mb-4">
-        <label for="name" class="block text-left font-medium text-gray-700">Name</label>
-        <input type="text" id="name" name="name" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800">
+        <label for="name" class="block text-left font-medium text-gray-300">Name</label>
+        <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
       </div>
       <div class="mb-4">
-        <label for="email" class="block text-left font-medium text-gray-700">Email</label>
-        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800">
+        <label for="email" class="block text-left font-medium text-gray-300">Email</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
       </div>
       <div class="mb-4">
-        <label for="message" class="block text-left font-medium text-gray-700">Message</label>
-        <textarea id="message" name="message" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-800"></textarea>
+        <label for="message" class="block text-left font-medium text-gray-300">Message</label>
+        <textarea id="message" name="message" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
-      <button type="submit" class="px-6 py-3 text-lg font-semibold text-white bg-blue-800 rounded hover:bg-blue-900">Submit</button>
+      <button type="submit" class="px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded hover:bg-blue-600 transition">
+        Submit
+      </button>
     </form>
   
     <!-- Confirmation Message -->
-    <div id="confirmationMessage" class="hidden mt-6 text-green-600 font-semibold">
+    <div id="confirmationMessage" class="hidden mt-6 text-green-400 font-semibold">
       Thank you for contacting us! We will get back to you shortly.
     </div>
   </section>
   
+  <!-- JavaScript for Form Submission -->
   <script>
     const form = document.getElementById('contactForm');
     const confirmationMessage = document.getElementById('confirmationMessage');
@@ -118,13 +173,11 @@
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
   
-      // Get form data
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
   
       try {
-        // Send data to the backend
         const response = await fetch('http://localhost:5004/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -132,23 +185,23 @@
         });
   
         if (response.ok) {
-          // Show confirmation message
           confirmationMessage.classList.remove('hidden');
           form.reset();
         } else {
-          const errorData = await response.json();
-          alert(errorData.error || 'Something went wrong.');
+          alert('Something went wrong. Please try again.');
         }
       } catch (error) {
-        console.error('Error:', error);
         alert('Failed to send your message. Please try again later.');
       }
     });
   </script>
- <footer class="py-6 bg-blue-800 text-center text-white">
+  
+
+  <!-- Footer -->
+  <footer class="py-6 bg-black text-center text-white">
     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
   </footer>
-  
+
   <script>
     const menuButton = document.getElementById('menuButton');
     const closeButton = document.getElementById('closeButton');
@@ -156,14 +209,13 @@
 
     // Open the navigation overlay
     menuButton.addEventListener('click', () => {
-    navOverlay.classList.remove('hidden');
+      navOverlay.classList.remove('hidden');
     });
 
     // Close the navigation overlay
     closeButton.addEventListener('click', () => {
-    navOverlay.classList.add('hidden');
+      navOverlay.classList.add('hidden');
     });
-
   </script>
 </body>
 </html>
