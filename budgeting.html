@@ -17,12 +17,28 @@
           <span class="text-xl font-semibold">DebtBud</span>
         </a>
       
-        <!-- Menu Button -->
-        <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-          </svg>
-        </button>
+        <!-- Right Section: Buttons and Menu -->
+        <div class="flex items-center space-x-4">
+            <!-- Sign Up Button -->
+          <button onclick="window.location.href='signup.html'" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+            Sign Up
+          </button>
+          <!-- Log In Button -->
+          <button onclick="window.location.href='login.html'" class="px-4 py-2 text-sm font-semibold bg-transparent border border-white rounded-full hover:bg-white hover:text-black transition">
+            Log In
+          </button>
+          <!-- Try Demo Button
+          <button onclick="window.location.href='demo.html'" class="px-4 py-2 text-sm text-green-600 font-semibold bg-transparent border border-green-600 rounded-full hover:bg-green-600 hover:text-white transition">
+            Try Demo
+          </button> -->
+      
+          <!-- Menu Button -->
+          <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+          </button>
+        </div>
       </header>
       <script>
         // Get the navbar element
