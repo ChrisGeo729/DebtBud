@@ -144,8 +144,80 @@ window.addEventListener('scroll', () => {
       </div>
     </div>
   </section>
+  <!-- Banner -->
+  <!-- Banner -->
+<!-- Banner -->
+<div class="banner-container overflow-hidden bg-black py-4 relative">
+    <div class="banner-content flex gap-16 animate-marquee">
+      <!-- Logos -->
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 1" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 2" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 3" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 4" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 5" class="h-32">
+  
+      <!-- Duplicate logos for seamless scrolling -->
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 1" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 2" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 3" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 4" class="h-32">
+      <img src="assets/TUDelft_logo_white.png" alt="Partner 5" class="h-32">
+    </div>
+  </div>
   
   
+  <style>
+   /* Container Styling */
+.banner-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: black;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  align-items: center;
+  animation: marquee 10s linear infinite;
+  gap: 3rem; /* Adjust spacing between logos */
+}
+
+/* Logo Styling */
+.banner-content img {
+  height: 8rem; /* Adjust logo size */
+}
+
+/* Fade Effect */
+.banner-container::before,
+.banner-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%; /* Adjust fade width as needed */
+  background: linear-gradient(to right, black, transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.banner-container::after {
+  right: 0;
+  left: auto;
+  background: linear-gradient(to left, black, transparent);
+}
+
+    </style>
+    
   
   <script>
  // Select all individual cards
