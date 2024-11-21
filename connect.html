@@ -23,7 +23,7 @@
     }
   </style>
 </head>
-<body class="font-sans bg-gray-900 text-gray-800">
+<body class="font-sans bg-black text-gray-800">
 
   <!-- Header -->
   <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
@@ -78,7 +78,7 @@ window.addEventListener('scroll', () => {
   <div class="flex flex-col lg:flex-row gap-8 p-8">
     
     <!-- Sticky Sidebar -->
-    <aside class="hidden lg:block w-1/4 sticky-sidebar bg-gray-800 p-6 rounded-lg shadow-md">
+    <aside class="hidden lg:block w-1/4 sticky-sidebar bg-gray-900 p-6 rounded-lg shadow-md">
       <h3 class="text-xl font-bold text-blue-800 mb-4">Forum Navigation</h3>
       <ul class="space-y-2">
         <li><a href="#threadForm" class="text-blue-600 hover:underline">Create a New Thread</a></li>
@@ -93,18 +93,18 @@ window.addEventListener('scroll', () => {
         <h2 class="text-3xl font-bold text-blue-700 mb-8">Discussion Forum</h2>
 
         <!-- Thread Submission Form -->
-        <div id="threadForm" class="bg-gray-800 p-6 rounded-lg shadow-lg interactive">
+        <div id="threadForm" class="bg-gray-900 p-6 rounded-lg shadow-lg interactive">
             <h3 class="text-2xl font-semibold text-white mb-4">Create a New Thread</h3>
             <form>
               <div class="mb-4">
                 <label for="thread-title" class="block text-left font-medium text-gray-300">Title</label>
                 <input type="text" id="thread-title" name="title" required
-                  class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
               </div>
               <div class="mb-4">
                 <label for="thread-description" class="block text-left font-medium text-gray-300">Description</label>
                 <textarea id="thread-description" name="description" required
-                  class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                  class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
               </div>
               <button type="submit" class="px-6 py-3 bg-blue-700 rounded text-white font-semibold hover:bg-blue-600">
                 Submit Thread
@@ -122,7 +122,7 @@ window.addEventListener('scroll', () => {
   
 
   <!-- Footer -->
-  <footer class="bg-black text-white text-center py-4">
+  <footer class="bg-gray-900 text-white text-center py-4">
     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
   </footer>
 

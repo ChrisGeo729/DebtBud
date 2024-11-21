@@ -75,7 +75,7 @@ window.addEventListener('scroll', () => {
 
 <!-- About Us Section -->
 <section id="about-us" class="py-16 bg-black text-center">
-    <p class="text-lg font-semibold text-white uppercase mb-2">About Us</p>
+    <p class="text-2xl font-semibold text-white uppercase mb-5">About Us</p>
     <p class="text-lg text-white max-w-3xl mx-auto">
       We are five third-year university students from different fields of study who share a common goal: to help students
       like us take charge of their financial well-being. DebtBud was created to empower students by offering practical
@@ -86,11 +86,11 @@ window.addEventListener('scroll', () => {
   
   
   <!-- Services Section -->
-  <section id="services" class="py-16 bg-gray-900 text-center">
+  <section id="services" class="py-16 bg-black text-center">
     <h2 class="text-4xl font-bold text-white mb-10">Our Services</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
       <!-- Card 1 -->
-      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+      <div class="rounded-lg bg-gray-900 text-white transform hover:scale-105 transition-all duration-300 p-6">
         <div class="w-16 h-16 mx-auto mb-4">
           <img src="assets/budgeting.png" alt="Budgeting" class="object-contain">
         </div>
@@ -98,7 +98,7 @@ window.addEventListener('scroll', () => {
         <p class="text-sm text-gray-400">Set and manage your monthly budgets effortlessly.</p>
       </div>
       <!-- Card 2 -->
-      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+      <div class="rounded-lg bg-gray-900 text-white transform hover:scale-105 transition-all duration-300 p-6">
         <div class="w-16 h-16 mx-auto mb-4">
           <img src="assets/calculator.png" alt="Loan Calculator" class="object-contain">
         </div>
@@ -106,7 +106,7 @@ window.addEventListener('scroll', () => {
         <p class="text-sm text-gray-400">Calculate your loan repayments easily.</p>
       </div>
       <!-- Card 3 -->
-      <div class="bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 p-6">
+      <div class="rounded-lg bg-gray-900 text-white transform hover:scale-105 transition-all duration-300 p-6">
         <div class="w-16 h-16 mx-auto mb-4">
           <img src="assets/connect.png" alt="Connect" class="object-contain">
         </div>
@@ -120,7 +120,7 @@ window.addEventListener('scroll', () => {
   
   <script>
  // Select all individual cards
-const cards = document.querySelectorAll('#services div.bg-gray-800');
+const cards = document.querySelectorAll('#services div.bg-gray-900');
 
 cards.forEach((card) => {
   card.addEventListener('mouseover', () => {
@@ -138,67 +138,10 @@ cards.forEach((card) => {
   
   
 
-  <!-- Contact Form Section -->
-<section id="contact" class="py-16 bg-gray-800 text-center">
-    <h2 class="text-4xl font-bold text-white mb-8">Contact Us</h2>
-    <form id="contactForm" class="max-w-lg mx-auto bg-gray-900 p-6 rounded-lg shadow-md">
-      <div class="mb-4">
-        <label for="name" class="block text-left font-medium text-gray-300">Name</label>
-        <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-      </div>
-      <div class="mb-4">
-        <label for="email" class="block text-left font-medium text-gray-300">Email</label>
-        <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-      </div>
-      <div class="mb-4">
-        <label for="message" class="block text-left font-medium text-gray-300">Message</label>
-        <textarea id="message" name="message" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-      </div>
-      <button type="submit" class="px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded hover:bg-blue-600 transition">
-        Submit
-      </button>
-    </form>
-  
-    <!-- Confirmation Message -->
-    <div id="confirmationMessage" class="hidden mt-6 text-green-400 font-semibold">
-      Thank you for contacting us! We will get back to you shortly.
-    </div>
-  </section>
-  
-  <!-- JavaScript for Form Submission -->
-  <script>
-    const form = document.getElementById('contactForm');
-    const confirmationMessage = document.getElementById('confirmationMessage');
-  
-    form.addEventListener('submit', async function (event) {
-      event.preventDefault();
-  
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-  
-      try {
-        const response = await fetch('http://localhost:5004/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, message }),
-        });
-  
-        if (response.ok) {
-          confirmationMessage.classList.remove('hidden');
-          form.reset();
-        } else {
-          alert('Something went wrong. Please try again.');
-        }
-      } catch (error) {
-        alert('Failed to send your message. Please try again later.');
-      }
-    });
-  </script>
   
 
   <!-- Footer -->
-  <footer class="py-6 bg-black text-center text-white">
+  <footer class="py-6 bg-gray-900 text-center text-white">
     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
   </footer>
 
