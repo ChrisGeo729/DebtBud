@@ -122,6 +122,158 @@
         </div>
       </div>
     </section>
+  <!-- Chatbot Section -->
+  <style>
+    #chatbot-container {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      width: 300px;
+      max-height: 400px;
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    #chatbot-header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #chatbot-messages {
+      flex-grow: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #222;
+    }
+
+    #chatbot-input-container {
+      display: flex;
+      border-top: 1px solid #333;
+      padding: 10px;
+      background-color: #1a1a1a;
+    }
+
+    #chatbot-input {
+      flex-grow: 1;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #444;
+      background-color: #333;
+      color: white;
+    }
+
+    #chatbot-send {
+      margin-left: 8px;
+      padding: 8px 12px;
+      background-color: #333cb4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #chatbot-button {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      background-color: #434bb7;
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body class="font-sans bg-black text-white">
+
+  <!-- Chatbot Trigger Button -->
+  <button id="chatbot-button">Chat</button>
+
+  <!-- Chatbot Container -->
+  <div id="chatbot-container">
+    <div id="chatbot-header">
+      <span>Assistant</span>
+      <button onclick="toggleChatbot()" style="color: white; background: none; border: none; cursor: pointer;">&times;</button>
+    </div>
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input-container">
+      <input type="text" id="chatbot-input" placeholder="Type a message..." />
+      <button id="chatbot-send">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const chatbotButton = document.getElementById("chatbot-button");
+    const chatbotMessages = document.getElementById("chatbot-messages");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotSend = document.getElementById("chatbot-send");
+
+    function toggleChatbot() {
+      if (chatbotContainer.style.display === "none" || !chatbotContainer.style.display) {
+        chatbotContainer.style.display = "flex";
+        chatbotButton.style.display = "none";
+      } else {
+        chatbotContainer.style.display = "none";
+        chatbotButton.style.display = "block";
+      }
+    }
+
+    chatbotButton.addEventListener("click", toggleChatbot);
+
+    chatbotSend.addEventListener("click", async () => {
+      const userMessage = chatbotInput.value.trim();
+      if (!userMessage) return;
+
+      // Add user message to the chat
+      const userMessageElement = document.createElement("div");
+      userMessageElement.style.color = "white";
+      userMessageElement.style.marginBottom = "10px";
+      userMessageElement.textContent = `You: ${userMessage}`;
+      chatbotMessages.appendChild(userMessageElement);
+
+      chatbotInput.value = "";
+
+      // Fetch response from the chatbot
+      const response = await fetch("http://127.0.0.1:5000/chatbot", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const botMessageElement = document.createElement("div");
+        botMessageElement.style.color = "#434bb7";
+        botMessageElement.style.marginBottom = "10px";
+        botMessageElement.textContent = `Assistant: ${data.message}`;
+        chatbotMessages.appendChild(botMessageElement);
+      } else {
+        const errorMessageElement = document.createElement("div");
+        errorMessageElement.style.color = "red";
+        errorMessageElement.style.marginBottom = "10px";
+        errorMessageElement.textContent = "Assistant: Something went wrong. Please try again.";
+        chatbotMessages.appendChild(errorMessageElement);
+      }
+
+      // Scroll to the latest message
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+  </script>
+  
   
     <!-- Footer -->
     <footer class="py-6 bg-black text-center text-white">
