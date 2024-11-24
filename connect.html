@@ -8,6 +8,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <style>
     /* Additional custom styles */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    #main-content {
+      flex: 1;
+    }
     .sticky-sidebar {
       position: sticky;
       top: 1rem;
@@ -91,7 +99,7 @@ window.addEventListener('scroll', () => {
   </div>
 
   <!-- Main Content -->
-  <div class="flex flex-col lg:flex-row gap-8 p-8">
+  <div id="main-content" class="flex flex-col lg:flex-row gap-8 p-8 mt-16">
     
     <!-- Sticky Sidebar -->
     <aside class="hidden lg:block w-1/4 sticky-sidebar bg-gray-900 p-6 rounded-lg shadow-md">

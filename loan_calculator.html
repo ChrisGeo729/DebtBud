@@ -8,6 +8,90 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
 <body class="font-sans bg-black text-white">
+    <style>
+        /* Ensure page fills the entire window */
+        body {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+      
+        #main-content {
+          flex: 1;
+        }
+      
+        /* Chatbot styles */
+        #chatbot-container {
+          position: fixed;
+          bottom: 1rem;
+          right: 1rem;
+          width: 300px;
+          max-height: 400px;
+          background-color: #1a1a1a;
+          border: 1px solid #333;
+          border-radius: 10px;
+          overflow: hidden;
+          display: none;
+          flex-direction: column;
+          z-index: 1000;
+        }
+      
+        #chatbot-header {
+          background-color: #333;
+          color: white;
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      
+        #chatbot-messages {
+          flex-grow: 1;
+          padding: 10px;
+          overflow-y: auto;
+          background-color: #222;
+        }
+      
+        #chatbot-input-container {
+          display: flex;
+          border-top: 1px solid #333;
+          padding: 10px;
+          background-color: #1a1a1a;
+        }
+      
+        #chatbot-input {
+          flex-grow: 1;
+          padding: 8px;
+          border-radius: 5px;
+          border: 1px solid #444;
+          background-color: #333;
+          color: white;
+        }
+      
+        #chatbot-send {
+          margin-left: 8px;
+          padding: 8px 12px;
+          background-color: #333cb4;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      
+        #chatbot-button {
+          position: fixed;
+          bottom: 1rem;
+          right: 1rem;
+          background-color: #434bb7;
+          color: white;
+          padding: 12px;
+          border-radius: 50%;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+          z-index: 999;
+        }
+      </style>
+      
 
     <!-- Header -->
     <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
@@ -53,7 +137,7 @@
       <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
     </div>
   
-    <!-- Loan Calculator Section -->
+    <div id="main-content">
     <section class="py-16 px-6 bg-black text-white">
       <div class="max-w-3xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg">
         <h2 class="text-4xl font-bold text-center text-blue-700 mb-8">Loan Repayment Calculator</h2>
@@ -122,79 +206,8 @@
         </div>
       </div>
     </section>
-  <!-- Chatbot Section -->
-  <style>
-    #chatbot-container {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      width: 300px;
-      max-height: 400px;
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 10px;
-      overflow: hidden;
-      display: none;
-      flex-direction: column;
-      z-index: 1000;
-    }
 
-    #chatbot-header {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
 
-    #chatbot-messages {
-      flex-grow: 1;
-      padding: 10px;
-      overflow-y: auto;
-      background-color: #222;
-    }
-
-    #chatbot-input-container {
-      display: flex;
-      border-top: 1px solid #333;
-      padding: 10px;
-      background-color: #1a1a1a;
-    }
-
-    #chatbot-input {
-      flex-grow: 1;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #444;
-      background-color: #333;
-      color: white;
-    }
-
-    #chatbot-send {
-      margin-left: 8px;
-      padding: 8px 12px;
-      background-color: #333cb4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #chatbot-button {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      background-color: #434bb7;
-      color: white;
-      padding: 12px;
-      border-radius: 50%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-      z-index: 999;
-    }
-  </style>
-</head>
 <body class="font-sans bg-black text-white">
 
   <!-- Chatbot Trigger Button -->
@@ -273,10 +286,9 @@
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     });
   </script>
-  
-  
+  </div>
     <!-- Footer -->
-    <footer class="py-6 bg-black text-center text-white">
+    <footer class="py-6 bg-gray-900 text-center text-white">
       <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
     </footer>
   
@@ -341,6 +353,7 @@
         document.getElementById('total-interest-result').innerText = `Total Interest: $${totalInterest.toFixed(2)}`;
       }
     </script>
+    </head>
   </body>
   
 </html>
