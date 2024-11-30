@@ -52,9 +52,14 @@ def get_ai_advice(income, expenses, budget_goals, balance):
     - Budget Goals:
     {budget_goals}
 
-    Analyze the expenses, identify categories that exceed budget goals, 
-    and suggest actionable advice to help the user save more effectively. 
+    Analyze the expenses, the primary categories are: groceries and rent. the secondary are entertainment, 
+    transportation and savings(savings are only if all the other categories can be met).Identify categories that exceed budget goals, 
+    and suggest adjustments, in a concise manner, within the secondary category goals based on the expenses, so that the actual expenses of the main categories 
+    can be accomodated. 
+    If there are not enough funds to be re allocated for the primary categories, propose the minimum amount that needs to be borrowed 
+    from the government for the current month.
     Make sure that the expenses exceeding the budget goals are actually bigger than the goals.
+    Make it as concise and as brief as possible(max 350 tokens)
     """
 
     response = openai.ChatCompletion.create(
@@ -63,7 +68,7 @@ def get_ai_advice(income, expenses, budget_goals, balance):
             {"role": "system", "content": "You are a financial budgeting assistant."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=250
+        max_tokens=350
     )
 
     advice = response.choices[0].message['content'].strip()
