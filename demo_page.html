@@ -1117,6 +1117,24 @@ document.getElementById('threadForm').addEventListener('submit', handleThreadSub
 fetchThreads();
 
     </script>
+<!-- Footer Section -->
+<footer class="bg-black text-white py-6 flex justify-center">
+    <button
+      onclick="goToMainPage()"
+      class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-500 transition"
+    >
+      Back to Main Page
+    </button>
+  </footer>
+  
+  <!-- JavaScript -->
+  <script>
+    function goToMainPage() {
+      // Redirect to the main page
+      window.location.href = "index.html"; // Replace with the URL of your main page
+    }
+  </script>
+  
   
 </body>
 </html>
