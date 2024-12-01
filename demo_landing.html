@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore the DebtBud demo and experience financial empowerment.">
+  <title>DebtBud Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>     /* Additional custom styles */     .hero-section {       background: linear-gradient(135deg, #2563eb, #1e3a8a);       color: white;     }     .feature-card:hover {       transform: scale(1.05);       transition: transform 0.3s ease-in-out;     }     .cta-button {       background: linear-gradient(90deg, #2563eb, #1e3a8a);       color: white;     }   </style>
+</head>
+<body class="font-sans bg-black text-white">
+
+
+  <!-- Header -->
+  <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
+    <!-- Logo and Name -->
+    <a href="index.html" class="flex items-center space-x-3">
+      <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+      <span class="text-xl font-semibold">DebtBud</span>
+    </a>
+  
+    <!-- Right Section: Buttons and Menu -->
+    <div class="flex items-center space-x-4">
+        <!-- Sign Up Button -->
+      <button onclick="window.location.href='signup.html'" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+        Sign Up
+      </button>
+      <!-- Log In Button -->
+      <button onclick="window.location.href='login.html'" class="px-4 py-2 text-sm font-semibold bg-transparent border border-white rounded-full hover:bg-white hover:text-black transition">
+        Log In
+      </button>
+      <!-- Try Demo Button
+      <button onclick="window.location.href='demo.html'" class="px-4 py-2 text-sm text-green-600 font-semibold bg-transparent border border-green-600 rounded-full hover:bg-green-600 hover:text-white transition">
+        Try Demo
+      </button> -->
+  
+      <!-- Menu Button -->
+      <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+  
+  
+  <script>
+    // Get the navbar element
+const navbar = document.getElementById('navbar');
+
+// Listen to the scroll event
+window.addEventListener('scroll', () => {
+  // Get the scroll position
+  const scrollPosition = window.scrollY;
+
+  // Change the background transparency based on scroll position
+  if (scrollPosition > 50) {
+    navbar.classList.remove('bg-transparent');
+    navbar.classList.add('bg-black', 'bg-opacity-90');
+  } else {
+    navbar.classList.remove('bg-black', 'bg-opacity-90');
+    navbar.classList.add('bg-transparent');
+  }
+});
+
+  </script>
+  
+
+  <!-- Navigation Overlay -->
+  <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+    <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
+      &times;
+    </button>
+    <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+    <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-500">Budgeting</a>
+    <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-500">Calculator</a>
+    <a href="connect.html" class="text-2xl font-bold hover:text-blue-500">Connect</a>
+    <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
+  </div>
+
+
+  <!-- Hero Section -->
+  <section class="py-48 px-6 text-center bg-gradient-to-r from-blue-600 to-blue-900 text-white">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-5xl font-bold mb-4">Try DebtBud Demo</h1>
+      <p class="text-lg mb-8">Experience how DebtBud empowers you to manage your finances, reduce debt, and gain financial freedom.</p>
+      <button onclick="window.location.href='demo.html'" class="cta-button px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition">Try the Demo</button>    </div>
+  </section>
+<!-- Our Mission Section -->
+<section id="our-mission" class="py-16 bg-black text-center">
+    <h2 class="text-4xl font-bold text-white mb-6">Our Mission</h2>
+    <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+      Our goal is to provide accessible, user-friendly tools that simplify budgeting, offer personalized advice on loan repayments, 
+      and foster a community where students can learn from each other. We aim to help students achieve financial stability and build 
+      a secure future, free from overwhelming debt.
+    </p>
+  </section>
+  <!-- Why Choose DebtBud -->
+  <section id="why-choose" class="py-16 bg-black text-center">
+    <h2 class="text-4xl font-bold text-white mb-6">Why Choose DebtBud?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
+      <div class="rounded-lg bg-gray-900 p-6">
+        <h3 class="text-xl font-semibold text-blue-400 mb-2">AI-Powered Insights</h3>
+        <p class="text-gray-300">Our tools provide tailored recommendations to help you optimize your finances effectively.</p>
+      </div>
+      <div class="rounded-lg bg-gray-900 p-6">
+        <h3 class="text-xl font-semibold text-blue-400 mb-2">Simplified Budgeting</h3>
+        <p class="text-gray-300">Easily create, track, and adjust your budgets with a user-friendly interface.</p>
+      </div>
+      <div class="rounded-lg bg-gray-900 p-6">
+        <h3 class="text-xl font-semibold text-blue-400 mb-2">Community Support</h3>
+        <p class="text-gray-300">Connect with peers, share experiences, and gain tips from our community forum.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Our Users Say -->
+  <section id="user-feedback" class="py-16 bg-gray-900 text-center">
+    <h2 class="text-4xl font-bold text-white mb-6">What Our Users Say</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
+      <div class="rounded-lg bg-gray-800 p-6">
+        <p class="text-gray-300 italic">"DebtBud's budgeting tools have transformed how I manage my expenses."</p>
+        <p class="text-sm text-blue-400 mt-4">- Lily, Student</p>
+      </div>
+      <div class="rounded-lg bg-gray-800 p-6">
+        <p class="text-gray-300 italic">"The loan calculator helped me plan my repayments effortlessly."</p>
+        <p class="text-sm text-blue-400 mt-4">- James, Graduate</p>
+      </div>
+      <div class="rounded-lg bg-gray-800 p-6">
+        <p class="text-gray-300 italic">"I love the community forum. It's great to connect with others facing similar challenges."</p>
+        <p class="text-sm text-blue-400 mt-4">- Maria, Postgraduate</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Contact Us Section -->
+  <section id="contact" class="py-16 bg-gray-900 text-center">
+    <h2 class="text-4xl font-bold text-white mb-8">Contact Us</h2>
+    <form id="contactForm" class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+      <div class="mb-4">
+        <label for="name" class="block text-left font-medium text-gray-300">Name</label>
+        <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-left font-medium text-gray-300">Email</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="message" class="block text-left font-medium text-gray-300">Message</label>
+        <textarea id="message" name="message" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+      <button type="submit" class="px-6 py-3 bg-blue-500 rounded text-white font-semibold hover:bg-blue-600">Submit</button>
+    </form>
+  </section>
+
+  <style>
+    /* Container Styling */
+ .banner-container {
+   position: relative;
+   width: 100%;
+   overflow: hidden;
+   background-color: black;
+ }
+ 
+ /* Marquee Animation */
+ @keyframes marquee {
+   0% {
+     transform: translateX(0%);
+   }
+   100% {
+     transform: translateX(-50%);
+   }
+ }
+ 
+ .animate-marquee {
+   display: flex;
+   align-items: center;
+   animation: marquee 10s linear infinite;
+   gap: 3rem; /* Adjust spacing between logos */
+ }
+ 
+ /* Logo Styling */
+ .banner-content img {
+   height: 8rem; /* Adjust logo size */
+ }
+ 
+ /* Fade Effect */
+ .banner-container::before,
+ .banner-container::after {
+   content: '';
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   width: 10%; /* Adjust fade width as needed */
+   background: linear-gradient(to right, black, transparent);
+   z-index: 1;
+   pointer-events: none;
+ }
+ 
+ .banner-container::after {
+   right: 0;
+   left: auto;
+   background: linear-gradient(to left, black, transparent);
+ }
+ 
+     </style>
+     
+   
+   <script>
+  // Select all individual cards
+ const cards = document.querySelectorAll('#services div.bg-gray-900');
+ 
+ cards.forEach((card) => {
+   card.addEventListener('mouseover', () => {
+     // Apply the glow only to the hovered card
+     card.style.boxShadow = '0 0 20px 5px rgba(255, 255, 255, 0.6)';
+   });
+   card.addEventListener('mouseout', () => {
+     // Remove the glow when not hovering
+     card.style.boxShadow = 'none';
+   });
+ });
+ 
+ 
+   </script>
+   
+   
+ 
+   
+ 
+   <!-- Footer -->
+   <footer class="py-6 bg-gray-900 text-center text-white">
+     <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
+   </footer>
+ 
+   <script>
+     const menuButton = document.getElementById('menuButton');
+     const closeButton = document.getElementById('closeButton');
+     const navOverlay = document.getElementById('navOverlay');
+ 
+     // Open the navigation overlay
+     menuButton.addEventListener('click', () => {
+       navOverlay.classList.remove('hidden');
+     });
+ 
+     // Close the navigation overlay
+     closeButton.addEventListener('click', () => {
+       navOverlay.classList.add('hidden');
+     });
+   </script>
+
+</body>
+</html>

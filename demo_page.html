@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DebtBud Dashboard Demo">
+  <title>DebtBud Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .hidden-section {
+      display: none;
+    }
+    .active-tab {
+      background-color: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white">
+  <!-- Header -->
+  <header class="bg-black text-white px-6 py-4 flex justify-between">
+    <a href="#" class="text-2xl font-bold">DebtBud Dashboard</a>
+    <nav class="flex space-x-4">
+      <button id="budgeting-tab" class="px-4 py-2 rounded hover:bg-blue-600 active-tab" onclick="showSection('budgeting')">Budgeting</button>
+      <button id="calculator-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('calculator')">Loan Calculator</button>
+      <button id="forum-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('forum')">Community Forum</button>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow p-8">
+    <!-- Budgeting Section -->
+    <section id="budgeting-section">
+        <section id="budgeting" class="py-16 px-8 bg-black text-white">
+            <h2 class="text-5xl font-bold text-center text-blue-600 mb-10">Budgeting Tools</h2>
+          
+            <!-- Grid Layout for Top Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Left: Forms -->
+                <div class="space-y-6">
+                    <!-- Budget Goals Form -->
+                    <!-- Budget Goals Form (Modified: Removed Income Input) -->
+<div id="goals-section" class="bg-gray-900 p-6 rounded-lg shadow-lg">
+    <h3 class="text-xl font-semibold text-center text-white mb-4">Enter Your Budget Goals</h3>
+    <form id="goalsForm" onsubmit="submitGoals(event)" class="space-y-4">
+        <div>
+            <label for="rent-goal" class="block font-medium text-gray-300">Rent Goal:</label>
+            <input type="number" id="rent-goal" name="rent-goal" required
+                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+            <label for="groceries-goal" class="block font-medium text-gray-300">Groceries Goal:</label>
+            <input type="number" id="groceries-goal" name="groceries-goal" required
+                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+            <label for="entertainment-goal" class="block font-medium text-gray-300">Entertainment Goal:</label>
+            <input type="number" id="entertainment-goal" name="entertainment-goal" required
+                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+            <label for="transportation-goal" class="block font-medium text-gray-300">Transportation Goal:</label>
+            <input type="number" id="transportation-goal" name="transportation-goal" required
+                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+            <label for="savings-goal" class="block font-medium text-gray-300">Savings Goal:</label>
+            <input type="number" id="savings-goal" name="savings-goal" required
+                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <button type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition">Save Goals</button>
+    </form>
+</div>
+
+                </div>
+    
+                <!-- AI Advice -->
+                <div id="advice-output" class="bg-gray-900 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-white">AI Advice</h3>
+                    <p id="advice-text" class="text-gray-300 mt-4">Your advice will appear here after syncing your data.</p>
+                </div>
+            </div>
+          
+            <!-- Bottom Section: Chart -->
+            <!-- Bottom Section: Charts -->
+<!-- Bottom Section: Charts (Modified: Removed Income Chart) -->
+<div id="charts-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
+        <p id="chart-rent-title" class="text-white font-bold mb-2">Rent</p>
+        <canvas id="chart-rent" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
+    </div>
+    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
+        <p id="chart-groceries-title" class="text-white font-bold mb-2">Groceries</p>
+        <canvas id="chart-groceries" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
+    </div>
+    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
+        <p id="chart-entertainment-title" class="text-white font-bold mb-2">Entertainment</p>
+        <canvas id="chart-entertainment" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
+    </div>
+    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
+        <p id="chart-transportation-title" class="text-white font-bold mb-2">Transportation</p>
+        <canvas id="chart-transportation" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
+    </div>
+    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
+        <p id="chart-savings-title" class="text-white font-bold mb-2">Savings</p>
+        <canvas id="chart-savings" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
+    </div>
+</div>
+
+
+        </section>
+    
+        <script>
+            let budgetGoals = {};
+const bankAccountData = {
+    transactions: [
+        { id: 1, date: "2024-12-01", category: "Income", amount: 1500 },
+        { id: 2, date: "2024-12-02", category: "Rent", amount: -800 },
+        { id: 3, date: "2024-12-03", category: "Groceries", amount: -500 },
+        { id: 4, date: "2024-12-04", category: "Entertainment", amount: -50 },
+        { id: 5, date: "2024-12-05", category: "Transportation", amount: -100 },
+        { id: 6, date: "2024-12-06", category: "Savings", amount: -50 }
+    ]
+};
+
+// Handle budget goal submission
+// Handle budget goal submission
+function submitGoals(event) {
+    event.preventDefault();
+
+    // Hardcode income to 1500
+    budgetGoals = {
+        income: 1500, // Fixed value
+        rent: parseFloat(document.getElementById('rent-goal').value) || 0,
+        groceries: parseFloat(document.getElementById('groceries-goal').value) || 0,
+        entertainment: parseFloat(document.getElementById('entertainment-goal').value) || 0,
+        transportation: parseFloat(document.getElementById('transportation-goal').value) || 0,
+        savings: parseFloat(document.getElementById('savings-goal').value) || 0
+    };
+
+    fetchAIAdvice();
+}
+
+
+
+// Calculate current expenses from bank data
+function calculateCurrentExpenses() {
+    const expenses = {
+        income: 0,
+        rent: 0,
+        groceries: 0,
+        entertainment: 0,
+        transportation: 0,
+        savings: 0
+    };
+
+    bankAccountData.transactions.forEach((transaction) => {
+        const category = transaction.category.toLowerCase();
+        if (expenses.hasOwnProperty(category)) {
+            expenses[category] += Math.abs(transaction.amount);
+        }
+    });
+
+    return expenses;
+}
+
+
+// Fetch AI advice from Flask server
+async function fetchAIAdvice() {
+    const expenses = calculateCurrentExpenses();
+    const income = budgetGoals.income;
+    const totalExpenses = Object.values(expenses).reduce((acc, val) => acc + val, 0);
+    const balance = income - totalExpenses;
+
+    const payload = {
+        income,
+        expenses,
+        budget_goals: budgetGoals,
+        balance
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/get-advice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            document.getElementById('advice-text').innerText = result.advice;
+            updateProgressCharts(expenses);
+        } else {
+            document.getElementById('advice-text').innerText = 'Error fetching AI advice. Please try again.';
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById('advice-text').innerText = 'Failed to connect to the server.';
+    }
+}
+
+// Update progress charts dynamically
+function getColorByPercentage(percentage) {
+    if (percentage <= 9) {
+        return '#2563eb'; // Blue for 0-9%
+    } else if (percentage <= 49) {
+        return '#4caf50'; // Green for 10-49%
+    } else if (percentage <= 75) {
+        return '#ffc107'; // Yellow for 50-75%
+    } else {
+        return '#f44336'; // Red for 76-100%
+    }
+}
+
+// Update progress charts dynamically
+function updateProgressCharts(expenses) {
+    const categories = Object.keys(budgetGoals);
+
+    categories.forEach((category) => {
+        const goal = budgetGoals[category];
+        const spent = expenses[category] || 0;
+
+        const percentage = Math.round((spent / goal) * 100);
+        const remaining = 100 - percentage;
+
+        const color = getColorByPercentage(percentage);
+        const canvasId = `chart-${category}`;
+        const ctx = document.getElementById(canvasId)?.getContext('2d');
+
+        if (!ctx) return;
+
+        // Update the chart title with the percentage
+        const titleElement = document.querySelector(`#chart-${category}-title`);
+        if (titleElement) {
+            titleElement.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)} (${percentage}%)`;
+        }
+
+        // Destroy any existing chart before rendering a new one
+        if (ctx.chart) {
+            ctx.chart.destroy();
+        }
+
+        ctx.chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [percentage, remaining],
+                    backgroundColor: [color, '#e0e0e0'],
+                    hoverBackgroundColor: [color, '#e0e0e0']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                cutout: '75%', // Smaller size
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    });
+}
+
+
+        </script>
+          
+    </section>
+
+    <!-- Loan Calculator Section -->
+    <section id="calculator-section" class="hidden-section">
+      <!-- Paste Loan Calculator HTML here -->
+    </section>
+
+    <!-- Community Forum Section -->
+    <section id="forum-section" class="hidden-section">
+      <!-- Paste Community Forum HTML here -->
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white text-center py-4">
+    <p>© 2024 DebtBud. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function showSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll('section').forEach(section => section.classList.add('hidden-section'));
+
+  // Remove active-tab class from all buttons
+  document.querySelectorAll('nav button').forEach(button => button.classList.remove('active-tab'));
+
+  // Show the selected section and activate the tab
+  document.getElementById(`${sectionId}-section`).classList.remove('hidden-section');
+  document.getElementById(`${sectionId}-tab`).classList.add('active-tab');
+}
+
+  </script>
+</body>
+</html>
