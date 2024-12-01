@@ -110,6 +110,20 @@
       color: white;
       font-weight: bold;
     }
+    .interactive:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
   </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -126,86 +140,89 @@
   <!-- Main Content -->
   <main class="flex-grow p-8">
     <!-- Budgeting Section -->
-    <section id="budgeting-section">
-        <section id="budgeting" class="py-16 px-8 bg-black text-white">
-            <h2 class="text-5xl font-bold text-center text-blue-600 mb-10">Budgeting Tools</h2>
-          
-            <!-- Grid Layout for Top Sections -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Left: Forms -->
-                <div class="space-y-6">
-                    <!-- Budget Goals Form -->
-                    <!-- Budget Goals Form (Modified: Removed Income Input) -->
-<div id="goals-section" class="bg-gray-900 p-6 rounded-lg shadow-lg">
-    <h3 class="text-xl font-semibold text-center text-white mb-4">Enter Your Budget Goals</h3>
-    <form id="goalsForm" onsubmit="submitGoals(event)" class="space-y-4">
-        <div>
-            <label for="rent-goal" class="block font-medium text-gray-300">Rent Goal:</label>
-            <input type="number" id="rent-goal" name="rent-goal" required
-                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <section id="budgeting-section" class="py-16 px-8 bg-gradient-to-b from-gray-800 to-black text-white">
+        <h2 class="text-5xl font-extrabold text-center text-blue-500 mb-10">Budgeting Tools</h2>
+      
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Left: Budget Goals Form -->
+          <div class="bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+            <h3 class="text-2xl font-semibold text-center mb-6">Enter Your Budget Goals</h3>
+            <form id="goalsForm" onsubmit="submitGoals(event)" class="space-y-6">
+              <!-- Rent Goal -->
+              <div>
+                <label for="rent-goal" class="block text-sm font-medium">Rent Goal:</label>
+                <input type="number" id="rent-goal" name="rent-goal" placeholder="Enter rent budget" required
+                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+              </div>
+              <!-- Groceries Goal -->
+              <div>
+                <label for="groceries-goal" class="block text-sm font-medium">Groceries Goal:</label>
+                <input type="number" id="groceries-goal" name="groceries-goal" placeholder="Enter groceries budget" required
+                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+              </div>
+              <!-- Entertainment Goal -->
+              <div>
+                <label for="entertainment-goal" class="block text-sm font-medium">Entertainment Goal:</label>
+                <input type="number" id="entertainment-goal" name="entertainment-goal" placeholder="Enter entertainment budget" required
+                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+              </div>
+              <!-- Transportation Goal -->
+              <div>
+                <label for="transportation-goal" class="block text-sm font-medium">Transportation Goal:</label>
+                <input type="number" id="transportation-goal" name="transportation-goal" placeholder="Enter transportation budget" required
+                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+              </div>
+              <!-- Savings Goal -->
+              <div>
+                <label for="savings-goal" class="block text-sm font-medium">Savings Goal:</label>
+                <input type="number" id="savings-goal" name="savings-goal" placeholder="Enter savings budget" required
+                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+              </div>
+              <!-- Submit Button -->
+              <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition">
+                Save Goals
+              </button>
+            </form>
+          </div>
+      
+          <!-- Right: AI Advice -->
+          <div id="advice-output" class="bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+            <h3 class="text-2xl font-semibold mb-6">AI Advice</h3>
+            <p id="advice-text" class="text-gray-300">Your advice will appear here after syncing your data.</p>
+          </div>
         </div>
-        <div>
-            <label for="groceries-goal" class="block font-medium text-gray-300">Groceries Goal:</label>
-            <input type="number" id="groceries-goal" name="groceries-goal" required
-                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+      
+        <!-- Bottom Section: Progress Charts -->
+        <div id="charts-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 mt-12">
+          <!-- Rent Chart -->
+          <div class="flex flex-col items-center bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+            <p id="chart-rent-title" class="text-xl font-semibold mb-4">Rent</p>
+            <canvas id="chart-rent" class="w-full h-auto" style="max-width: 200px; max-height: 200px;"></canvas>
+          </div>
+          <!-- Groceries Chart -->
+          <div class="flex flex-col items-center bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+            <p id="chart-groceries-title" class="text-xl font-semibold mb-4">Groceries</p>
+            <canvas id="chart-groceries" class="w-full h-auto" style="max-width: 200px; max-height: 200px;"></canvas>
+          </div>
+          <!-- Entertainment Chart -->
+          <div class="flex flex-col items-center bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+            <p id="chart-entertainment-title" class="text-xl font-semibold mb-4">Entertainment</p>
+            <canvas id="chart-entertainment" class="w-full h-auto" style="max-width: 200px; max-height: 200px;"></canvas>
+          </div>
+          <!-- Transportation Chart -->
+          <div class="flex flex-col items-center bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+            <p id="chart-transportation-title" class="text-xl font-semibold mb-4">Transportation</p>
+            <canvas id="chart-transportation" class="w-full h-auto" style="max-width: 200px; max-height: 200px;"></canvas>
+          </div>
+          <!-- Savings Chart -->
+          <div class="flex flex-col items-center bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+            <p id="chart-savings-title" class="text-xl font-semibold mb-4">Savings</p>
+            <canvas id="chart-savings" class="w-full h-auto" style="max-width: 200px; max-height: 200px;"></canvas>
+          </div>
         </div>
-        <div>
-            <label for="entertainment-goal" class="block font-medium text-gray-300">Entertainment Goal:</label>
-            <input type="number" id="entertainment-goal" name="entertainment-goal" required
-                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div>
-            <label for="transportation-goal" class="block font-medium text-gray-300">Transportation Goal:</label>
-            <input type="number" id="transportation-goal" name="transportation-goal" required
-                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div>
-            <label for="savings-goal" class="block font-medium text-gray-300">Savings Goal:</label>
-            <input type="number" id="savings-goal" name="savings-goal" required
-                class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <button type="submit"
-            class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition">Save Goals</button>
-    </form>
-</div>
-
-                </div>
-    
-                <!-- AI Advice -->
-                <div id="advice-output" class="bg-gray-900 p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-white">AI Advice</h3>
-                    <p id="advice-text" class="text-gray-300 mt-4">Your advice will appear here after syncing your data.</p>
-                </div>
-            </div>
-          
-            <!-- Bottom Section: Chart -->
-            <!-- Bottom Section: Charts -->
-<!-- Bottom Section: Charts (Modified: Removed Income Chart) -->
-<div id="charts-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
-        <p id="chart-rent-title" class="text-white font-bold mb-2">Rent</p>
-        <canvas id="chart-rent" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
-    </div>
-    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
-        <p id="chart-groceries-title" class="text-white font-bold mb-2">Groceries</p>
-        <canvas id="chart-groceries" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
-    </div>
-    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
-        <p id="chart-entertainment-title" class="text-white font-bold mb-2">Entertainment</p>
-        <canvas id="chart-entertainment" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
-    </div>
-    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
-        <p id="chart-transportation-title" class="text-white font-bold mb-2">Transportation</p>
-        <canvas id="chart-transportation" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
-    </div>
-    <div class="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow w-full">
-        <p id="chart-savings-title" class="text-white font-bold mb-2">Savings</p>
-        <canvas id="chart-savings" class="w-full h-auto" style="max-width: 250px; max-height: 250px;"></canvas>
-    </div>
-</div>
-
-
-        </section>
+      </section>
+      
     
         <script>
             let budgetGoals = {};
@@ -364,75 +381,113 @@ function updateProgressCharts(expenses) {
     </section>
 
     <!-- Loan Calculator Section -->
-    <section id="calculator-section" class="hidden-section">
-        <section class="py-16 px-6 bg-black text-white">
-            <div class="max-w-3xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg">
-              <h2 class="text-4xl font-bold text-center text-blue-700 mb-8">Loan Repayment Calculator</h2>
-              <form id="loanForm" onsubmit="calculateLoan(event)" class="space-y-6">
-                <!-- Loan Amount -->
+    <section id="calculator-section" class="py-16 px-6 bg-gradient-to-b from-gray-800 to-black text-white">
+        <div class="max-w-3xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+          <h2 class="text-5xl font-extrabold text-center text-blue-500 mb-8">Loan Repayment Calculator</h2>
+          <form id="loanForm" onsubmit="calculateLoan(event)" class="space-y-6">
+            <!-- Loan Amount -->
+            <div>
+              <label for="loan-amount" class="block text-sm font-medium">Loan Amount:</label>
+              <input type="number" id="loan-amount" name="loan-amount" placeholder="Enter loan amount" required
+                class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500">
+            </div>
+            
+            <!-- Annual Interest Rate -->
+            <div>
+              <label for="interest-rate" class="block text-sm font-medium">Annual Interest Rate (%):</label>
+              <input type="number" id="interest-rate" name="interest-rate" step="0.01" placeholder="Enter interest rate (e.g., 3.75)" required
+                class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500">
+            </div>
+            
+            <!-- Repayment Options -->
+            <div>
+              <label class="block text-sm font-medium mb-2">Repayment Option:</label>
+              <div class="flex items-center space-x-4">
                 <div>
-                  <label for="loan-amount" class="block text-gray-300 font-medium">Loan Amount:</label>
-                  <input type="number" id="loan-amount" name="loan-amount" required
-                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter loan amount">
+                  <input type="radio" id="option-term" name="repayment-option" value="term" checked
+                    class="text-blue-500 focus:ring focus:ring-blue-500">
+                  <label for="option-term" class="text-gray-300">Specify Loan Term (years)</label>
                 </div>
-        
-                <!-- Annual Interest Rate -->
                 <div>
-                  <label for="interest-rate" class="block text-gray-300 font-medium">Annual Interest Rate (%):</label>
-                  <input type="number" id="interest-rate" name="interest-rate" step="0.01" required
-                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter interest rate (e.g., 3.75)">
+                  <input type="radio" id="option-payment" name="repayment-option" value="payment"
+                    class="text-blue-500 focus:ring focus:ring-blue-500">
+                  <label for="option-payment" class="text-gray-300">Specify Desired Monthly Payment</label>
                 </div>
-        
-                <!-- Repayment Options -->
-                <div>
-                  <label class="block text-gray-300 font-medium mb-2">Repayment Option:</label>
-                  <div class="flex items-center space-x-4">
-                    <div>
-                      <input type="radio" id="option-term" name="repayment-option" value="term" checked
-                        class="text-blue-500 focus:ring-blue-500" onchange="toggleInput()">
-                      <label for="option-term" class="text-gray-300">Specify Loan Term (years)</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="option-payment" name="repayment-option" value="payment"
-                        class="text-blue-500 focus:ring-blue-500" onchange="toggleInput()">
-                      <label for="option-payment" class="text-gray-300">Specify Desired Monthly Payment</label>
-                    </div>
-                  </div>
-                </div>
-        
-                <!-- Loan Term Input -->
-                <div id="term-input" class="mt-4">
-                  <label for="loan-term" class="block text-gray-300 font-medium">Loan Term (years):</label>
-                  <input type="number" id="loan-term" name="loan-term"
-                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter loan term in years">
-                </div>
-        
-                <!-- Monthly Payment Input -->
-                <div id="payment-input" class="hidden mt-4">
-                  <label for="monthly-payment" class="block text-gray-300 font-medium">Desired Monthly Payment:</label>
-                  <input type="number" id="monthly-payment" name="monthly-payment"
-                    class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-700"
-                    placeholder="Enter desired monthly payment">
-                </div>
-        
-                <!-- Submit Button -->
-                <button type="submit" class="w-full px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600">
-                  Calculate Repayment
-                </button>
-              </form>
-        
-              <!-- Results Section -->
-              <div id="loan-results" class="mt-8 p-4 bg-gray-700 rounded-lg shadow hidden">
-                <h3 class="text-xl font-semibold text-blue-700 mb-4">Results:</h3>
-                <p id="monthly-payment-result" class="text-gray-300"></p>
-                <p id="total-payment-result" class="text-gray-300"></p>
-                <p id="total-interest-result" class="text-gray-300"></p>
               </div>
             </div>
-          </section>
+            
+            <!-- Loan Term Input -->
+            <div id="term-input" class="mt-4">
+              <label for="loan-term" class="block text-sm font-medium">Loan Term (years):</label>
+              <input type="number" id="loan-term" name="loan-term" placeholder="Enter loan term in years"
+                class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500">
+            </div>
+            
+            <!-- Monthly Payment Input -->
+            <div id="payment-input" class="hidden mt-4">
+              <label for="monthly-payment" class="block text-sm font-medium">Desired Monthly Payment:</label>
+              <input type="number" id="monthly-payment" name="monthly-payment" placeholder="Enter desired monthly payment"
+                class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500">
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition">
+              Calculate Repayment
+            </button>
+          </form>
+          
+          <!-- Results Section -->
+          <div id="loan-results" class="mt-8 p-6 bg-gray-800 rounded-lg shadow-lg hidden">
+            <h3 class="text-3xl font-semibold text-center text-blue-400 mb-4">Results:</h3>
+            <div class="space-y-4">
+              <p id="monthly-payment-result" class="text-lg font-medium text-gray-300"></p>
+              <p id="total-payment-result" class="text-lg font-medium text-gray-300"></p>
+              <p id="total-interest-result" class="text-lg font-medium text-gray-300"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <script>
+        // Toggle between loan term and desired monthly payment inputs
+        function toggleInput() {
+          const isTermOption = document.getElementById('option-term').checked;
+          document.getElementById('term-input').classList.toggle('hidden', !isTermOption);
+          document.getElementById('payment-input').classList.toggle('hidden', isTermOption);
+        }
+      
+        // Calculate loan repayment
+        function calculateLoan(event) {
+          event.preventDefault();
+      
+          const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+          const annualInterestRate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
+          const isTermOption = document.getElementById('option-term').checked;
+      
+          let monthlyPayment, totalPayment, totalInterest, loanTerm;
+      
+          if (isTermOption) {
+            loanTerm = parseFloat(document.getElementById('loan-term').value) * 12;
+            monthlyPayment = (loanAmount * annualInterestRate) / (1 - Math.pow(1 + annualInterestRate, -loanTerm));
+            totalPayment = monthlyPayment * loanTerm;
+            totalInterest = totalPayment - loanAmount;
+          } else {
+            monthlyPayment = parseFloat(document.getElementById('monthly-payment').value);
+            loanTerm = Math.log(1 - (loanAmount * annualInterestRate) / monthlyPayment) / Math.log(1 + annualInterestRate);
+            totalPayment = monthlyPayment * loanTerm;
+            totalInterest = totalPayment - loanAmount;
+          }
+      
+          document.getElementById('loan-results').classList.remove('hidden');
+          document.getElementById('monthly-payment-result').innerText = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
+          document.getElementById('total-payment-result').innerText = `Total Payment: $${totalPayment.toFixed(2)}`;
+          document.getElementById('total-interest-result').innerText = `Total Interest: $${totalInterest.toFixed(2)}`;
+        }
+      
+        // Event listener for repayment option change
+        document.querySelectorAll('input[name="repayment-option"]').forEach(input => {
+          input.addEventListener('change', toggleInput);
+        });
+      </script>
           <!-- Chatbot Trigger Button -->
   <button id="chatbot-button">Chat</button>
 
@@ -545,76 +600,72 @@ function updateProgressCharts(expenses) {
 
     <!-- Community Forum Section -->
     <!-- Community Forum Section -->
-    <section id="forum-section" class="hidden-section flex flex-col lg:flex-row gap-8 p-8">
-        <div id="main-content" class="flex flex-col lg:flex-row gap-8 p-8 mt-16">
-    
-            <!-- Sticky Sidebar -->
-            <aside class="hidden lg:block w-1/4 sticky-sidebar bg-gray-900 p-6 rounded-lg shadow-md">
-              <h3 class="text-xl font-bold text-blue-800 mb-4">Forum Navigation</h3>
-              <ul class="space-y-2">
-                <li><a href="#threadForm" class="text-blue-600 hover:underline">Create a New Thread</a></li>
-                <li><a href="#threadsContainer" class="text-blue-600 hover:underline">View Threads</a></li>
-                <li><a href="#contact" class="text-blue-600 hover:underline">Contact Us</a></li>
-              </ul>
-            </aside>
-        
-            <!-- Main Forum Section -->
-            <main class="flex-1">
-              <section id="forum" class="py-8">
-                <h2 class="text-3xl font-bold text-blue-700 mb-8">Discussion Forum</h2>
-        
-                <!-- Thread Submission Form -->
-                <div id="threadForm" class="bg-gray-900 p-6 rounded-lg shadow-lg interactive">
-                    <h3 class="text-2xl font-semibold text-white mb-4">Create a New Thread</h3>
-                    <form>
-                      <div class="mb-4">
-                        <label for="thread-title" class="block text-left font-medium text-gray-300">Title</label>
-                        <input type="text" id="thread-title" name="title" required
-                          class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      </div>
-                      <div class="mb-4">
-                        <label for="thread-description" class="block text-left font-medium text-gray-300">Description</label>
-                        <textarea id="thread-description" name="description" required
-                          class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                      </div>
-                      <button type="submit" class="px-6 py-3 bg-blue-700 rounded text-white font-semibold hover:bg-blue-600">
-                        Submit Thread
-                      </button>
-                    </form>
-                  </div>
-        
-                <!-- Threads and Replies -->
-        <div id="threadsContainer" class="mt-8 space-y-6">
-            <!-- Threads will be dynamically added here -->
-        </div>
-        
-        <!-- Modal for Thread Details -->
-        <div id="threadModal" class="fixed inset-0 hidden bg-black bg-opacity-70 flex justify-center items-center z-50">
-            <div class="bg-gray-900 p-6 rounded-lg shadow-lg w-11/12 md:w-2/3">
-                <h3 id="modalThreadTitle" class="text-xl font-semibold text-blue-400"></h3>
-                <p id="modalThreadDescription" class="text-gray-300 my-4"></p>
-                <div class="mt-4 space-y-4">
-                    <h4 class="text-lg font-semibold text-blue-500">Replies</h4>
-                    <div id="modalReplies" class="space-y-2"></div>
-                    <form id="modalReplyForm" class="replyForm mt-4 space-y-2">
-                        <textarea 
-                            id="modalReplyInput"
-                            class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Add a reply..." 
-                            required></textarea>
-                        <button 
-                            type="submit" 
-                            class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            Submit Reply
-                        </button>
-                    </form>
+    <section id="forum-section" class="py-16 px-8 bg-gradient-to-b from-gray-900 to-black text-white">
+        <h2 class="text-5xl font-extrabold text-center text-blue-500 mb-10">Community Forum</h2>
+      
+        <div class="flex flex-col lg:flex-row gap-8">
+          <!-- Sidebar Navigation -->
+          <aside class="hidden lg:block w-1/4 bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+            <h3 class="text-xl font-bold text-blue-400 mb-4">Forum Navigation</h3>
+            <ul class="space-y-4">
+              <li><a href="#threadForm" class="text-blue-500 hover:underline">Create a New Thread</a></li>
+              <li><a href="#threadsContainer" class="text-blue-500 hover:underline">View Threads</a></li>
+            </ul>
+          </aside>
+      
+          <!-- Main Forum Section -->
+          <main class="flex-1">
+            <!-- Thread Creation Form -->
+            <div id="threadForm" class="bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+              <h3 class="text-2xl font-semibold mb-6">Create a New Thread</h3>
+              <form onsubmit="handleThreadSubmit(event)">
+                <!-- Thread Title -->
+                <div class="mb-6">
+                  <label for="thread-title" class="block text-sm font-medium mb-2">Title:</label>
+                  <input type="text" id="thread-title" name="title" placeholder="Enter thread title" required
+                    class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
                 </div>
-                <button 
-                    class="mt-4 px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                    onclick="closeThreadModal()">
-                    Close
+                <!-- Thread Description -->
+                <div class="mb-6">
+                  <label for="thread-description" class="block text-sm font-medium mb-2">Description:</label>
+                  <textarea id="thread-description" name="description" placeholder="Enter thread description" required
+                    class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500"></textarea>
+                </div>
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition">
+                  Submit Thread
                 </button>
+              </form>
             </div>
+      
+            <!-- Threads and Replies -->
+            <div id="threadsContainer" class="mt-10 space-y-8">
+              <!-- Placeholder for dynamically added threads -->
+            </div>
+      
+            <!-- Modal for Thread Details -->
+            <div id="threadModal" class="fixed inset-0 hidden bg-black bg-opacity-70 flex justify-center items-center z-50">
+              <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-11/12 md:w-2/3">
+                <h3 id="modalThreadTitle" class="text-xl font-bold text-blue-400"></h3>
+                <p id="modalThreadDescription" class="text-gray-300 mt-4 mb-6"></p>
+                <div>
+                  <h4 class="text-lg font-semibold text-blue-500 mb-4">Replies</h4>
+                  <div id="modalReplies" class="space-y-4">
+                    <!-- Replies will be dynamically added here -->
+                  </div>
+                </div>
+                <form id="modalReplyForm" class="mt-6">
+                  <textarea id="modalReplyInput" placeholder="Add a reply..." required
+                    class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500 mb-4"></textarea>
+                  <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-full hover:bg-blue-500 transition">
+                    Submit Reply
+                  </button>
+                </form>
+                <button class="mt-4 w-full bg-red-600 text-white py-2 rounded-full hover:bg-red-500 transition"
+                  onclick="closeThreadModal()">Close</button>
+              </div>
+            </div>
+          </main>
         </div>
       </section>
       
