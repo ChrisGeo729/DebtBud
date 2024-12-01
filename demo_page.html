@@ -20,6 +20,96 @@
       background-color: #2563eb;
       color: white;
     }
+    #chatbot-container {
+          position: fixed;
+          bottom: 1rem;
+          right: 1rem;
+          width: 300px;
+          max-height: 400px;
+          background-color: #1a1a1a;
+          border: 1px solid #333;
+          border-radius: 10px;
+          overflow: hidden;
+          display: none;
+          flex-direction: column;
+          z-index: 1000;
+        }
+      
+        #chatbot-header {
+          background-color: #333;
+          color: white;
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      
+        #chatbot-messages {
+          flex-grow: 1;
+          padding: 10px;
+          overflow-y: auto;
+          background-color: #222;
+        }
+      
+        #chatbot-input-container {
+          display: flex;
+          border-top: 1px solid #333;
+          padding: 10px;
+          background-color: #1a1a1a;
+        }
+      
+        #chatbot-input {
+          flex-grow: 1;
+          padding: 8px;
+          border-radius: 5px;
+          border: 1px solid #444;
+          background-color: #333;
+          color: white;
+        }
+      
+        #chatbot-send {
+          margin-left: 8px;
+          padding: 8px 12px;
+          background-color: #333cb4;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      
+        #chatbot-button {
+          position: fixed;
+          bottom: 1rem;
+          right: 1rem;
+          background-color: #434bb7;
+          color: white;
+          padding: 12px;
+          border-radius: 50%;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+          z-index: 999;
+        }
+        #forum {
+  display: block;
+  color: white;
+}
+.bg-gray-900 {
+  background-color: #1a202c;
+}
+.text-blue-700 {
+  color: #2b6cb0;
+}
+
+
+    .interactive:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s ease-in-out;
+    }
+    .active-tab {
+      background-color: #2563eb;
+      color: white;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -275,33 +365,415 @@ function updateProgressCharts(expenses) {
 
     <!-- Loan Calculator Section -->
     <section id="calculator-section" class="hidden-section">
-      <!-- Paste Loan Calculator HTML here -->
+        <section class="py-16 px-6 bg-black text-white">
+            <div class="max-w-3xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg">
+              <h2 class="text-4xl font-bold text-center text-blue-700 mb-8">Loan Repayment Calculator</h2>
+              <form id="loanForm" onsubmit="calculateLoan(event)" class="space-y-6">
+                <!-- Loan Amount -->
+                <div>
+                  <label for="loan-amount" class="block text-gray-300 font-medium">Loan Amount:</label>
+                  <input type="number" id="loan-amount" name="loan-amount" required
+                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter loan amount">
+                </div>
+        
+                <!-- Annual Interest Rate -->
+                <div>
+                  <label for="interest-rate" class="block text-gray-300 font-medium">Annual Interest Rate (%):</label>
+                  <input type="number" id="interest-rate" name="interest-rate" step="0.01" required
+                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter interest rate (e.g., 3.75)">
+                </div>
+        
+                <!-- Repayment Options -->
+                <div>
+                  <label class="block text-gray-300 font-medium mb-2">Repayment Option:</label>
+                  <div class="flex items-center space-x-4">
+                    <div>
+                      <input type="radio" id="option-term" name="repayment-option" value="term" checked
+                        class="text-blue-500 focus:ring-blue-500" onchange="toggleInput()">
+                      <label for="option-term" class="text-gray-300">Specify Loan Term (years)</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="option-payment" name="repayment-option" value="payment"
+                        class="text-blue-500 focus:ring-blue-500" onchange="toggleInput()">
+                      <label for="option-payment" class="text-gray-300">Specify Desired Monthly Payment</label>
+                    </div>
+                  </div>
+                </div>
+        
+                <!-- Loan Term Input -->
+                <div id="term-input" class="mt-4">
+                  <label for="loan-term" class="block text-gray-300 font-medium">Loan Term (years):</label>
+                  <input type="number" id="loan-term" name="loan-term"
+                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter loan term in years">
+                </div>
+        
+                <!-- Monthly Payment Input -->
+                <div id="payment-input" class="hidden mt-4">
+                  <label for="monthly-payment" class="block text-gray-300 font-medium">Desired Monthly Payment:</label>
+                  <input type="number" id="monthly-payment" name="monthly-payment"
+                    class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-700"
+                    placeholder="Enter desired monthly payment">
+                </div>
+        
+                <!-- Submit Button -->
+                <button type="submit" class="w-full px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600">
+                  Calculate Repayment
+                </button>
+              </form>
+        
+              <!-- Results Section -->
+              <div id="loan-results" class="mt-8 p-4 bg-gray-700 rounded-lg shadow hidden">
+                <h3 class="text-xl font-semibold text-blue-700 mb-4">Results:</h3>
+                <p id="monthly-payment-result" class="text-gray-300"></p>
+                <p id="total-payment-result" class="text-gray-300"></p>
+                <p id="total-interest-result" class="text-gray-300"></p>
+              </div>
+            </div>
+          </section>
+          <!-- Chatbot Trigger Button -->
+  <button id="chatbot-button">Chat</button>
+
+  <!-- Chatbot Container -->
+  <div id="chatbot-container">
+    <div id="chatbot-header">
+      <span>Assistant</span>
+      <button onclick="toggleChatbot()" style="color: white; background: none; border: none; cursor: pointer;">&times;</button>
+    </div>
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input-container">
+      <input type="text" id="chatbot-input" placeholder="Type a message..." />
+      <button id="chatbot-send">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const chatbotButton = document.getElementById("chatbot-button");
+    const chatbotMessages = document.getElementById("chatbot-messages");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotSend = document.getElementById("chatbot-send");
+
+    function toggleChatbot() {
+      if (chatbotContainer.style.display === "none" || !chatbotContainer.style.display) {
+        chatbotContainer.style.display = "flex";
+        chatbotButton.style.display = "none";
+      } else {
+        chatbotContainer.style.display = "none";
+        chatbotButton.style.display = "block";
+      }
+    }
+
+    chatbotButton.addEventListener("click", toggleChatbot);
+
+    chatbotSend.addEventListener("click", async () => {
+      const userMessage = chatbotInput.value.trim();
+      if (!userMessage) return;
+
+      // Add user message to the chat
+      const userMessageElement = document.createElement("div");
+      userMessageElement.style.color = "white";
+      userMessageElement.style.marginBottom = "10px";
+      userMessageElement.textContent = `You: ${userMessage}`;
+      chatbotMessages.appendChild(userMessageElement);
+
+      chatbotInput.value = "";
+
+      // Fetch response from the chatbot
+      const response = await fetch("http://127.0.0.1:5000/chatbot", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const botMessageElement = document.createElement("div");
+        botMessageElement.style.color = "#434bb7";
+        botMessageElement.style.marginBottom = "10px";
+        botMessageElement.textContent = `Assistant: ${data.message}`;
+        chatbotMessages.appendChild(botMessageElement);
+      } else {
+        const errorMessageElement = document.createElement("div");
+        errorMessageElement.style.color = "red";
+        errorMessageElement.style.marginBottom = "10px";
+        errorMessageElement.textContent = "Assistant: Something went wrong. Please try again.";
+        chatbotMessages.appendChild(errorMessageElement);
+      }
+
+      // Scroll to the latest message
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+    function toggleInput() {
+        const isTermOption = document.getElementById('option-term').checked;
+        document.getElementById('term-input').classList.toggle('hidden', !isTermOption);
+        document.getElementById('payment-input').classList.toggle('hidden', isTermOption);
+      }
+  
+      function calculateLoan(event) {
+        event.preventDefault();
+  
+        const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+        const annualInterestRate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
+        const isTermOption = document.getElementById('option-term').checked;
+  
+        let monthlyPayment, totalPayment, totalInterest, loanTerm;
+  
+        if (isTermOption) {
+          loanTerm = parseFloat(document.getElementById('loan-term').value) * 12;
+          monthlyPayment = (loanAmount * annualInterestRate) / (1 - Math.pow(1 + annualInterestRate, -loanTerm));
+          totalPayment = monthlyPayment * loanTerm;
+          totalInterest = totalPayment - loanAmount;
+        } else {
+          monthlyPayment = parseFloat(document.getElementById('monthly-payment').value);
+          loanTerm = Math.log(1 - (loanAmount * annualInterestRate) / monthlyPayment) / Math.log(1 + annualInterestRate);
+          totalPayment = monthlyPayment * loanTerm;
+          totalInterest = totalPayment - loanAmount;
+        }
+  
+        document.getElementById('loan-results').classList.remove('hidden');
+        document.getElementById('monthly-payment-result').innerText = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
+        document.getElementById('total-payment-result').innerText = `Total Payment: $${totalPayment.toFixed(2)}`;
+        document.getElementById('total-interest-result').innerText = `Total Interest: $${totalInterest.toFixed(2)}`;
+      }
+  </script>
     </section>
 
     <!-- Community Forum Section -->
-    <section id="forum-section" class="hidden-section">
-      <!-- Paste Community Forum HTML here -->
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-black text-white text-center py-4">
-    <p>© 2024 DebtBud. All rights reserved.</p>
-  </footer>
-
-  <script>
-    function showSection(sectionId) {
+    <!-- Community Forum Section -->
+    <section id="forum-section" class="hidden-section flex flex-col lg:flex-row gap-8 p-8">
+        <div id="main-content" class="flex flex-col lg:flex-row gap-8 p-8 mt-16">
+    
+            <!-- Sticky Sidebar -->
+            <aside class="hidden lg:block w-1/4 sticky-sidebar bg-gray-900 p-6 rounded-lg shadow-md">
+              <h3 class="text-xl font-bold text-blue-800 mb-4">Forum Navigation</h3>
+              <ul class="space-y-2">
+                <li><a href="#threadForm" class="text-blue-600 hover:underline">Create a New Thread</a></li>
+                <li><a href="#threadsContainer" class="text-blue-600 hover:underline">View Threads</a></li>
+                <li><a href="#contact" class="text-blue-600 hover:underline">Contact Us</a></li>
+              </ul>
+            </aside>
+        
+            <!-- Main Forum Section -->
+            <main class="flex-1">
+              <section id="forum" class="py-8">
+                <h2 class="text-3xl font-bold text-blue-700 mb-8">Discussion Forum</h2>
+        
+                <!-- Thread Submission Form -->
+                <div id="threadForm" class="bg-gray-900 p-6 rounded-lg shadow-lg interactive">
+                    <h3 class="text-2xl font-semibold text-white mb-4">Create a New Thread</h3>
+                    <form>
+                      <div class="mb-4">
+                        <label for="thread-title" class="block text-left font-medium text-gray-300">Title</label>
+                        <input type="text" id="thread-title" name="title" required
+                          class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      </div>
+                      <div class="mb-4">
+                        <label for="thread-description" class="block text-left font-medium text-gray-300">Description</label>
+                        <textarea id="thread-description" name="description" required
+                          class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                      </div>
+                      <button type="submit" class="px-6 py-3 bg-blue-700 rounded text-white font-semibold hover:bg-blue-600">
+                        Submit Thread
+                      </button>
+                    </form>
+                  </div>
+        
+                <!-- Threads and Replies -->
+        <div id="threadsContainer" class="mt-8 space-y-6">
+            <!-- Threads will be dynamically added here -->
+        </div>
+        
+        <!-- Modal for Thread Details -->
+        <div id="threadModal" class="fixed inset-0 hidden bg-black bg-opacity-70 flex justify-center items-center z-50">
+            <div class="bg-gray-900 p-6 rounded-lg shadow-lg w-11/12 md:w-2/3">
+                <h3 id="modalThreadTitle" class="text-xl font-semibold text-blue-400"></h3>
+                <p id="modalThreadDescription" class="text-gray-300 my-4"></p>
+                <div class="mt-4 space-y-4">
+                    <h4 class="text-lg font-semibold text-blue-500">Replies</h4>
+                    <div id="modalReplies" class="space-y-2"></div>
+                    <form id="modalReplyForm" class="replyForm mt-4 space-y-2">
+                        <textarea 
+                            id="modalReplyInput"
+                            class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Add a reply..." 
+                            required></textarea>
+                        <button 
+                            type="submit" 
+                            class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            Submit Reply
+                        </button>
+                    </form>
+                </div>
+                <button 
+                    class="mt-4 px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                    onclick="closeThreadModal()">
+                    Close
+                </button>
+            </div>
+        </div>
+      </section>
+      
+      
+    </main>
+  
+    <!-- JavaScript -->
+    <script>
+      // Function to show a section and store the selected tab in localStorage
+function showSection(sectionId) {
   // Hide all sections
-  document.querySelectorAll('section').forEach(section => section.classList.add('hidden-section'));
+  document.querySelectorAll('main > section').forEach(section => section.classList.add('hidden-section'));
 
-  // Remove active-tab class from all buttons
+  // Remove the active-tab class from all buttons
   document.querySelectorAll('nav button').forEach(button => button.classList.remove('active-tab'));
 
-  // Show the selected section and activate the tab
+  // Show the selected section and activate the corresponding tab
   document.getElementById(`${sectionId}-section`).classList.remove('hidden-section');
   document.getElementById(`${sectionId}-tab`).classList.add('active-tab');
+
+  // Save the current tab in localStorage
+  localStorage.setItem('activeTab', sectionId);
 }
 
-  </script>
+// Function to load the last active tab on page load
+function loadLastActiveTab() {
+  const savedTab = localStorage.getItem('activeTab');
+  if (savedTab) {
+    showSection(savedTab);
+  } else {
+    // Default to the budgeting section if no tab is saved
+    showSection('budgeting');
+  }
+}
+
+// Event listeners for tab buttons
+document.getElementById('budgeting-tab').addEventListener('click', () => showSection('budgeting'));
+document.getElementById('calculator-tab').addEventListener('click', () => showSection('calculator'));
+document.getElementById('forum-tab').addEventListener('click', () => showSection('forum'));
+
+// Load the last active tab when the page loads
+window.onload = loadLastActiveTab;
+
+
+  
+      // Forum Functionality
+      const apiUrl = 'http://localhost:5003/api/threads';
+
+// Fetch and display threads
+async function fetchThreads() {
+  try {
+    const response = await fetch(apiUrl);
+    const threads = await response.json();
+    renderThreads(threads);
+  } catch (error) {
+    console.error('Error fetching threads:', error);
+  }
+}
+
+// Render threads and replies
+function renderThreads(threads) {
+const threadsContainer = document.getElementById('threadsContainer');
+threadsContainer.innerHTML = ''; // Clear existing threads
+
+threads.forEach((thread) => {
+const threadElement = document.createElement('div');
+threadElement.classList.add('bg-gray-800', 'p-6', 'rounded-lg', 'shadow-md', 'interactive', 'text-white');
+
+threadElement.innerHTML = `
+  <h3 class="text-xl font-semibold text-blue-400">${thread.title}</h3>
+  <p class="text-gray-300 my-2" style="white-space: pre-wrap; overflow-wrap: break-word;">
+    ${thread.description}
+  </p>
+  <div class="mt-4 space-y-4">
+    <h4 class="text-lg font-semibold text-blue-500">Replies</h4>
+    <div id="replies-${thread.id}" class="space-y-2">
+      ${thread.replies.map((reply) => `
+        <p class="bg-gray-700 p-3 rounded shadow text-gray-300">- ${reply.reply}</p>
+      `).join('')}
+    </div>
+    <form data-thread-id="${thread.id}" class="replyForm mt-4 space-y-2">
+      <textarea 
+        class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Add a reply..." 
+        required></textarea>
+      <button 
+        type="submit" 
+        class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Submit Reply
+      </button>
+    </form>
+  </div>
+`;
+
+threadsContainer.appendChild(threadElement);
+});
+
+document.querySelectorAll('.replyForm').forEach((form) => {
+form.addEventListener('submit', handleReplySubmit);
+});
+}
+
+
+// Handle thread submission
+async function handleThreadSubmit(event) {
+  event.preventDefault();
+  const title = document.getElementById('thread-title').value;
+  const description = document.getElementById('thread-description').value;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, description }),
+    });
+
+    if (response.ok) {
+      document.getElementById('threadForm').reset();
+      fetchThreads();
+    } else {
+      const errorData = await response.json();
+      alert(errorData.error || 'Failed to submit thread.');
+    }
+  } catch (error) {
+    console.error('Error submitting thread:', error);
+  }
+}
+
+// Handle reply submission
+async function handleReplySubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const threadId = form.getAttribute('data-thread-id');
+  const reply = form.querySelector('textarea').value;
+
+  try {
+    const response = await fetch(`${apiUrl}/${threadId}/replies`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reply }),
+    });
+
+    if (response.ok) {
+      form.reset();
+      fetchThreads();
+    } else {
+      const errorData = await response.json();
+      alert(errorData.error || 'Failed to submit reply.');
+    }
+  } catch (error) {
+    console.error('Error submitting reply:', error);
+  }
+}
+
+// Initialize
+document.getElementById('threadForm').addEventListener('submit', handleThreadSubmit);
+fetchThreads();
+
+    </script>
+  
 </body>
 </html>
