@@ -128,10 +128,12 @@
 </head>
 <body class="bg-gray-900 text-white">
   <!-- Header -->
+  <!-- Header -->
   <header class="bg-black text-white px-6 py-4 flex justify-between">
     <a href="#" class="text-2xl font-bold">DebtBud Dashboard</a>
     <nav class="flex space-x-4">
-      <button id="budgeting-tab" class="px-4 py-2 rounded hover:bg-blue-600 active-tab" onclick="showSection('budgeting')">Budgeting</button>
+      <button id="overview-tab" class="px-4 py-2 rounded hover:bg-blue-600 active-tab" onclick="showSection('overview')">Account Overview</button>
+      <button id="budgeting-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('budgeting')">Budgeting</button>
       <button id="calculator-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('calculator')">Loan Calculator</button>
       <button id="forum-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('forum')">Community Forum</button>
     </nav>
@@ -139,6 +141,102 @@
 
   <!-- Main Content -->
   <main class="flex-grow p-8">
+    <section id="overview-section" class="py-16 px-8 bg-gray-900 text-white">
+        <h2 class="text-4xl font-bold text-center text-blue-600 mb-10">Account Overview</h2>
+      
+        <!-- Statement Summary -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-10">
+          <h3 class="text-xl font-semibold text-gray-200 mb-4">Statement Summary</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center">
+              <p class="text-lg font-semibold text-gray-400">Total Income</p>
+              <p id="total-income" class="text-2xl font-bold text-green-400">$0</p>
+            </div>
+            <div class="text-center">
+              <p class="text-lg font-semibold text-gray-400">Total Expenses</p>
+              <p id="total-expenses" class="text-2xl font-bold text-red-400">$0</p>
+            </div>
+            <div class="text-center">
+              <p class="text-lg font-semibold text-gray-400">Remaining Balance</p>
+              <p id="remaining-balance" class="text-2xl font-bold text-yellow-400">$0</p>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Bank Statement -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-gray-200 mb-4">Bank Statement</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full table-auto border-collapse">
+              <thead>
+                <tr class="bg-gray-700 text-left">
+                  <th class="px-4 py-2 text-blue-400">Date/Time</th>
+                  <th class="px-4 py-2 text-blue-400">Category</th>
+                  <th class="px-4 py-2 text-blue-400">Description</th>
+                  <th class="px-4 py-2 text-blue-400">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="statement-rows">
+                <!-- Transactions dynamically rendered here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-8">
+            <h3 class="text-xl font-semibold text-gray-200 mb-4">Add a New Transaction</h3>
+            <form id="add-transaction-form" onsubmit="addNewTransaction(event)" class="space-y-6">
+              <div>
+                <label for="transaction-category" class="block text-sm font-medium text-gray-400">Category</label>
+                <select
+                  id="transaction-category"
+                  name="category"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                >
+                  <option value="Income">Income</option>
+                  <option value="Rent">Rent</option>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Savings">Savings</option>
+                </select>
+              </div>
+              <div>
+                <label for="transaction-description" class="block text-sm font-medium text-gray-400">Description</label>
+                <input
+                  type="text"
+                  id="transaction-description"
+                  name="description"
+                  placeholder="Enter transaction description"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label for="transaction-amount" class="block text-sm font-medium text-gray-400">Amount</label>
+                <input
+                  type="number"
+                  id="transaction-amount"
+                  name="amount"
+                  placeholder="Enter transaction amount"
+                  required
+                  step="0.01"
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition"
+              >
+                Add Transaction
+              </button>
+            </form>
+          </div>
+          
+      </section>
+      
+      
     <!-- Budgeting Section -->
     <section id="budgeting-section" class="py-16 px-8 bg-gradient-to-b from-gray-800 to-black text-white">
         <h2 class="text-5xl font-extrabold text-center text-blue-500 mb-10">Budgeting Tools</h2>
@@ -146,45 +244,84 @@
         <!-- Grid Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Left: Budget Goals Form -->
-          <div class="bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition">
-            <h3 class="text-2xl font-semibold text-center mb-6">Enter Your Budget Goals</h3>
-            <form id="goalsForm" onsubmit="submitGoals(event)" class="space-y-6">
-              <!-- Rent Goal -->
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold text-gray-200 mb-4">Set Your Budget Goals</h3>
+            <form id="budget-goals-form" onsubmit="submitGoals(event)" class="space-y-6">
+              <!-- <div>
+                <label for="income-goal" class="block text-sm font-medium text-gray-400">Income Goal</label>
+                <input
+                  type="number"
+                  id="income-goal"
+                  name="income-goal"
+                  placeholder="Enter income goal"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
+              </div> -->
               <div>
-                <label for="rent-goal" class="block text-sm font-medium">Rent Goal:</label>
-                <input type="number" id="rent-goal" name="rent-goal" placeholder="Enter rent budget" required
-                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+                <label for="rent-goal" class="block text-sm font-medium text-gray-400">Rent Goal</label>
+                <input
+                  type="number"
+                  id="rent-goal"
+                  name="rent-goal"
+                  placeholder="Enter rent goal"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
               </div>
-              <!-- Groceries Goal -->
               <div>
-                <label for="groceries-goal" class="block text-sm font-medium">Groceries Goal:</label>
-                <input type="number" id="groceries-goal" name="groceries-goal" placeholder="Enter groceries budget" required
-                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+                <label for="groceries-goal" class="block text-sm font-medium text-gray-400">Groceries Goal</label>
+                <input
+                  type="number"
+                  id="groceries-goal"
+                  name="groceries-goal"
+                  placeholder="Enter groceries goal"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
               </div>
-              <!-- Entertainment Goal -->
               <div>
-                <label for="entertainment-goal" class="block text-sm font-medium">Entertainment Goal:</label>
-                <input type="number" id="entertainment-goal" name="entertainment-goal" placeholder="Enter entertainment budget" required
-                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+                <label for="entertainment-goal" class="block text-sm font-medium text-gray-400">Entertainment Goal</label>
+                <input
+                  type="number"
+                  id="entertainment-goal"
+                  name="entertainment-goal"
+                  placeholder="Enter entertainment goal"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
               </div>
-              <!-- Transportation Goal -->
               <div>
-                <label for="transportation-goal" class="block text-sm font-medium">Transportation Goal:</label>
-                <input type="number" id="transportation-goal" name="transportation-goal" placeholder="Enter transportation budget" required
-                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+                <label for="transportation-goal" class="block text-sm font-medium text-gray-400">Transportation Goal</label>
+                <input
+                  type="number"
+                  id="transportation-goal"
+                  name="transportation-goal"
+                  placeholder="Enter transportation goal"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
               </div>
-              <!-- Savings Goal -->
               <div>
-                <label for="savings-goal" class="block text-sm font-medium">Savings Goal:</label>
-                <input type="number" id="savings-goal" name="savings-goal" placeholder="Enter savings budget" required
-                  class="w-full p-3 bg-gray-700 rounded focus:ring focus:ring-blue-500">
+                <label for="savings-goal" class="block text-sm font-medium text-gray-400">Savings Goal</label>
+                <input
+                  type="number"
+                  id="savings-goal"
+                  name="savings-goal"
+                  placeholder="Enter savings goal"
+                  required
+                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
+                />
               </div>
-              <!-- Submit Button -->
-              <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition">
+              <button
+                type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition"
+              >
                 Save Goals
               </button>
             </form>
           </div>
+          
       
           <!-- Right: AI Advice -->
           <div id="advice-output" class="bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition">
@@ -225,155 +362,302 @@
       
     
         <script>
-            let budgetGoals = {};
-const bankAccountData = {
-    transactions: [
-        { id: 1, date: "2024-12-01", category: "Income", amount: 1500 },
-        { id: 2, date: "2024-12-02", category: "Rent", amount: -800 },
-        { id: 3, date: "2024-12-03", category: "Groceries", amount: -500 },
-        { id: 4, date: "2024-12-04", category: "Entertainment", amount: -50 },
-        { id: 5, date: "2024-12-05", category: "Transportation", amount: -100 },
-        { id: 6, date: "2024-12-06", category: "Savings", amount: -50 }
-    ]
+            // Centralized transaction data
+// Centralized transaction data
+const transactions = [
+  { id: 1, date: "2024-12-01", category: "Income", description: "Salary", amount: 1500 },
+  { id: 2, date: "2024-12-02", category: "Rent", description: "Monthly rent payment", amount: -800 },
+  { id: 3, date: "2024-12-03", category: "Groceries", description: "Supermarket shopping", amount: -500 },
+  { id: 4, date: "2024-12-04", category: "Entertainment", description: "Movie night", amount: -50 },
+  { id: 5, date: "2024-12-05", category: "Transportation", description: "Bus fare", amount: -100 },
+  { id: 6, date: "2024-12-06", category: "Savings", description: "Savings contribution", amount: -50 },
+];
+
+// Budget goals object
+let budgetGoals = {
+  income: 1500, // Hardcoded income goal
 };
+
+// Load Budget Goals from Local Storage
+function loadBudgetGoals() {
+  const savedGoals = localStorage.getItem("budgetGoals");
+  if (savedGoals) {
+    const parsedGoals = JSON.parse(savedGoals);
+    budgetGoals = {
+      ...budgetGoals, // Keep hardcoded income goal
+      ...parsedGoals, // Load other goals from localStorage
+    };
+
+    // Populate form inputs with saved goals
+    document.getElementById("rent-goal").value = budgetGoals.rent || 0;
+    document.getElementById("groceries-goal").value = budgetGoals.groceries || 0;
+    document.getElementById("entertainment-goal").value = budgetGoals.entertainment || 0;
+    document.getElementById("transportation-goal").value = budgetGoals.transportation || 0;
+    document.getElementById("savings-goal").value = budgetGoals.savings || 0;
+  } else {
+    // Initialize default goals if nothing is saved
+    budgetGoals = {
+      ...budgetGoals, // Keep hardcoded income goal
+      rent: 0,
+      groceries: 0,
+      entertainment: 0,
+      transportation: 0,
+      savings: 0,
+    };
+  }
+}
+
+// Save Budget Goals to Local Storage
+function saveBudgetGoals() {
+  const goalsToSave = { ...budgetGoals };
+  delete goalsToSave.income; // Don't save hardcoded income goal
+  localStorage.setItem("budgetGoals", JSON.stringify(goalsToSave));
+}
 
 // Handle budget goal submission
 // Handle budget goal submission
 function submitGoals(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    // Hardcode income to 1500
-    budgetGoals = {
-        income: 1500, // Fixed value
-        rent: parseFloat(document.getElementById('rent-goal').value) || 0,
-        groceries: parseFloat(document.getElementById('groceries-goal').value) || 0,
-        entertainment: parseFloat(document.getElementById('entertainment-goal').value) || 0,
-        transportation: parseFloat(document.getElementById('transportation-goal').value) || 0,
-        savings: parseFloat(document.getElementById('savings-goal').value) || 0
-    };
+  // Get budget goals from form inputs
+  budgetGoals = {
+    ...budgetGoals, // Preserve hardcoded income goal
+    rent: parseFloat(document.getElementById("rent-goal").value) || 0,
+    groceries: parseFloat(document.getElementById("groceries-goal").value) || 0,
+    entertainment: parseFloat(document.getElementById("entertainment-goal").value) || 0,
+    transportation: parseFloat(document.getElementById("transportation-goal").value) || 0,
+    savings: parseFloat(document.getElementById("savings-goal").value) || 0,
+  };
 
-    fetchAIAdvice();
+  // Save to localStorage
+  saveBudgetGoals();
+
+  // Render charts with updated goals
+  renderBudgetingProgress();
+
+  // Fetch AI advice based on updated goals and expenses
+  fetchAIAdvice();
+
+  alert("Budget goals saved! AI advice updated.");
 }
 
 
+// Render Account Overview Section
+function renderAccountOverview() {
+  const statementRows = document.getElementById("statement-rows");
+  statementRows.innerHTML = "";
 
-// Calculate current expenses from bank data
-function calculateCurrentExpenses() {
-    const expenses = {
-        income: 0,
-        rent: 0,
-        groceries: 0,
-        entertainment: 0,
-        transportation: 0,
-        savings: 0
-    };
+  let totalIncome = 0;
+  let totalExpenses = 0;
 
-    bankAccountData.transactions.forEach((transaction) => {
-        const category = transaction.category.toLowerCase();
-        if (expenses.hasOwnProperty(category)) {
-            expenses[category] += Math.abs(transaction.amount);
-        }
-    });
+  transactions.forEach((transaction) => {
+    const row = document.createElement("tr");
+    row.classList.add("border-b", "border-gray-600");
 
-    return expenses;
-}
-
-
-// Fetch AI advice from Flask server
-async function fetchAIAdvice() {
-    const expenses = calculateCurrentExpenses();
-    const income = budgetGoals.income;
-    const totalExpenses = Object.values(expenses).reduce((acc, val) => acc + val, 0);
-    const balance = income - totalExpenses;
-
-    const payload = {
-        income,
-        expenses,
-        budget_goals: budgetGoals,
-        balance
-    };
-
-    try {
-        const response = await fetch('http://127.0.0.1:5000/get-advice', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            document.getElementById('advice-text').innerText = result.advice;
-            updateProgressCharts(expenses);
-        } else {
-            document.getElementById('advice-text').innerText = 'Error fetching AI advice. Please try again.';
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        document.getElementById('advice-text').innerText = 'Failed to connect to the server.';
-    }
-}
-
-// Update progress charts dynamically
-function getColorByPercentage(percentage) {
-    if (percentage <= 9) {
-        return '#2563eb'; // Blue for 0-9%
-    } else if (percentage <= 49) {
-        return '#4caf50'; // Green for 10-49%
-    } else if (percentage <= 75) {
-        return '#ffc107'; // Yellow for 50-75%
+    // Update totals
+    if (transaction.amount > 0) {
+      totalIncome += transaction.amount;
     } else {
-        return '#f44336'; // Red for 76-100%
+      totalExpenses += Math.abs(transaction.amount);
     }
+
+    row.innerHTML = `
+      <td class="px-4 py-2 text-gray-300">${transaction.date}</td>
+      <td class="px-4 py-2 text-gray-300">${transaction.category}</td>
+      <td class="px-4 py-2 text-gray-300">${transaction.description}</td>
+      <td class="px-4 py-2 ${transaction.amount > 0 ? "text-green-400" : "text-red-400"}">${
+      transaction.amount > 0 ? "+" : "-"
+    } ${Math.abs(transaction.amount).toFixed(2)}</td>
+    `;
+
+    statementRows.appendChild(row);
+  });
+
+  // Update summary totals
+  document.getElementById("total-income").textContent = `$${totalIncome.toFixed(2)}`;
+  document.getElementById("total-expenses").textContent = `$${totalExpenses.toFixed(2)}`;
+  document.getElementById("remaining-balance").textContent = `$${(totalIncome - totalExpenses).toFixed(2)}`;
+}
+
+// Render Budgeting Progress Section
+function renderBudgetingProgress() {
+  const expenses = calculateCurrentExpenses();
+
+  // Update progress charts
+  updateProgressCharts(expenses);
+}
+
+// Calculate current expenses from centralized transaction data
+function calculateCurrentExpenses() {
+  const expenses = {
+    income: 0,
+    rent: 0,
+    groceries: 0,
+    entertainment: 0,
+    transportation: 0,
+    savings: 0,
+  };
+
+  transactions.forEach((transaction) => {
+    const category = transaction.category.toLowerCase();
+    if (transaction.amount < 0 && expenses.hasOwnProperty(category)) {
+      // Only count negative amounts as expenses
+      expenses[category] += Math.abs(transaction.amount);
+    } else if (transaction.amount > 0 && category === "income") {
+      // Count positive amounts as income
+      expenses.income += transaction.amount;
+    }
+  });
+
+  return expenses;
 }
 
 // Update progress charts dynamically
 function updateProgressCharts(expenses) {
-    const categories = Object.keys(budgetGoals);
+  const categories = Object.keys(budgetGoals);
 
-    categories.forEach((category) => {
-        const goal = budgetGoals[category];
-        const spent = expenses[category] || 0;
+  categories.forEach((category) => {
+    const goal = budgetGoals[category];
+    const spent = expenses[category] || 0;
 
-        const percentage = Math.round((spent / goal) * 100);
-        const remaining = 100 - percentage;
+    const percentage = goal > 0 ? Math.round((spent / goal) * 100) : 0;
+    const remaining = 100 - percentage;
 
-        const color = getColorByPercentage(percentage);
-        const canvasId = `chart-${category}`;
-        const ctx = document.getElementById(canvasId)?.getContext('2d');
+    const color = getColorByPercentage(percentage);
+    const canvasId = `chart-${category}`;
+    const ctx = document.getElementById(canvasId)?.getContext("2d");
 
-        if (!ctx) return;
+    if (!ctx) return;
 
-        // Update the chart title with the percentage
-        const titleElement = document.querySelector(`#chart-${category}-title`);
-        if (titleElement) {
-            titleElement.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)} (${percentage}%)`;
-        }
+    // Update the chart title with the percentage
+    const titleElement = document.querySelector(`#chart-${category}-title`);
+    if (titleElement) {
+      titleElement.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)} (${percentage}%)`;
+    }
 
-        // Destroy any existing chart before rendering a new one
-        if (ctx.chart) {
-            ctx.chart.destroy();
-        }
+    // Destroy any existing chart before rendering a new one
+    if (ctx.chart) {
+      ctx.chart.destroy();
+    }
 
-        ctx.chart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: [percentage, remaining],
-                    backgroundColor: [color, '#e0e0e0'],
-                    hoverBackgroundColor: [color, '#e0e0e0']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                cutout: '75%', // Smaller size
-                plugins: {
-                    legend: { display: false }
-                }
-            }
-        });
+    ctx.chart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        datasets: [
+          {
+            data: [percentage, remaining],
+            backgroundColor: [color, "#e0e0e0"],
+            hoverBackgroundColor: [color, "#e0e0e0"],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        cutout: "75%",
+        plugins: {
+          legend: { display: false },
+        },
+      },
     });
+  });
 }
+
+// Get color by percentage
+function getColorByPercentage(percentage) {
+  if (percentage <= 9) {
+    return "#2563eb"; // Blue
+  } else if (percentage <= 49) {
+    return "#4caf50"; // Green
+  } else if (percentage <= 75) {
+    return "#ffc107"; // Yellow
+  } else {
+    return "#f44336"; // Red
+  }
+}
+
+// Handle form submission to add a new transaction
+function addNewTransaction(event) {
+  event.preventDefault(); // Prevent page reload on form submission
+
+  // Get form values
+  const category = document.getElementById("transaction-category").value;
+  const description = document.getElementById("transaction-description").value;
+  let amount = parseFloat(document.getElementById("transaction-amount").value);
+
+  if (isNaN(amount) || amount === 0) {
+    alert("Amount must be a valid number and cannot be zero.");
+    return;
+  }
+
+  // Ensure the amount is negative for non-Income categories
+  if (category !== "Income") {
+    amount = -Math.abs(amount);
+  } else {
+    amount = Math.abs(amount); // Ensure positive for Income
+  }
+
+  // Get the current date in YYYY-MM-DD format
+  const currentDate = new Date().toISOString().split("T")[0];
+
+  // Add the new transaction to the centralized array
+  transactions.push({
+    id: transactions.length + 1,
+    date: currentDate,
+    category,
+    description,
+    amount,
+  });
+
+  // Re-render both sections
+  renderAccountOverview();
+  renderBudgetingProgress();
+
+  // Reset the form
+  document.getElementById("add-transaction-form").reset();
+}
+// Fetch AI advice based on current expenses and budget goals
+async function fetchAIAdvice() {
+  const expenses = calculateCurrentExpenses();
+  const income = budgetGoals.income; // Hardcoded income goal
+  const totalExpenses = Object.values(expenses).reduce((acc, val) => acc + val, 0);
+  const balance = income - totalExpenses;
+
+  const payload = {
+    income,
+    expenses,
+    budget_goals: budgetGoals,
+    balance,
+  };
+
+  try {
+    const response = await fetch("http://127.0.0.1:5000/get-advice", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      document.getElementById("advice-text").innerText = result.advice;
+    } else {
+      document.getElementById("advice-text").innerText =
+        "Error fetching AI advice. Please try again.";
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    document.getElementById("advice-text").innerText =
+      "Failed to connect to the server.";
+  }
+}
+
+
+// Load goals and render charts on page load
+window.addEventListener("load", () => {
+  loadBudgetGoals(); // Load saved budget goals
+  renderAccountOverview(); // Render Account Overview
+  renderBudgetingProgress(); // Render charts
+});
 
 
         </script>
@@ -675,16 +959,22 @@ function updateProgressCharts(expenses) {
     <!-- JavaScript -->
     <script>
       // Function to show a section and store the selected tab in localStorage
+// Function to show a section and store the selected tab in localStorage
 function showSection(sectionId) {
   // Hide all sections
-  document.querySelectorAll('main > section').forEach(section => section.classList.add('hidden-section'));
+  document.querySelectorAll('main > section').forEach((section) => section.classList.add('hidden-section'));
 
   // Remove the active-tab class from all buttons
-  document.querySelectorAll('nav button').forEach(button => button.classList.remove('active-tab'));
+  document.querySelectorAll('nav button').forEach((button) => button.classList.remove('active-tab'));
 
   // Show the selected section and activate the corresponding tab
-  document.getElementById(`${sectionId}-section`).classList.remove('hidden-section');
-  document.getElementById(`${sectionId}-tab`).classList.add('active-tab');
+  const section = document.getElementById(`${sectionId}-section`);
+  const tab = document.getElementById(`${sectionId}-tab`);
+
+  if (section && tab) {
+    section.classList.remove('hidden-section');
+    tab.classList.add('active-tab');
+  }
 
   // Save the current tab in localStorage
   localStorage.setItem('activeTab', sectionId);
@@ -696,18 +986,20 @@ function loadLastActiveTab() {
   if (savedTab) {
     showSection(savedTab);
   } else {
-    // Default to the budgeting section if no tab is saved
-    showSection('budgeting');
+    // Default to the overview section if no tab is saved
+    showSection('overview');
   }
 }
 
-// Event listeners for tab buttons
+// Add event listeners for all tabs
+document.getElementById('overview-tab').addEventListener('click', () => showSection('overview'));
 document.getElementById('budgeting-tab').addEventListener('click', () => showSection('budgeting'));
 document.getElementById('calculator-tab').addEventListener('click', () => showSection('calculator'));
 document.getElementById('forum-tab').addEventListener('click', () => showSection('forum'));
 
-// Load the last active tab when the page loads
+// Load the last active tab on page load
 window.onload = loadLastActiveTab;
+
 
 
   
