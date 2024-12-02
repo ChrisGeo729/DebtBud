@@ -6,10 +6,130 @@
   <meta name="description" content="Take control of your finances with our budgeting tools.">
   <title>DebtBud - Home</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  
   <style>
     html {
       scroll-behavior: smooth;
     }
+   /* Grid Layout */
+#services .grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Perspective Wrapper */
+.perspective {
+  perspective: 1000px;
+}
+
+/* Flip Card Container */
+.flip-card {
+  width: 100%;
+  height: 290px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+/* Front and Back Faces */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+/* Front Face */
+.flip-card-front {
+  background-color: #111827; /* Dark gray for front */
+}
+
+/* Back Face */
+.flip-card-back {
+  background-color: #3d4858; /* Blue for back */
+  transform: rotateY(180deg);
+}
+
+/* Flip Effect */
+.group:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+/* Icon Styling */
+.flip-card-front img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+}
+
+/* Text Styling */
+.flip-card h3 {
+  font-size: 1.5rem;
+}
+
+.flip-card p {
+  font-size: 1rem;
+  text-align: center;
+}
+/* Benefits Section */
+#benefits {
+  background-color: #000; /* Ensure the background is black */
+}
+
+.benefit-card {
+  background-color: #1f2937; /* Dark gray card background */
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+}
+
+.benefit-card:hover {
+  transform: scale(1.05); /* Slight scale-up on hover */
+}
+
+.benefit-card img {
+  width: 64px; /* Icon size */
+  height: 64px;
+  margin-bottom: 1rem;
+}
+
+.benefit-card h3 {
+  font-size: 1.25rem; /* Heading size */
+  margin-bottom: 0.5rem;
+  color: #ffffff; /* White text */
+}
+
+.benefit-card p {
+  font-size: 0.875rem; /* Description size */
+  color: #9ca3af; /* Light gray text */
+}
+
+/* Grid Layout Adjustments */
+.grid {
+  display: grid;
+  gap: 2rem; /* Spacing between cards */
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr; /* Single column for mobile */
+}
+
+.sm\:grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr); /* Three columns for small screens and above */
+}
+
+.lg\:grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr); /* Two columns for large screens */
+}
+
+
   </style>
 </head>
 <body class="font-sans bg-black text-white">
@@ -82,25 +202,40 @@ window.addEventListener('scroll', () => {
   </div>
 
   <!-- Hero Section -->
-  <section id="home" class="relative flex items-center justify-center py-60 bg-black text-white">
+<!-- Hero Section -->
+<section id="home" class="relative flex items-center justify-center py-52 bg-black text-white">
     <video autoplay muted loop class="absolute top-0 left-0 w-full h-full object-cover z-0">
-        <source src="assets/7762075-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <source src="assets/7762075-hd_1920_1080_25fps.mp4" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
-    <div class="relative z-10 p-6 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg text-center">
-      <h1 class="text-5xl font-bold text-white">Take Control of Your Finances</h1>
-      <p class="text-lg text-gray-300 my-4">We help you manage budgeting, loan repayments, and connect with others for financial advice.</p>
-      <button onclick="window.location.href='demo_landing.html'" class="px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded-full hover:bg-blue-600">
-        Start Your Journey
-      </button>
+    
+    <!-- Content Container -->
+    <div class="relative z-10 flex items-center justify-between w-full max-w-7xl px-6">
+      
+      <!-- Left Content -->
+      <div class="text-left">
+        <h1 class="text-5xl font-bold text-white mb-4">Take Control of Your Finances</h1>
+        <p class="text-lg text-gray-300 mb-6">We help you manage budgeting, loan repayments, and connect with others for financial advice.</p>
+        <button onclick="window.location.href='demo_landing.html'" class="px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded-full hover:bg-blue-600">
+          Start Your Journey
+        </button>
+      </div>
+      
+      <!-- Right PNG Icon -->
+      <div class="flex-shrink-0 ml-6">
+        <img src="assets/smartphone-6.png" alt="Icon" class="w-72 h-auto rounded-lg shadow-lg">
+      </div>
     </div>
-
+    
+    <!-- Scroll Down Arrow -->
     <a href="#about-us" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white hover:text-gray-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </a>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </a>
   </section>
+  
+  
 
 <!-- About Us Section -->
 <section id="about-us" class="py-16 bg-black text-center">
@@ -114,36 +249,65 @@ window.addEventListener('scroll', () => {
   </section>
   
   
-  <!-- Services Section -->
   <section id="services" class="py-16 bg-black text-center">
     <h2 class="text-4xl font-bold text-white mb-10">Our Services</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
+      
       <!-- Card 1 -->
-      <div class="rounded-lg bg-gray-900 text-white transform hover:scale-105 transition-all duration-300 p-6">
-        <div class="w-16 h-16 mx-auto mb-4">
-          <img src="assets/budgeting.png" alt="Budgeting" class="object-contain">
+      <div class="service-card group perspective">
+        <div class="flip-card">
+          <!-- Front Side -->
+          <div class="flip-card-front rounded-lg bg-gray-900 text-white p-6 flex flex-col items-center justify-between">
+            <img src="assets/budgeting.png" alt="Budgeting" class="mb-4">
+            <h3 class="text-xl font-semibold">Budgeting</h3>
+            <p class="text-sm text-gray-400 mt-2">Set and manage budgets easily.</p>
+          </div>
+          <!-- Back Side -->
+          <div class="flip-card-back rounded-lg bg-blue-500 text-white p-6 flex flex-col items-center justify-center">
+            <h3 class="text-xl font-semibold mb-2">Budgeting</h3>
+            <p class="text-sm">Take control of your finances by setting monthly spending limits and tracking your progress with detailed insights.</p>
+          </div>
         </div>
-        <h3 class="text-xl font-semibold mb-2">Budgeting</h3>
-        <p class="text-sm text-gray-400">Set and manage your monthly budgets effortlessly.</p>
       </div>
+  
       <!-- Card 2 -->
-      <div class="rounded-lg bg-gray-900 text-white transform hover:scale-105 transition-all duration-300 p-6">
-        <div class="w-16 h-16 mx-auto mb-4">
-          <img src="assets/calculator.png" alt="Loan Calculator" class="object-contain">
+      <div class="service-card group perspective">
+        <div class="flip-card">
+          <!-- Front Side -->
+          <div class="flip-card-front rounded-lg bg-gray-900 text-white p-6 flex flex-col items-center justify-between">
+            <img src="assets/calculator.png" alt="Loan Calculator" class="mb-4">
+            <h3 class="text-xl font-semibold">Loan Calculator</h3>
+            <p class="text-sm text-gray-400 mt-2">Calculate your loan repayments.</p>
+          </div>
+          <!-- Back Side -->
+          <div class="flip-card-back rounded-lg bg-blue-500 text-white p-6 flex flex-col items-center justify-center">
+            <h3 class="text-xl font-semibold mb-2">Loan Calculator</h3>
+            <p class="text-sm">Simplify your financial planning with our easy-to-use calculator for estimating loan repayment schedules.</p>
+          </div>
         </div>
-        <h3 class="text-xl font-semibold mb-2">Loan Calculator</h3>
-        <p class="text-sm text-gray-400">Calculate your loan repayments easily.</p>
       </div>
+  
       <!-- Card 3 -->
-      <div class="rounded-lg bg-gray-900 text-white transform hover:scale-105 transition-all duration-300 p-6">
-        <div class="w-16 h-16 mx-auto mb-4">
-          <img src="assets/Connect.png" alt="Connect" class="object-contain">
+      <div class="service-card group perspective">
+        <div class="flip-card">
+          <!-- Front Side -->
+          <div class="flip-card-front rounded-lg bg-gray-900 text-white p-6 flex flex-col items-center justify-between">
+            <img src="assets/remote-worker.png" alt="Connect with Others" class="mb-4">
+            <h3 class="text-xl font-semibold">Connect with Others</h3>
+            <p class="text-sm text-gray-400 mt-2">Join a supportive community.</p>
+          </div>
+          <!-- Back Side -->
+          <div class="flip-card-back rounded-lg bg-blue-500 text-white p-6 flex flex-col items-center justify-center">
+            <h3 class="text-xl font-semibold mb-2">Connect with Others</h3>
+            <p class="text-sm">Engage with peers in a safe, supportive environment to share financial tips and get advice tailored to your needs.</p>
+          </div>
         </div>
-        <h3 class="text-xl font-semibold mb-2">Connect with Others</h3>
-        <p class="text-sm text-gray-400">Join a community to share financial advice.</p>
       </div>
+  
     </div>
   </section>
+  
+  
 
 <!-- Banner -->
 <div class="banner-container overflow-hidden bg-black py-4 relative">
@@ -163,7 +327,78 @@ window.addEventListener('scroll', () => {
       <img src="assets/TUDelft_logo_white.png" alt="Partner 5" class="h-32">
     </div>
   </div>
+
+  <!-- Benefits Section -->
+  <section id="benefits" class="py-16 bg-black text-white">
+    <h2 class="text-4xl font-bold text-center mb-12">Why Choose DebtBud?</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto px-6">
+      
+      <!-- Row 1: Two Containers -->
+      <div class="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center space-x-4 mb-4">
+          <div class="bg-blue-500 bg-opacity-50 w-12 h-12 flex items-center justify-center rounded-full">
+            <img src="assets/student-focus-icon.png" alt="Student Focus" class="w-6 h-6">
+          </div>
+          <h3 class="text-xl font-semibold">Designed for Students</h3>
+        </div>
+        <p class="text-sm text-gray-400">
+          We are students ourselves, so we understand your struggles and tailor our solutions to your needs.
+        </p>
+      </div>
   
+      <div class="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center space-x-4 mb-4">
+          <div class="bg-purple-500 bg-opacity-50 w-12 h-12 flex items-center justify-center rounded-full">
+            <img src="assets/personalized-advice-icon.png" alt="Personalized Advice" class="w-6 h-6">
+          </div>
+          <h3 class="text-xl font-semibold">Personalized Advice</h3>
+        </div>
+        <p class="text-sm text-gray-400">
+          Receive customized financial guidance tailored to your unique situation.
+        </p>
+      </div>
+    </div>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-6xl mx-auto px-6 mt-8">
+      <!-- Row 2: Three Containers -->
+      <div class="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center space-x-4 mb-4">
+          <div class="bg-green-500 bg-opacity-50 w-12 h-12 flex items-center justify-center rounded-full">
+            <img src="assets/financial-tracking-icon.png" alt="Stay Updated" class="w-6 h-6">
+          </div>
+          <h3 class="text-xl font-semibold">Stay Updated</h3>
+        </div>
+        <p class="text-sm text-gray-400">
+          Monitor your financial situation in real-time to make smarter spending decisions and avoid unnecessary borrowing.
+        </p>
+      </div>
+  
+      <div class="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center space-x-4 mb-4">
+          <div class="bg-yellow-500 bg-opacity-50 w-12 h-12 flex items-center justify-center rounded-full">
+            <img src="assets/loan-calculator-icon.png" alt="Loan Calculator" class="w-6 h-6">
+          </div>
+          <h3 class="text-xl font-semibold">Loan Repayment Calculator</h3>
+        </div>
+        <p class="text-sm text-gray-400">
+          Understand the impact of your loans and find the best repayment plan tailored to your needs.
+        </p>
+      </div>
+  
+      <div class="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center space-x-4 mb-4">
+          <div class="bg-red-500 bg-opacity-50 w-12 h-12 flex items-center justify-center rounded-full">
+            <img src="assets/community-icon.png" alt="Community Space" class="w-6 h-6">
+          </div>
+          <h3 class="text-xl font-semibold">Safe Community Space</h3>
+        </div>
+        <p class="text-sm text-gray-400">
+          Join a supportive environment where you can share experiences, tips, and help each other.
+        </p>
+      </div>
+    </div>
+  </section>
+    
   
   <style>
    /* Container Styling */
@@ -232,6 +467,24 @@ cards.forEach((card) => {
     card.style.boxShadow = 'none';
   });
 });
+// // Select all icons with the class "service-icon"
+// const serviceIcons = document.querySelectorAll('.service-icon');
+
+// // Add event listeners for hover effect
+// serviceIcons.forEach(icon => {
+//   const staticSrc = icon.src; // Get the static image source
+//   const animatedSrc = icon.getAttribute('data-hover'); // Get the animated image source
+
+//   // On hover: switch to animated GIF
+//   icon.addEventListener('mouseenter', () => {
+//     icon.src = animatedSrc;
+//   });
+
+//   // On mouse leave: switch back to static image
+//   icon.addEventListener('mouseleave', () => {
+//     icon.src = staticSrc;
+//   });
+// });
 
 
   </script>
