@@ -22,9 +22,9 @@
     <!-- Right Section: Buttons and Menu -->
     <div class="flex items-center space-x-4">
         <!-- Sign Up Button -->
-      <button onclick="window.location.href='signup.html'" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
-        Sign Up
-      </button>
+        <button onclick="toggleModal(true)" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+            Sign Up
+          </button>
       <!-- Log In Button -->
       <button onclick="window.location.href='login.html'" class="px-4 py-2 text-sm font-semibold bg-transparent border border-white rounded-full hover:bg-white hover:text-black transition">
         Log In
@@ -71,12 +71,22 @@ window.addEventListener('scroll', () => {
     <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
       &times;
     </button>
+    <!-- Home -->
     <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
-    <a href="budgeting.html" class="text-2xl font-bold hover:text-blue-500">Budgeting</a>
-    <a href="loan_calculator.html" class="text-2xl font-bold hover:text-blue-500">Calculator</a>
-    <a href="connect.html" class="text-2xl font-bold hover:text-blue-500">Connect</a>
-    <a href="#contact" class="text-2xl font-bold hover:text-blue-500">Contact</a>
+    <!-- Get Started -->
+    <a href="demo_landing.html" class="text-2xl font-bold hover:text-blue-500">Get Started</a>
+    <!-- Our Team -->
+    <a href="aboutus.html" class="text-2xl font-bold hover:text-blue-500">Our Team</a>
+    <!-- Services -->
+    <a href="services.html" class="text-2xl font-bold hover:text-blue-500">Services</a>
+    <!-- Contact Us -->
+    <button 
+      onclick="toggleContactModal(true)" 
+      class="text-2xl font-bold hover:text-blue-500 focus:outline-none">
+      Contact Us
+    </button>
   </div>
+  
 
 
   <!-- Hero Section -->
@@ -190,6 +200,209 @@ window.addEventListener('scroll', () => {
     </div>
   </section>
   
+  <!-- Modal -->
+  <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-gray-800 text-white rounded-lg w-96 p-6 shadow-lg">
+      <h2 class="text-2xl font-bold text-center mb-4">We're Almost There!</h2>
+      <p class="text-gray-300 text-center mb-6">
+        Our product is still under development, but sign up for our newsletter to be the first to know when we launch.
+      </p>
+      <form id="signupForm">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          class="w-full p-2 border border-gray-600 rounded mb-4 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-500" 
+          required
+        >
+        <button 
+          type="submit" 
+          class="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+          Subscribe
+        </button>
+      </form>
+      
+      <button 
+        onclick="toggleModal(false)" 
+        class="mt-4 text-gray-400 hover:text-gray-200 block mx-auto">
+        Close
+      </button>
+    </div>
+  </div>
+ <!-- Sticky Contact Button -->
+ <div class="fixed bottom-8 right-8 z-50">
+    <button onclick="toggleContactModal(true)" class="bg-blue-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-600">
+      Contact Us
+    </button>
+  </div>
+  
+  <!-- Contact Modal -->
+  <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 text-white rounded-lg w-full max-w-lg p-6 shadow-lg relative">
+      <!-- Close Button -->
+      <button onclick="toggleContactModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+      
+      <!-- Contact Form -->
+      <h2 class="text-4xl font-bold text-center mb-8">Contact Us</h2>
+      <form id="contactForm" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="mb-4">
+          <label for="name" class="block text-left font-medium text-gray-300">Name</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-left font-medium text-gray-300">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-4">
+          <label for="message" class="block text-left font-medium text-gray-300">Message</label>
+          <textarea id="message" name="message" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+        <button type="submit" class="px-6 py-3 bg-blue-500 rounded text-white font-semibold hover:bg-blue-600">Submit</button>
+      </form>
+    </div>
+  </div>
+  
+
+  <!-- JavaScript -->
+  <script>
+    // Function to toggle modal visibility
+    // Function to toggle modal visibility
+function toggleModal(show) {
+  const modal = document.getElementById('signupModal'); // Ensure the modal ID matches
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden'); // Show the modal
+      modal.classList.add('flex'); // Use flex to make it visible and centered
+    } else {
+      modal.classList.remove('flex'); // Hide the modal
+      modal.classList.add('hidden'); // Use hidden to make it invisible
+    }
+  } else {
+    console.error('Modal element not found. Check your modal ID.');
+  }
+}
+
+
+    // Handle form submission
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const email = event.target.email.value; // Get email value from the form
+
+  try {
+    const response = await fetch('http://localhost:5005/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }), // Send the email as JSON
+    });
+
+    const result = await response.json(); // Parse the JSON response
+
+    if (response.ok) {
+      alert(result.message); // Show success message
+      toggleModal(false); // Close the modal
+    } else {
+      alert(result.error); // Show backend error message
+    }
+  } catch (error) {
+    alert('Failed to subscribe. Please try again later.'); // Show generic error
+    console.error('Subscription error:', error); // Log error for debugging
+  }
+});
+// Function to toggle the modal visibility
+function toggleContactModal(show) {
+  const contactModal = document.getElementById('contactModal');
+  if (show) {
+    contactModal.classList.remove('hidden'); // Show modal
+    contactModal.classList.add('flex'); // Use flex for centering
+  } else {
+    contactModal.classList.add('hidden'); // Hide modal
+    contactModal.classList.remove('flex');
+  }
+}
+
+// Submit handler for the contact form
+document.getElementById('contactForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = {
+    name: event.target.name.value,
+    email: event.target.email.value,
+    message: event.target.message.value,
+  };
+
+  try {
+    const response = await fetch('http://localhost:5004/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert(result.message);
+      event.target.reset();
+      toggleContactModal(false);
+    } else {
+      alert(result.error || 'Failed to submit the form.');
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('Error submitting the form. Please try again later.');
+  }
+});
+
+
+  </script>
+  <!-- JavaScript -->
+  <script>
+    // Function to toggle modal visibility
+    // Function to toggle modal visibility
+function toggleModal(show) {
+  const modal = document.getElementById('signupModal'); // Ensure the modal ID matches
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden'); // Show the modal
+      modal.classList.add('flex'); // Use flex to make it visible and centered
+    } else {
+      modal.classList.remove('flex'); // Hide the modal
+      modal.classList.add('hidden'); // Use hidden to make it invisible
+    }
+  } else {
+    console.error('Modal element not found. Check your modal ID.');
+  }
+}
+
+
+    // Handle form submission
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const email = event.target.email.value; // Get email value from the form
+
+  try {
+    const response = await fetch('http://localhost:5005/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }), // Send the email as JSON
+    });
+
+    const result = await response.json(); // Parse the JSON response
+
+    if (response.ok) {
+      alert(result.message); // Show success message
+      toggleModal(false); // Close the modal
+    } else {
+      alert(result.error); // Show backend error message
+    }
+  } catch (error) {
+    alert('Failed to subscribe. Please try again later.'); // Show generic error
+    console.error('Subscription error:', error); // Log error for debugging
+  }
+});
+
+  </script>
+    
   
   <!-- What Our Users Say -->
   <!-- <section id="user-feedback" class="py-16 bg-black text-center">
@@ -212,7 +425,7 @@ window.addEventListener('scroll', () => {
 
 
   <!-- Contact Us Section -->
-  <section id="contact" class="py-16 bg-black text-center">
+  <!-- <section id="contact" class="py-16 bg-black text-center">
     <h2 class="text-4xl font-bold text-white mb-8">Contact Us</h2>
     <form id="contactForm" class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
       <div class="mb-4">
@@ -229,7 +442,7 @@ window.addEventListener('scroll', () => {
       </div>
       <button type="submit" class="px-6 py-3 bg-blue-500 rounded text-white font-semibold hover:bg-blue-600">Submit</button>
     </form>
-  </section>
+  </section> -->
 
   <style>
     /* Container Styling */
