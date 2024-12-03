@@ -86,15 +86,52 @@ window.addEventListener('scroll', () => {
       <p class="text-lg mb-8">Experience how DebtBud empowers you to manage your finances, reduce debt, and gain financial freedom.</p>
       <button onclick="window.location.href='demo_page.html'" class="cta-button px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition">Try the Demo</button>    </div>
   </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+
+  <section id="our-mission" class="py-16 bg-black text-white">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+      
+      <!-- Left: Animation -->
+      <div id="missionAnimation" class="flex-shrink-0 w-full md:w-1/2 mb-8 md:mb-0"></div>
+      
+      <!-- Right: Text -->
+      <div class="text-center md:text-left md:w-1/2 md:pl-10">
+        <h2 class="text-4xl font-extrabold mb-6">Our Mission</h2>
+        <p class="text-lg text-gray-300 mb-6">
+          We strive to empower students and individuals to take control of their finances. 
+          By providing AI-driven insights, seamless banking integration, and a supportive community, 
+          we aim to create a future where financial literacy and stability are accessible to everyone.
+        </p>
+        <button 
+          onclick="window.location.href='more-info.html'" 
+          class="px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition">
+          Learn More
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Include Lottie Animation Script -->
+  <script>
+    // Load Lottie animation
+    lottie.loadAnimation({
+      container: document.getElementById('missionAnimation'), // The container for the animation
+      renderer: 'svg', // Render as SVG
+      loop: true, // Animation will loop
+      autoplay: true, // Animation starts automatically
+      path: 'assets/missionAnimation.json' // Replace with the path to your JSON animation file
+    });
+  </script>
+  
 <!-- Our Mission Section -->
-<section id="our-mission" class="py-16 bg-black text-center">
+<!-- <section id="our-mission" class="py-16 bg-black text-center">
     <h2 class="text-4xl font-bold text-white mb-6">Our Mission</h2>
     <p class="text-lg text-gray-300 max-w-3xl mx-auto">
       Our goal is to provide accessible, user-friendly tools that simplify budgeting, offer personalized advice on loan repayments, 
       and foster a community where students can learn from each other. We aim to help students achieve financial stability and build 
       a secure future, free from overwhelming debt.
     </p>
-  </section>
+  </section> -->
   <!-- Why Choose DebtBud -->
   <!-- <section id="why-choose" class="py-16 bg-black text-center">
     <h2 class="text-4xl font-bold text-white mb-6">Why Choose DebtBud?</h2>
@@ -114,8 +151,48 @@ window.addEventListener('scroll', () => {
     </div>
   </section> -->
 
+<!-- How DebtBud Works Section -->
+<section id="how-it-works" class="py-16 bg-black text-white">
+    <h2 class="text-4xl font-bold text-center mb-12">How it Works?</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-6 text-center">
+      <!-- Step 1: Registration -->
+      <div class="flex flex-col items-center">
+        <img src="assets/registration-icon.png" alt="Registration Icon" class="w-16 h-16 mb-4">
+        <h3 class="text-lg font-semibold">Connect Your Bank</h3>
+        <p class="text-sm text-gray-300">
+          Link your bank account to effortlessly track expenses and set financial goals.
+        </p>
+      </div>
+      <!-- Step 2: AI-Powered Advice -->
+      <div class="flex flex-col items-center">
+        <img src="assets/ai-icon.png" alt="AI Icon" class="w-17 h-16 mb-4">
+        <h3 class="text-lg font-semibold">Personalized Insights</h3>
+        <p class="text-sm text-gray-300">
+          Use AI-driven advice to manage unpredictable expenses and minimize borrowing.
+        </p>
+      </div>
+      <!-- Step 3: Loan Repayment -->
+      <div class="flex flex-col items-center">
+        <img src="assets/loan-icon.png" alt="Loan Icon" class="w-16 h-16 mb-4">
+        <h3 class="text-lg font-semibold">Explore Repayment Plans</h3>
+        <p class="text-sm text-gray-300">
+          Learn how different plans affect your finances and choose the best option for you.
+        </p>
+      </div>
+      <!-- Step 4: Community Forum -->
+      <div class="flex flex-col items-center">
+        <img src="assets/community-icons.png" alt="Community Icon" class="w-16 h-16 mb-4">
+        <h3 class="text-lg font-semibold">Join the Community</h3>
+        <p class="text-sm text-gray-300">
+          Connect with others in a safe space to share tips and get support on your journey.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  
   <!-- What Our Users Say -->
-  <section id="user-feedback" class="py-16 bg-black text-center">
+  <!-- <section id="user-feedback" class="py-16 bg-black text-center">
     <h2 class="text-4xl font-bold text-white mb-6">What Our Users Say</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
       <div class="rounded-lg bg-gray-800 p-6">
@@ -131,7 +208,7 @@ window.addEventListener('scroll', () => {
         <p class="text-sm text-blue-400 mt-4">- Maria, Postgraduate</p>
       </div>
     </div>
-  </section>
+  </section> -->
 
 
   <!-- Contact Us Section -->
@@ -224,7 +301,6 @@ window.addEventListener('scroll', () => {
  
  
    </script>
-   
    
  
    
