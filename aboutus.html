@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet the passionate team behind DebtBud.">
+  <title>DebtBud - Meet the Team</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Sans-serif';
+    }
+    #hero video {
+      object-fit: cover;
+    }
+
+  /* Other styles remain the same */
+
+  /* Hero Section Overlay */
+  #hero .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10; /* Hero section overlay z-index */
+  }
+
+  /* Modal */
+  #signupModal {
+    z-index: 50; /* Ensure modal is above all other elements */
+  }
+
+
+
+    .hero-section {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 60vh;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('assets/team-video.mp4');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .team-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .member-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .member-card:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .member-image {
+      flex: 1 1 40%;
+      max-width: 300px;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .member-text {
+      flex: 1 1 55%;
+      text-align: left;
+    }
+
+    .hero-section video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body class="font-sans bg-black text-white">
+
+  <!-- Header -->
+  <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
+    <!-- Logo and Name -->
+    <a href="index.html" class="flex items-center space-x-3">
+      <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+      <span class="text-xl font-semibold">DebtBud</span>
+    </a>
+
+    <!-- Right Section: Buttons and Menu -->
+    <div class="flex items-center space-x-4">
+      <!-- Sign Up Button -->
+      <button onclick="toggleModal(true)" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+        Sign Up
+      </button>
+      <!-- Log In Button -->
+      <button onclick="window.location.href='login.html'" class="px-4 py-2 text-sm font-semibold bg-transparent border border-white rounded-full hover:bg-white hover:text-black transition">
+        Log In
+      </button>
+      <!-- Menu Button -->
+      <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation Overlay -->
+  <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+    <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
+      &times;
+    </button>
+    <!-- Home -->
+    <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+    <!-- Get Started -->
+    <a href="demo_landing.html" class="text-2xl font-bold hover:text-blue-500">Get Started</a>
+    <!-- Our Team -->
+    <a href="aboutus.html" class="text-2xl font-bold hover:text-blue-500">Our Team</a>
+    <!-- Services -->
+    <a href="services.html" class="text-2xl font-bold hover:text-blue-500">Services</a>
+    <!-- Contact Us -->
+    <button 
+      onclick="toggleContactModal(true)" 
+      class="text-2xl font-bold hover:text-blue-500 focus:outline-none">
+      Contact Us
+    </button>
+  </div>
+  
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative w-full h-screen text-white">
+    <!-- Video Background -->
+    <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0">
+      <source src="assets/teamvid.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Overlay for darkening the video -->
+    <div class="absolute inset-0 overlay z-10"></div>
+
+    <!-- Content Container -->
+    <div class="relative z-20 flex flex-col items-center justify-center text-center h-full px-6">
+      <h1 class="text-5xl font-bold mb-4">Meet the Team</h1>
+      <p class="text-lg text-gray-300 mb-6">
+        We’re a group of students from TU Delft and Leiden University with diverse educational backgrounds.<br>
+        Together, we’re building a platform to empower financial literacy and create a supportive community.
+      </p>
+      <button onclick="window.location.href='#team'" class="px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded-full hover:bg-blue-600 transition">
+        Explore the Team
+      </button>
+    </div>
+  </section>
+
+  <section id="team" class="team-section py-16 bg-black text-white">
+    <!-- Section Heading -->
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold">Our Team</h2>
+      <p class="text-gray-300 mt-2">Meet the people who make DebtBud possible.</p>
+    </div>
+  
+    <!-- Team Members -->
+    <div class="container mx-auto px-6">
+      <!-- Member 1 -->
+      <div class="flex flex-col md:flex-row items-center mb-12">
+        <div class="w-full md:w-1/2 mb-6 md:mb-0">
+          <img src="assets/christos.jpg" alt="Christos Georghiou" class="w-full h-auto rounded-lg shadow-lg">
+        </div>
+        <div class="w-full md:w-1/2 md:pl-20 text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2">Christos Georghiou</h3>
+          <!-- <p class="text-gray-300">21 years old, Data Science and AI student at Leiden University. He specializes in software development and programming tasks.</p> -->
+        </div>
+      </div>
+  
+      <!-- Member 2 -->
+      <div class="flex flex-col md:flex-row-reverse items-center mb-12">
+        <div class="w-full md:w-1/2 mb-6 md:mb-0">
+          <img src="assets/nicolas.jpg" alt="Nicolas Loaiza" class="w-full h-auto rounded-lg shadow-lg">
+        </div>
+        <div class="w-full md:w-1/2 md:pr-20 text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2">Nicolas Loaiza</h3>
+          <!-- <p class="text-gray-300">20 years old, Data Science and AI student at Leiden University. He works on similar tasks as Christos and handles finance-related responsibilities.</p> -->
+        </div>
+      </div>
+  
+      <!-- Member 3 -->
+      <div class="flex flex-col md:flex-row items-center mb-12">
+        <div class="w-full md:w-1/2 mb-6 md:mb-0">
+          <img src="assets/olivier-r.jpg" alt="Olivier Risseeuw" class="w-full h-auto rounded-lg shadow-lg">
+        </div>
+        <div class="w-full md:w-1/2 md:pl-20 text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2">Olivier Risseeuw</h3>
+          <!-- <p class="text-gray-300">20 years old, Architecture student at TU Delft. He contributes as a designer and handles outreach efforts for the team.</p> -->
+        </div>
+      </div>
+  
+      <!-- Member 4 -->
+      <div class="flex flex-col md:flex-row-reverse items-center mb-12">
+        <div class="w-full md:w-1/2 mb-6 md:mb-0">
+          <img src="assets/olivier-w.jpg" alt="Olivier van der Weal" class="w-full h-auto rounded-lg shadow-lg">
+        </div>
+        <div class="w-full md:w-1/2 md:pr-20 text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2">Olivier van der Weal</h3>
+          <!-- <p class="text-gray-300">20 years old, Technology, Policy, and Management student at TU Delft. His main tasks include marketing, outreach, and customer acquisition.</p> -->
+        </div>
+      </div>
+  
+      <!-- Member 5 -->
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="w-full md:w-1/2 mb-6 md:mb-0">
+          <img src="assets/harm.jpg" alt="Harm van da Pol" class="w-full h-auto rounded-lg shadow-lg">
+        </div>
+        <div class="w-full md:w-1/2 md:pl-20 text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2">Harm van da Pol</h3>
+          <!-- <p class="text-gray-300">20 years old, Mechanical Engineering student at TU Delft. He focuses on marketing, outreach, and customer acquisition.</p> -->
+        </div>
+      </div>
+    </div>
+  </section>
+   <!-- Modal -->
+   <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-gray-800 text-white rounded-lg w-96 p-6 shadow-lg">
+      <h2 class="text-2xl font-bold text-center mb-4">We're Almost There!</h2>
+      <p class="text-gray-300 text-center mb-6">
+        Our product is still under development, but sign up for our newsletter to be the first to know when we launch.
+      </p>
+      <form id="signupForm">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          class="w-full p-2 border border-gray-600 rounded mb-4 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-500" 
+          required
+        >
+        <button 
+          type="submit" 
+          class="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+          Subscribe
+        </button>
+      </form>
+      
+      <button 
+        onclick="toggleModal(false)" 
+        class="mt-4 text-gray-400 hover:text-gray-200 block mx-auto">
+        Close
+      </button>
+    </div>
+  </div>
+ <!-- Sticky Contact Button -->
+ <div class="fixed bottom-8 right-8 z-50">
+    <button onclick="toggleContactModal(true)" class="bg-blue-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-600">
+      Contact Us
+    </button>
+  </div>
+  
+  <!-- Contact Modal -->
+  <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 text-white rounded-lg w-full max-w-lg p-6 shadow-lg relative">
+      <!-- Close Button -->
+      <button onclick="toggleContactModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+      
+      <!-- Contact Form -->
+      <h2 class="text-4xl font-bold text-center mb-8">Contact Us</h2>
+      <form id="contactForm" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="mb-4">
+          <label for="name" class="block text-left font-medium text-gray-300">Name</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-left font-medium text-gray-300">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-4">
+          <label for="message" class="block text-left font-medium text-gray-300">Message</label>
+          <textarea id="message" name="message" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+        <button type="submit" class="px-6 py-3 bg-blue-500 rounded text-white font-semibold hover:bg-blue-600">Submit</button>
+      </form>
+    </div>
+  </div>
+  
+
+  <!-- JavaScript -->
+  <script>
+    // Function to toggle modal visibility
+    // Function to toggle modal visibility
+function toggleModal(show) {
+  const modal = document.getElementById('signupModal'); // Ensure the modal ID matches
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden'); // Show the modal
+      modal.classList.add('flex'); // Use flex to make it visible and centered
+    } else {
+      modal.classList.remove('flex'); // Hide the modal
+      modal.classList.add('hidden'); // Use hidden to make it invisible
+    }
+  } else {
+    console.error('Modal element not found. Check your modal ID.');
+  }
+}
+
+
+    // Handle form submission
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const email = event.target.email.value; // Get email value from the form
+
+  try {
+    const response = await fetch('http://localhost:5005/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }), // Send the email as JSON
+    });
+
+    const result = await response.json(); // Parse the JSON response
+
+    if (response.ok) {
+      alert(result.message); // Show success message
+      toggleModal(false); // Close the modal
+    } else {
+      alert(result.error); // Show backend error message
+    }
+  } catch (error) {
+    alert('Failed to subscribe. Please try again later.'); // Show generic error
+    console.error('Subscription error:', error); // Log error for debugging
+  }
+});
+// Function to toggle the modal visibility
+function toggleContactModal(show) {
+  const contactModal = document.getElementById('contactModal');
+  if (show) {
+    contactModal.classList.remove('hidden'); // Show modal
+    contactModal.classList.add('flex'); // Use flex for centering
+  } else {
+    contactModal.classList.add('hidden'); // Hide modal
+    contactModal.classList.remove('flex');
+  }
+}
+
+// Submit handler for the contact form
+document.getElementById('contactForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = {
+    name: event.target.name.value,
+    email: event.target.email.value,
+    message: event.target.message.value,
+  };
+
+  try {
+    const response = await fetch('http://localhost:5004/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert(result.message);
+      event.target.reset();
+      toggleContactModal(false);
+    } else {
+      alert(result.error || 'Failed to submit the form.');
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('Error submitting the form. Please try again later.');
+  }
+});
+
+
+  </script>
+  <!-- JavaScript -->
+  <script>
+    // Function to toggle modal visibility
+    // Function to toggle modal visibility
+function toggleModal(show) {
+  const modal = document.getElementById('signupModal'); // Ensure the modal ID matches
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden'); // Show the modal
+      modal.classList.add('flex'); // Use flex to make it visible and centered
+    } else {
+      modal.classList.remove('flex'); // Hide the modal
+      modal.classList.add('hidden'); // Use hidden to make it invisible
+    }
+  } else {
+    console.error('Modal element not found. Check your modal ID.');
+  }
+}
+
+
+    // Handle form submission
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const email = event.target.email.value; // Get email value from the form
+
+  try {
+    const response = await fetch('http://localhost:5005/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }), // Send the email as JSON
+    });
+
+    const result = await response.json(); // Parse the JSON response
+
+    if (response.ok) {
+      alert(result.message); // Show success message
+      toggleModal(false); // Close the modal
+    } else {
+      alert(result.error); // Show backend error message
+    }
+  } catch (error) {
+    alert('Failed to subscribe. Please try again later.'); // Show generic error
+    console.error('Subscription error:', error); // Log error for debugging
+  }
+});
+
+  </script>
+    
+
+
+  <!-- JavaScript -->
+  <script>
+    // Toggle navigation overlay
+    const menuButton = document.getElementById('menuButton');
+    const closeButton = document.getElementById('closeButton');
+    const navOverlay = document.getElementById('navOverlay');
+
+    menuButton.addEventListener('click', () => {
+      navOverlay.classList.remove('hidden');
+    });
+
+    closeButton.addEventListener('click', () => {
+      navOverlay.classList.add('hidden');
+    });
+
+    // Change navbar background on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 50) {
+        navbar.classList.remove('bg-transparent');
+        navbar.classList.add('bg-black', 'bg-opacity-90');
+      } else {
+        navbar.classList.remove('bg-black', 'bg-opacity-90');
+        navbar.classList.add('bg-transparent');
+      }
+    });
+  </script>
+  <footer class="bg-gray-900 text-white text-center py-4">
+    <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
+  </footer>
+</body>
+</html>
