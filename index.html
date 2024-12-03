@@ -145,9 +145,10 @@
     <!-- Right Section: Buttons and Menu -->
     <div class="flex items-center space-x-4">
         <!-- Sign Up Button -->
-      <button onclick="window.location.href='signup.html'" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
-        Sign Up
-      </button>
+        <button onclick="toggleModal(true)" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+            Sign Up
+          </button>
+          
       <!-- Log In Button -->
       <button onclick="window.location.href='login.html'" class="px-4 py-2 text-sm font-semibold bg-transparent border border-white rounded-full hover:bg-white hover:text-black transition">
         Log In
@@ -240,7 +241,7 @@ window.addEventListener('scroll', () => {
 <!-- About Us Section -->
 <section id="about-us" class="py-16 bg-black text-center">
     <p class="text-2xl font-semibold text-white uppercase mb-5">About Us</p>
-    <p class="text-lg text-white max-w-3xl mx-auto">
+    <p class="text-lg text-gray-200 max-w-3xl mx-auto">
       We are five third-year university students from different fields of study who share a common goal: to help students
       like us take charge of their financial well-being. DebtBud was created to empower students by offering practical
       tools, financial insights, and a supportive community. Together, we aim to make financial literacy accessible and
@@ -292,7 +293,7 @@ window.addEventListener('scroll', () => {
         <div class="flip-card">
           <!-- Front Side -->
           <div class="flip-card-front rounded-lg bg-gray-900 text-white p-6 flex flex-col items-center justify-between">
-            <img src="assets/remote-worker.png" alt="Connect with Others" class="mb-4">
+            <img src="assets/diversity.png" alt="Connect with Others" class="mb-4">
             <h3 class="text-xl font-semibold">Connect with Others</h3>
             <p class="text-sm text-gray-400 mt-2">Join a supportive community.</p>
           </div>
@@ -398,6 +399,129 @@ window.addEventListener('scroll', () => {
       </div>
     </div>
   </section>
+
+ <!-- Call-to-Action Section -->
+<section id="cta" class="py-20 bg-black text-center">
+    <h2 
+      class="text-5xl font-extrabold text-white mb-6" 
+      data-aos="fade-up" 
+      data-aos-duration="1000"
+    >
+      Try <span class="text-blue-500 font-light">DebtBud</span> <span class="text-orange-500">for Free</span>
+    </h2>
+    <p 
+      class="text-lg text-gray-300 mb-12" 
+      data-aos="fade-up" 
+      data-aos-delay="200"
+      data-aos-duration="1000"
+    >
+      Take control of your finances with smart tools, personalized advice, and a supportive community.
+    </p>
+    
+    <!-- Buttons -->
+    <div 
+      class="flex justify-center space-x-6" 
+      data-aos="fade-up" 
+      data-aos-delay="400"
+      data-aos-duration="1000"
+    >
+    <button onclick="toggleModal(true)" class="px-8 py-3 text-lg font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+        Get Started
+      </button>
+      
+      <button 
+        onclick="window.location.href='demo_landing.html'" 
+        class="px-8 py-3 text-lg font-semibold bg-transparent border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition">
+        Try Demo
+      </button>
+    </div>
+  </section>
+    <!-- Modal -->
+  <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-gray-800 text-white rounded-lg w-96 p-6 shadow-lg">
+      <h2 class="text-2xl font-bold text-center mb-4">We're Almost There!</h2>
+      <p class="text-gray-300 text-center mb-6">
+        Our product is still under development, but sign up for our newsletter to be the first to know when we launch.
+      </p>
+      <form id="signupForm">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          class="w-full p-2 border border-gray-600 rounded mb-4 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-500" 
+          required
+        >
+        <button 
+          type="submit" 
+          class="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+          Subscribe
+        </button>
+      </form>
+      
+      <button 
+        onclick="toggleModal(false)" 
+        class="mt-4 text-gray-400 hover:text-gray-200 block mx-auto">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Function to toggle modal visibility
+    // Function to toggle modal visibility
+function toggleModal(show) {
+  const modal = document.getElementById('signupModal'); // Ensure the modal ID matches
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden'); // Show the modal
+      modal.classList.add('flex'); // Use flex to make it visible and centered
+    } else {
+      modal.classList.remove('flex'); // Hide the modal
+      modal.classList.add('hidden'); // Use hidden to make it invisible
+    }
+  } else {
+    console.error('Modal element not found. Check your modal ID.');
+  }
+}
+
+
+    // Handle form submission
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const email = event.target.email.value; // Get email value from the form
+
+  try {
+    const response = await fetch('http://localhost:5005/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }), // Send the email as JSON
+    });
+
+    const result = await response.json(); // Parse the JSON response
+
+    if (response.ok) {
+      alert(result.message); // Show success message
+      toggleModal(false); // Close the modal
+    } else {
+      alert(result.error); // Show backend error message
+    }
+  } catch (error) {
+    alert('Failed to subscribe. Please try again later.'); // Show generic error
+    console.error('Subscription error:', error); // Log error for debugging
+  }
+});
+
+  </script>
+  
+  <!-- Include AOS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script>
+    AOS.init();
+  </script>
+  
     
   
   <style>
