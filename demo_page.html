@@ -123,6 +123,36 @@
 .hover\:shadow-xl:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+#onboarding-overlay {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.notification {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #444;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInOut 5s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.notification.warning {
+  border-left: 5px solid #ffc107; /* Yellow for warnings */
+}
+
+.notification.danger {
+  border-left: 5px solid #f44336; /* Red for danger */
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
 
   </style>
 </head>
@@ -136,8 +166,36 @@
       <button id="budgeting-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('budgeting')">Budgeting</button>
       <button id="calculator-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('calculator')">Loan Calculator</button>
       <button id="forum-tab" class="px-4 py-2 rounded hover:bg-blue-600" onclick="showSection('forum')">Community Forum</button>
+      <button onclick="showOverlay()" class="px-4 py-2 rounded hover:bg-blue-600">Help</button>
+
     </nav>
   </header>
+  <!-- Onboarding Overlay -->
+<div id="onboarding-overlay" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-900 text-white p-8 rounded-lg max-w-2xl w-full">
+      <h2 class="text-2xl font-bold mb-4">Welcome to DebtBud Demo!</h2>
+      <p class="mb-4">This demo showcases the key features of DebtBud:</p>
+      <ul class="list-disc pl-5 mb-4">
+        <li><strong>Account Overview:</strong> Track income, expenses, and remaining balance.</li>
+        <li><strong>Budgeting:</strong> Set goals and monitor your progress.</li>
+        <li><strong>Loan Calculator:</strong> Plan and analyze loan repayments.</li>
+        <li><strong>Community Forum:</strong> Engage with peers and share financial tips.</li>
+      </ul>
+      <button onclick="closeOverlay()" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded text-white">Got it!</button>
+    </div>
+  </div>
+  <div id="notification-container" class="fixed top-4 right-4 space-y-4 z-50">
+    <!-- Notifications will be dynamically added here -->
+  </div>
+  <button
+    id="reset-notifications"
+    class="fixed bottom-4 right-4 bg-red-600 text-white py-2 px-4 rounded shadow-lg hover:bg-red-500"
+  >
+    Reset Notifications
+  </button>
+  
+  
+  
 
   <!-- Main Content -->
   <main class="flex-grow p-8">
@@ -358,18 +416,55 @@
             <canvas id="chart-savings" class="w-full h-auto" style="max-width: 200px; max-height: 200px;"></canvas>
           </div>
         </div>
+        <div id="onboarding-overlay" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-900 text-white p-8 rounded-lg max-w-2xl w-full">
+              <h2 class="text-2xl font-bold mb-4">Welcome to DebtBud Demo!</h2>
+              <p class="mb-4">This demo showcases the key features of DebtBud:</p>
+              <ul class="list-disc pl-5 mb-4">
+                <li><strong>Account Overview:</strong> Track income, expenses, and remaining balance.</li>
+                <li><strong>Budgeting:</strong> Set goals and monitor your progress.</li>
+                <li><strong>Loan Calculator:</strong> Plan and analyze loan repayments.</li>
+                <li><strong>Community Forum:</strong> Engage with peers and share financial tips.</li>
+              </ul>
+              <button onclick="closeOverlay()" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded text-white">Got it!</button>
+            </div>
+          </div>
+          
       </section>
       
     
         <script>
+        const activeNotifications = new Set();
+
+    // Show the onboarding overlay
+function showOverlay() {
+  document.getElementById('onboarding-overlay').classList.remove('hidden');
+}
+
+// Close the onboarding overlay
+function closeOverlay() {
+  document.getElementById('onboarding-overlay').classList.add('hidden');
+  sessionStorage.setItem('seenOnboarding', 'true'); // Only dismiss for the current session
+}
+
+// Always show the overlay on page load unless dismissed
+window.addEventListener('load', () => {
+    const hasSeen = sessionStorage.getItem('seenOnboarding');
+    if (!hasSeen) {
+        showOverlay(); // Call this function to display the overlay
+    }
+});
+
+
+
             // Centralized transaction data
 // Centralized transaction data
 const transactions = [
   { id: 1, date: "2024-12-01", category: "Income", description: "Salary", amount: 1500 },
   { id: 2, date: "2024-12-02", category: "Rent", description: "Monthly rent payment", amount: -800 },
-  { id: 3, date: "2024-12-03", category: "Groceries", description: "Supermarket shopping", amount: -500 },
+  { id: 3, date: "2024-12-03", category: "Groceries", description: "Supermarket shopping", amount: -225 },
   { id: 4, date: "2024-12-04", category: "Entertainment", description: "Movie night", amount: -50 },
-  { id: 5, date: "2024-12-05", category: "Transportation", description: "Bus fare", amount: -100 },
+  { id: 5, date: "2024-12-05", category: "Transportation", description: "Bus fare", amount: -80 },
   { id: 6, date: "2024-12-06", category: "Savings", description: "Savings contribution", amount: -50 },
 ];
 
@@ -435,14 +530,17 @@ function submitGoals(event) {
   // Render charts with updated goals
   renderBudgetingProgress();
 
-  // Fetch AI advice based on updated goals and expenses
-  fetchAIAdvice();
+  // Trigger notifications
+  checkNotifications();
 
   alert("Budget goals saved! AI advice updated.");
+  updateDashboard();
 }
 
 
+
 // Render Account Overview Section
+// Update after rendering Account Overview
 function renderAccountOverview() {
   const statementRows = document.getElementById("statement-rows");
   statementRows.innerHTML = "";
@@ -465,27 +563,30 @@ function renderAccountOverview() {
       <td class="px-4 py-2 text-gray-300">${transaction.date}</td>
       <td class="px-4 py-2 text-gray-300">${transaction.category}</td>
       <td class="px-4 py-2 text-gray-300">${transaction.description}</td>
-      <td class="px-4 py-2 ${transaction.amount > 0 ? "text-green-400" : "text-red-400"}">${
-      transaction.amount > 0 ? "+" : "-"
-    } ${Math.abs(transaction.amount).toFixed(2)}</td>
+      <td class="px-4 py-2 ${
+        transaction.amount > 0 ? "text-green-400" : "text-red-400"
+      }">${transaction.amount > 0 ? "+" : "-"} ${Math.abs(transaction.amount).toFixed(2)}</td>
     `;
 
     statementRows.appendChild(row);
   });
 
   // Update summary totals
-  document.getElementById("total-income").textContent = `$${totalIncome.toFixed(2)}`;
-  document.getElementById("total-expenses").textContent = `$${totalExpenses.toFixed(2)}`;
-  document.getElementById("remaining-balance").textContent = `$${(totalIncome - totalExpenses).toFixed(2)}`;
+  document.getElementById("total-income").textContent = `€${totalIncome.toFixed(2)}`;
+  document.getElementById("total-expenses").textContent = `€${totalExpenses.toFixed(2)}`;
+  document.getElementById("remaining-balance").textContent = `€${(totalIncome - totalExpenses).toFixed(2)}`;
 }
 
-// Render Budgeting Progress Section
+
+
+// Update after rendering Budgeting Progress
 function renderBudgetingProgress() {
   const expenses = calculateCurrentExpenses();
 
   // Update progress charts
   updateProgressCharts(expenses);
 }
+
 
 // Calculate current expenses from centralized transaction data
 function calculateCurrentExpenses() {
@@ -615,6 +716,8 @@ function addNewTransaction(event) {
 
   // Reset the form
   document.getElementById("add-transaction-form").reset();
+  updateDashboard(); // Refresh all sections and trigger notifications
+
 }
 // Fetch AI advice based on current expenses and budget goals
 async function fetchAIAdvice() {
@@ -1133,6 +1236,130 @@ fetchThreads();
       // Redirect to the main page
       window.location.href = "index.html"; // Replace with the URL of your main page
     }
+   // Show notification with a message and type
+   function showNotification(message, type = "info") {
+  const container = document.getElementById("notification-container");
+
+  // Create a unique key for the notification
+  const notificationKey = `${type}:${message}`;
+
+  // Check if the notification was already shown (in memory or localStorage)
+  if (activeNotifications.has(notificationKey)) return;
+
+  const shownNotifications = JSON.parse(localStorage.getItem("shownNotifications")) || [];
+  if (shownNotifications.includes(notificationKey)) return;
+
+  // Add the notification to active and persistent storage
+  activeNotifications.add(notificationKey);
+  shownNotifications.push(notificationKey);
+  localStorage.setItem("shownNotifications", JSON.stringify(shownNotifications));
+
+  // Create and display the notification
+  const notification = document.createElement("div");
+  notification.className = `notification ${type}`;
+  notification.innerText = message;
+
+  container.appendChild(notification);
+
+  // Remove the notification after 5 seconds
+  setTimeout(() => {
+    container.removeChild(notification);
+    activeNotifications.delete(notificationKey);
+  }, 5000);
+}
+
+
+
+// Check notifications for funds and goals
+function checkNotifications() {
+  const totalIncome = parseFloat(
+    document.getElementById("total-income").textContent.replace("€", "")
+  );
+  const totalExpenses = parseFloat(
+    document.getElementById("total-expenses").textContent.replace("€", "")
+  );
+  const remainingBalance = parseFloat(
+    document.getElementById("remaining-balance").textContent.replace("€", "")
+  );
+
+  if (remainingBalance <= totalIncome / 2 && remainingBalance > 100) {
+    showNotification(
+      "Warning: Half of your funds have been used. Monitor your expenses carefully.",
+      "warning"
+    );
+  }
+
+  if (remainingBalance <= 100) {
+    showNotification(
+      "Danger: Your remaining funds are critically low! Take action to avoid financial trouble.",
+      "danger"
+    );
+  }
+
+  checkBudgetGoals();
+}
+
+
+// Check budget goal notifications
+function checkBudgetGoals() {
+  const expenses = calculateCurrentExpenses();
+
+  for (const [category, spent] of Object.entries(expenses)) {
+    if (["income", "rent"].includes(category)) continue; // Skip income and rent
+
+    const goal = budgetGoals[category] || 0;
+    if (goal > 0) {
+      const percentage = (spent / goal) * 100;
+
+      // Notify based on percentage
+      if (percentage >= 50 && percentage < 75) {
+        showNotification(
+          `Warning: You have used ${percentage.toFixed(
+            1
+          )}% of your budget for ${category}.`,
+          "warning"
+        );
+      } else if (percentage >= 75) {
+        showNotification(
+          `Danger: You have used ${percentage.toFixed(
+            1
+          )}% of your budget for ${category}. Take action immediately!`,
+          "danger"
+        );
+      }
+    }
+  }
+}
+function updateDashboard() {
+  renderAccountOverview();
+  renderBudgetingProgress();
+  checkNotifications(); // Call notifications only once
+}
+
+// Call updateDashboard instead of individual rendering functions
+window.addEventListener("load", () => {
+  loadBudgetGoals(); // Load saved budget goals
+  updateDashboard(); // Update entire dashboard
+});
+// Function to reset notifications
+function resetNotifications() {
+  // Clear active notifications in memory
+  activeNotifications.clear();
+
+  // Clear localStorage tracking for shown notifications
+  localStorage.removeItem("shownNotifications");
+
+  // Clear the notification container
+  const container = document.getElementById("notification-container");
+  container.innerHTML = "";
+
+  alert("Notifications have been reset.");
+}
+
+// Attach reset functionality to the button
+document.getElementById("reset-notifications").addEventListener("click", resetNotifications);
+
+
   </script>
   
   
