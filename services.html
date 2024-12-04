@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - DebtBud</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    .gradient-bg {
+      background: linear-gradient(135deg, #2424c2, #c55bf2, #490986);
+      border-radius: 2rem;
+      padding: 5rem 1rem; /* Decrease padding further if necessary */
+      max-height: 700px; /* Optionally set a minimum height */
+    }
+    .card {
+      max-width: 400px; /* Increased card width */
+      flex: 1; /* Ensure uniform width for all cards */
+      margin: 0; /* No margin for spacing */
+      position: relative;
+      z-index: 20;
+      transform: scale(1.1); /* Scale cards by 1.5 */
+      background-color: #1d1e1f; /* Dark gray background for cards */
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.1); /* Transparent outline */
+    }
+    .logos img {
+    filter: brightness(0) invert(0); /* Makes logos white for consistency */
+    opacity: 0.8; /* Slight transparency */
+    transition: opacity 0.3s;
+  }
+
+  .logos img:hover {
+    opacity: 1; /* Full opacity on hover */
+  }
+    .card-container {
+      transform: translateY(-180px); /* Adjust this value for card placement */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .card + .card {
+      margin-left: 5rem; /* Minimal spacing between cards */
+    }
+    .black-section {
+      padding-bottom: 20rem;
+      padding-top: 8rem;
+    }
+    .grid-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 60px 40px; /* Smaller size for more grid lines */
+    z-index: 0;
+  }
+  * Perspective Wrapper */
+.perspective {
+  perspective: 1000px;
+}
+/* Sticky Button */
+.fixed.bottom-8.right-8 button {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+.fixed.bottom-8.right-8 button:hover {
+  transform: translateY(-2px);
+}
+
+/* Modal Overlay */
+#contactModal {
+  background-color: rgba(0, 0, 0, 0.8); /* Darker background for better focus */
+}
+
+/* Modal Close Button */
+#contactModal .absolute {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+#contactModal .absolute:hover {
+  color: #ffffff;
+}
+
+
+/* Flip Card Container */
+.flip-card {
+  width: 100%;
+  height: 290px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+/* Front and Back Faces */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+/* Front Face */
+.flip-card-front {
+  background-color: #111827; /* Dark gray for front */
+}
+
+/* Back Face */
+.flip-card-back {
+  background-color: #3d4858; /* Blue for back */
+  transform: rotateY(180deg);
+}
+
+/* Flip Effect */
+.group:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+/* Icon Styling */
+.flip-card-front img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+}
+
+/* Text Styling */
+.flip-card h3 {
+  font-size: 1.5rem;
+}
+
+.flip-card p {
+  font-size: 1rem;
+  text-align: center;
+}
+/* Benefits Section */
+#benefits {
+  background-color: #000; /* Ensure the background is black */
+}
+
+.benefit-card {
+  background-color: #1f2937; /* Dark gray card background */
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+}
+
+.benefit-card:hover {
+  transform: scale(1.05); /* Slight scale-up on hover */
+}
+
+.benefit-card img {
+  width: 64px; /* Icon size */
+  height: 64px;
+  margin-bottom: 1rem;
+}
+
+.benefit-card h3 {
+  font-size: 1.25rem; /* Heading size */
+  margin-bottom: 0.5rem;
+  color: #ffffff; /* White text */
+}
+
+.benefit-card p {
+  font-size: 0.875rem; /* Description size */
+  color: #9ca3af; /* Light gray text */
+}
+
+/* Grid Layout Adjustments */
+.grid {
+  display: grid;
+  gap: 2rem; /* Spacing between cards */
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr; /* Single column for mobile */
+}
+
+.sm\:grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr); /* Three columns for small screens and above */
+}
+
+.lg\:grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr); /* Two columns for large screens */
+}
+
+
+  </style>
+</head>
+<body class="bg-black text-white font-sans">
+  <!-- Header -->
+  <header id="navbar" class="flex items-center justify-between px-6 py-4 fixed w-full top-0 z-50 transition-colors duration-300 bg-transparent text-white">
+    <!-- Logo and Name -->
+    <a href="index.html" class="flex items-center space-x-3">
+      <img src="assets/unnamed-removebg-preview.png" alt="DebtBud Logo" class="w-8 h-8">
+      <span class="text-xl font-semibold">DebtBud</span>
+    </a>
+  
+    <!-- Right Section: Buttons and Menu -->
+    <div class="flex items-center space-x-4">
+        <!-- Sign Up Button -->
+        <button onclick="toggleModal(true)" class="px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+            Sign Up
+          </button>
+          
+      <!-- Log In Button -->
+      <button onclick="window.location.href='services.html'" class="px-4 py-2 text-sm font-semibold bg-transparent border border-white rounded-full hover:bg-white hover:text-black transition">
+        Services
+      </button>
+      <!-- Try Demo Button
+      <button onclick="window.location.href='demo.html'" class="px-4 py-2 text-sm text-green-600 font-semibold bg-transparent border border-green-600 rounded-full hover:bg-green-600 hover:text-white transition">
+        Try Demo
+      </button> -->
+  
+      <!-- Menu Button -->
+      <button id="menuButton" class="flex items-center justify-center w-10 h-10 rounded-full bg-black hover:bg-gray-900">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+  
+  
+  <script>
+    // Get the navbar element
+const navbar = document.getElementById('navbar');
+
+// Listen to the scroll event
+window.addEventListener('scroll', () => {
+  // Get the scroll position
+  const scrollPosition = window.scrollY;
+
+  // Change the background transparency based on scroll position
+  if (scrollPosition > 50) {
+    navbar.classList.remove('bg-transparent');
+    navbar.classList.add('bg-black', 'bg-opacity-90');
+  } else {
+    navbar.classList.remove('bg-black', 'bg-opacity-90');
+    navbar.classList.add('bg-transparent');
+  }
+});
+
+  </script>
+  
+
+  <!-- Navigation Overlay -->
+  <div id="navOverlay" class="fixed inset-0 bg-black bg-opacity-95 text-white flex flex-col items-center justify-center space-y-8 hidden z-50">
+    <button id="closeButton" class="absolute top-6 right-6 text-white text-3xl">
+      &times;
+    </button>
+    <!-- Home -->
+    <a href="index.html" class="text-2xl font-bold hover:text-blue-500">Home</a>
+    <!-- Get Started -->
+    <a href="demo_landing.html" class="text-2xl font-bold hover:text-blue-500">Get Started</a>
+    <!-- Our Team -->
+    <a href="aboutus.html" class="text-2xl font-bold hover:text-blue-500">The Team</a>
+    <!-- Services -->
+    <a href="services.html" class="text-2xl font-bold hover:text-blue-500">Services</a>
+    <!-- Contact Us -->
+    <button 
+      onclick="toggleContactModal(true)" 
+      class="text-2xl font-bold hover:text-blue-500 focus:outline-none">
+      Contact Us
+    </button>
+  </div>
+
+  <!-- Pricing Section -->
+  <section class="relative bg-black text-white py-8">
+    <div class="black-section text-left pt-60 pb-12 relative overflow-hidden">
+      <!-- Grid Overlay -->
+      <div class="absolute inset-0 w-screen h-full z-0 pointer-events-none">
+        <div class="grid-overlay"></div>
+      </div>
+      <div class="relative z-10 px-28">
+        <h1 class="text-5xl  text-white">Smart Tools for Smarter Savings</h1>
+        <p class="text-gray-300 mt-4 text-lg">Start for free or unlock premium features for just €3.99 per month.</p>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  
+
+    <!-- Gradient Background -->
+    <div class="gradient-bg mx-auto max-w-9xl relative z-10">
+      <!-- Card Container -->
+      <div class="card-container">
+        <!-- Free Plan -->
+        <div class="bg-gray-800 text-white rounded-xl shadow-lg card p-8">
+          <h3 class="text-xl font-bold text-center">Free Plan</h3>
+          <p class="text-gray-400 mt-2 text-center">Manage your finances for free.</p>
+          <p class="text-4xl font-extrabold mt-6 text-center">€0</p>
+          <span class="block text-gray-500 text-center">Forever</span>
+          <ul class="mt-6 space-y-4 text-gray-400">
+            <li class="flex items-center"><span class="text-green-500 mr-3">✔</span> Budget management</li>
+            <li class="flex items-center"><span class="text-green-500 mr-3">✔</span> Loan repayment tracking</li>
+            <li class="flex items-center"><span class="text-green-500 mr-3">✔</span> Ads-supported platform</li>
+          </ul>
+          <button onclick="window.location.href='demo_landing.html'" class="mt-8 w-full px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-blue-700">Start Free</button>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="bg-gray-800 text-white rounded-xl shadow-lg card p-8">
+          <h3 class="text-xl font-bold text-center">Premium Plan</h3>
+          <p class="text-gray-400 mt-2 text-center">Unlock advanced features.</p>
+          <p class="text-4xl font-extrabold mt-6 text-center">€3.99</p>
+          <span class="block text-gray-500 text-center">Per month</span>
+          <ul class="mt-6 space-y-4 text-gray-400">
+            <li class="flex items-center"><span class="text-green-500 mr-3">✔</span> Personalized loan suggestions</li>
+            <li class="flex items-center"><span class="text-green-500 mr-3">✔</span> Custom dynamic payment notifications</li>
+            <li class="flex items-center"><span class="text-green-500 mr-3">✔</span> Ad-free experience</li>
+          </ul>
+          <button onclick="toggleModal(true)" class="mt-8 w-full px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-blue-700">Go Premium</button>
+        </div>
+      </div>
+      <!-- Logos Section -->
+    <div class="flex justify-center items-center mt-12 space-x-16">
+        <img src="assets/TUDelft_logo_black.png" alt="Logo 1" class="h-auto max-h-32 max-w-full">
+        <img src="assets/stud-logo.webp" alt="Logo 3" class="h-auto max-h-20 max-w-full">
+        <img src="assets/UL - Algemeen Internationaal - Black.png" alt="Logo 2" class="h-auto max-h-20 max-w-full">
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-black text-white py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">Compare Our Plans</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+          <thead>
+            <tr class="bg-gray-900 text-left">
+              <th class="p-4 text-sm font-semibold text-gray-300">Features</th>
+              <th class="p-4 text-sm font-semibold text-center">Free Plan</th>
+              <th class="p-4 text-sm font-semibold text-center">Premium Plan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0">Budget Management</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-green-500">✔</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-green-500">✔</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0">Loan Repayment Tracking</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-green-500">✔</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-green-500">✔</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0">Ads-Free Experience</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-gray-500">–</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-green-500">✔</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0">Personalized Loan Suggestions</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-gray-500">–</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-green-500">✔</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0">Dynamic Payment Notifications</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-gray-500">–</td>
+              <td class="p-4 border-b border-gray-500 bg-black border-l-0 border-r-0 text-center text-green-500">✔</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  
+  
+<!-- Call-to-Action Section -->
+<section id="cta" class="py-20 bg-black text-center">
+    <h2 
+      class="text-5xl font-extrabold text-white mb-6" 
+      data-aos="fade-up" 
+      data-aos-duration="1000"
+    >
+      Try <span class="text-blue-500 font-light">DebtBud</span> <span class="text-orange-500">for Free</span>
+    </h2>
+    <p 
+      class="text-lg text-gray-300 mb-12" 
+      data-aos="fade-up" 
+      data-aos-delay="200"
+      data-aos-duration="1000"
+    >
+      Take control of your finances with smart tools, personalized advice, and a supportive community.
+    </p>
+    
+    <!-- Buttons -->
+    <div 
+      class="flex justify-center space-x-6" 
+      data-aos="fade-up" 
+      data-aos-delay="400"
+      data-aos-duration="1000"
+    >
+    <button onclick="toggleModal(true)" class="px-8 py-3 text-lg font-semibold bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+        Get Started
+      </button>
+      
+      <button 
+        onclick="window.location.href='demo_landing.html'" 
+        class="px-8 py-3 text-lg font-semibold bg-transparent border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition">
+        Try Demo
+      </button>
+    </div>
+  </section>
+    <!-- Modal -->
+  <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 text-white rounded-lg w-96 p-6 shadow-lg">
+      <h2 class="text-2xl font-bold text-center mb-4">We're Almost There!</h2>
+      <p class="text-gray-300 text-center mb-6">
+        Our product is still under development, but sign up for our newsletter to be the first to know when we launch.
+      </p>
+      <form id="signupForm">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          class="w-full p-2 border border-gray-600 rounded mb-4 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-500" 
+          required
+        >
+        <button 
+          type="submit" 
+          class="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+          Subscribe
+        </button>
+      </form>
+      
+      <button 
+        onclick="toggleModal(false)" 
+        class="mt-4 text-gray-400 hover:text-gray-200 block mx-auto">
+        Close
+      </button>
+    </div>
+  </div>
+  <!-- Sticky Contact Button -->
+<div class="fixed bottom-8 right-8 z-50">
+    <button onclick="toggleContactModal(true)" class="bg-blue-500 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-600">
+      Contact Us
+    </button>
+  </div>
+  
+  <!-- Contact Modal -->
+  <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 text-white rounded-lg w-full max-w-lg p-6 shadow-lg relative">
+      <!-- Close Button -->
+      <button onclick="toggleContactModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+      
+      <!-- Contact Form -->
+      <h2 class="text-4xl font-bold text-center mb-8">Contact Us</h2>
+      <form id="contactForm" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="mb-4">
+          <label for="name" class="block text-left font-medium text-gray-300">Name</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-left font-medium text-gray-300">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-4">
+          <label for="message" class="block text-left font-medium text-gray-300">Message</label>
+          <textarea id="message" name="message" required class="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+        <button type="submit" class="px-6 py-3 bg-blue-500 rounded text-white font-semibold hover:bg-blue-600">Submit</button>
+      </form>
+    </div>
+  </div>
+  
+
+  <!-- JavaScript -->
+  <script>
+    // Function to toggle modal visibility
+    // Function to toggle modal visibility
+function toggleModal(show) {
+  const modal = document.getElementById('signupModal'); // Ensure the modal ID matches
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden'); // Show the modal
+      modal.classList.add('flex'); // Use flex to make it visible and centered
+    } else {
+      modal.classList.remove('flex'); // Hide the modal
+      modal.classList.add('hidden'); // Use hidden to make it invisible
+    }
+  } else {
+    console.error('Modal element not found. Check your modal ID.');
+  }
+}
+
+
+    // Handle form submission
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const email = event.target.email.value; // Get email value from the form
+
+  try {
+    const response = await fetch('http://localhost:5005/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }), // Send the email as JSON
+    });
+
+    const result = await response.json(); // Parse the JSON response
+
+    if (response.ok) {
+      alert(result.message); // Show success message
+      toggleModal(false); // Close the modal
+    } else {
+      alert(result.error); // Show backend error message
+    }
+  } catch (error) {
+    alert('Failed to subscribe. Please try again later.'); // Show generic error
+    console.error('Subscription error:', error); // Log error for debugging
+  }
+});
+// Function to toggle the modal visibility
+function toggleContactModal(show) {
+  const contactModal = document.getElementById('contactModal');
+  if (show) {
+    contactModal.classList.remove('hidden'); // Show modal
+    contactModal.classList.add('flex'); // Use flex for centering
+  } else {
+    contactModal.classList.add('hidden'); // Hide modal
+    contactModal.classList.remove('flex');
+  }
+}
+
+// Submit handler for the contact form
+document.getElementById('contactForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = {
+    name: event.target.name.value,
+    email: event.target.email.value,
+    message: event.target.message.value,
+  };
+
+  try {
+    const response = await fetch('http://localhost:5004/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert(result.message);
+      event.target.reset();
+      toggleContactModal(false);
+    } else {
+      alert(result.error || 'Failed to submit the form.');
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('Error submitting the form. Please try again later.');
+  }
+});
+
+
+  </script>
+  
+  <!-- Include AOS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script>
+    AOS.init();
+  </script>
+  
+    
+  
+  <style>
+   /* Container Styling */
+.banner-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: black;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  align-items: center;
+  animation: marquee 10s linear infinite;
+  gap: 3rem; /* Adjust spacing between logos */
+}
+
+/* Logo Styling */
+.banner-content img {
+  height: 8rem; /* Adjust logo size */
+}
+
+/* Fade Effect */
+.banner-container::before,
+.banner-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%; /* Adjust fade width as needed */
+  background: linear-gradient(to right, black, transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.banner-container::after {
+  right: 0;
+  left: auto;
+  background: linear-gradient(to left, black, transparent);
+}
+
+    </style>
+    
+  
+  <script>
+ // Select all individual cards
+const cards = document.querySelectorAll('#services div.bg-gray-900');
+
+cards.forEach((card) => {
+  card.addEventListener('mouseover', () => {
+    // Apply the glow only to the hovered card
+    card.style.boxShadow = '0 0 20px 5px rgba(255, 255, 255, 0.6)';
+  });
+  card.addEventListener('mouseout', () => {
+    // Remove the glow when not hovering
+    card.style.boxShadow = 'none';
+  });
+});
+// // Select all icons with the class "service-icon"
+// const serviceIcons = document.querySelectorAll('.service-icon');
+
+// // Add event listeners for hover effect
+// serviceIcons.forEach(icon => {
+//   const staticSrc = icon.src; // Get the static image source
+//   const animatedSrc = icon.getAttribute('data-hover'); // Get the animated image source
+
+//   // On hover: switch to animated GIF
+//   icon.addEventListener('mouseenter', () => {
+//     icon.src = animatedSrc;
+//   });
+
+//   // On mouse leave: switch back to static image
+//   icon.addEventListener('mouseleave', () => {
+//     icon.src = staticSrc;
+//   });
+// });
+
+
+  </script>
+  
+  
+
+  
+
+  <!-- Footer -->
+  <footer class="py-6 bg-gray-900 text-center text-white">
+    <p class="text-sm">© 2024 DebtBud. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const closeButton = document.getElementById('closeButton');
+    const navOverlay = document.getElementById('navOverlay');
+
+    // Open the navigation overlay
+    menuButton.addEventListener('click', () => {
+      navOverlay.classList.remove('hidden');
+    });
+
+    // Close the navigation overlay
+    closeButton.addEventListener('click', () => {
+      navOverlay.classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
