@@ -152,7 +152,20 @@
   90% { opacity: 1; }
   100% { opacity: 0; transform: translateY(-20px); }
 }
+.loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #2563eb;
+    animation: spin 1s linear infinite;
+  }
 
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
   </style>
 </head>
@@ -172,26 +185,49 @@
   <!-- Onboarding Overlay -->
 <div id="onboarding-overlay" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
     <div class="bg-gray-900 text-white p-8 rounded-lg max-w-2xl w-full">
-      <h2 class="text-2xl font-bold mb-4">Welcome to DebtBud Demo!</h2>
-      <p class="mb-4">This demo showcases the key features of DebtBud:</p>
-      <ul class="list-disc pl-5 mb-4">
-        <li><strong>Account Overview:</strong> Track income, expenses, and remaining balance.</li>
-        <li><strong>Budgeting:</strong> Set goals and monitor your progress.</li>
-        <li><strong>Loan Calculator:</strong> Plan and analyze loan repayments.</li>
-        <li><strong>Community Forum:</strong> Engage with peers and share financial tips.</li>
+      <h2 class="text-3xl font-bold mb-6 text-center text-blue-500">Welcome to DebtBud Demo!</h2>
+      <p class="mb-4 text-gray-300">
+        This demo provides an overview of the key features of DebtBud, helping you explore and manage your finances efficiently.
+      </p>
+      <ul class="list-disc pl-5 mb-6 space-y-2 text-gray-300">
+        <li>
+          <strong>Account Overview:</strong> Track your income, expenses, and remaining balance. 
+          <br>In the future, users will be able to seamlessly sync their bank accounts for optimal convenience. 
+          <br>For now, we’ve implemented a simulation of a bank account where you can add transactions to mimic the real experience.
+        </li>
+        <li>
+          <strong>Budgeting Section:</strong> Set and update your monthly financial goals. 
+          <br>Visualize your progress with detailed charts at the bottom and use the AI-driven advice feature on the right to optimize your financial health. 
+          <br>Our AI advice is designed to help you reduce unnecessary borrowing from the government and minimize final student debt.
+        </li>
+        <li>
+          <strong>Loan Calculator:</strong> Explore different loan repayment plans to find the best one for your needs. 
+          <br>This section helps you analyze and plan your repayments effectively.
+        </li>
+        <li>
+          <strong>Community Forum:</strong> Join a supportive and safe community where you can ask for tips, share experiences, and exchange financial insights with peers.
+        </li>
+        <li>
+          <strong>AI Assistant:</strong> Access your AI-powered assistant via the chat button at the bottom right for instant help and guidance at any time.
+        </li>
       </ul>
-      <button onclick="closeOverlay()" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded text-white">Got it!</button>
+      <button onclick="closeOverlay()" class="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded text-white w-full">
+        Got it!
+      </button>
     </div>
   </div>
+  
   <div id="notification-container" class="fixed top-4 right-4 space-y-4 z-50">
     <!-- Notifications will be dynamically added here -->
   </div>
   <button
-    id="reset-notifications"
-    class="fixed bottom-4 right-4 bg-red-600 text-white py-2 px-4 rounded shadow-lg hover:bg-red-500"
-  >
-    Reset Notifications
-  </button>
+  id="reset-notifications"
+  class="fixed bottom-4 right-4 bg-red-600 text-white py-2 px-4 rounded shadow-lg hover:bg-red-500"
+  style="display: none;"
+>
+  Reset Notifications
+</button>
+
   
   
   
@@ -382,8 +418,12 @@
           <!-- Right: AI Advice -->
           <div id="advice-output" class="bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition">
             <h3 class="text-2xl font-semibold mb-6">AI Advice</h3>
+            <div id="loading-spinner" class="hidden flex items-center justify-center">
+                <div class="loader"></div>
+              </div>
             <p id="advice-text" class="text-gray-300">Your advice will appear here after syncing your data.</p>
           </div>
+          
         </div>
       
         <!-- Bottom Section: Progress Charts -->
@@ -752,6 +792,12 @@ async function fetchAIAdvice() {
 
     console.log("Payload passed to AI Advice function:", payload);
 
+    // Show the loading spinner
+    const spinner = document.getElementById("loading-spinner");
+    const adviceText = document.getElementById("advice-text");
+    spinner.classList.remove("hidden");
+    adviceText.innerText = ""; // Clear previous advice text
+
     try {
         const response = await fetch("http://127.0.0.1:5000/get-advice", {
             method: "POST",
@@ -762,16 +808,17 @@ async function fetchAIAdvice() {
         if (response.ok) {
             const result = await response.json();
             console.log("AI Advice API Response:", result);
-            document.getElementById("advice-text").innerText = result.advice;
+            adviceText.innerText = result.advice;
         } else {
             console.error("Error in response:", response);
-            document.getElementById("advice-text").innerText =
-                "Error fetching AI advice. Please try again.";
+            adviceText.innerText = "Error fetching AI advice. Please try again.";
         }
     } catch (error) {
         console.error("Error:", error);
-        document.getElementById("advice-text").innerText =
-            "Failed to connect to the server.";
+        adviceText.innerText = "Failed to connect to the server.";
+    } finally {
+        // Hide the loading spinner
+        spinner.classList.add("hidden");
     }
 }
 
@@ -899,7 +946,13 @@ window.addEventListener("load", () => {
         });
       </script>
           <!-- Chatbot Trigger Button -->
-  <button id="chatbot-button">Chat</button>
+          <button
+          id="chatbot-button"
+          class="fixed bottom-4 right-4 bg-blue-600 text-white py-2 px-4 rounded-full shadow-lg hover:bg-blue-500"
+        >
+          Chat
+        </button>
+        
 
   <!-- Chatbot Container -->
   <div id="chatbot-container">
@@ -1084,38 +1137,71 @@ window.addEventListener("load", () => {
   
     <!-- JavaScript -->
     <script>
-      // Function to show a section and store the selected tab in localStorage
+    
 // Function to show a section and store the selected tab in localStorage
 function showSection(sectionId) {
   // Hide all sections
-  document.querySelectorAll('main > section').forEach((section) => section.classList.add('hidden-section'));
+  document.querySelectorAll("main > section").forEach((section) => section.classList.add("hidden-section"));
 
   // Remove the active-tab class from all buttons
-  document.querySelectorAll('nav button').forEach((button) => button.classList.remove('active-tab'));
+  document.querySelectorAll("nav button").forEach((button) => button.classList.remove("active-tab"));
 
   // Show the selected section and activate the corresponding tab
   const section = document.getElementById(`${sectionId}-section`);
   const tab = document.getElementById(`${sectionId}-tab`);
 
   if (section && tab) {
-    section.classList.remove('hidden-section');
-    tab.classList.add('active-tab');
+    section.classList.remove("hidden-section");
+    tab.classList.add("active-tab");
+  }
+
+  // Show Reset Notifications button only in Account Overview
+  const resetButton = document.getElementById("reset-notifications");
+  if (sectionId === "overview") {
+    resetButton.style.display = "block";
+  } else {
+    resetButton.style.display = "none";
+  }
+
+  // Hide Chat Button in Account Overview
+  const chatButton = document.getElementById("chatbot-button");
+  if (sectionId === "overview") {
+    chatButton.style.display = "none";
+  } else {
+    chatButton.style.display = "block";
   }
 
   // Save the current tab in localStorage
-  localStorage.setItem('activeTab', sectionId);
+  localStorage.setItem("activeTab", sectionId);
 }
 
-// Function to load the last active tab on page load
 function loadLastActiveTab() {
-  const savedTab = localStorage.getItem('activeTab');
+  const savedTab = localStorage.getItem("activeTab");
   if (savedTab) {
     showSection(savedTab);
   } else {
     // Default to the overview section if no tab is saved
-    showSection('overview');
+    showSection("overview");
+  }
+
+  // Handle Reset Notifications button visibility
+  const resetButton = document.getElementById("reset-notifications");
+  if (savedTab === "overview" || !savedTab) {
+    resetButton.style.display = "block";
+  } else {
+    resetButton.style.display = "none";
+  }
+
+  // Handle Chat Button visibility
+  const chatButton = document.getElementById("chatbot-button");
+  if (savedTab === "overview" || !savedTab) {
+    chatButton.style.display = "none";
+  } else {
+    chatButton.style.display = "block";
   }
 }
+
+
 
 // Add event listeners for all tabs
 document.getElementById('overview-tab').addEventListener('click', () => showSection('overview'));

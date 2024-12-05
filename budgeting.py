@@ -58,7 +58,7 @@ def get_ai_advice(income, expenses, budget_goals, balance):
     3. If the remaining balance is negative, suggest adjustments within secondary categories to accommodate the primary categories.
     4. If reallocating funds is insufficient for primary categories, propose the minimum amount required to be borrowed for the current month.
     5. Ensure that adjustments and borrowing recommendations are clear, logical, and based on actual data. Avoid suggesting reductions in categories where expenses are within or below budget goals.
-    6. Ensure the response is concise and does not exceed 350 tokens.
+    6. Ensure the response is concise, avoid giving a summary and does not exceed 350 tokens.
 
     Keep the recommendations as brief and actionable as possible.
     """
@@ -70,7 +70,7 @@ def get_ai_advice(income, expenses, budget_goals, balance):
             {"role": "system", "content": "You are a financial budgeting assistant."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=350
+        max_tokens=450
     )
 
     advice = response.choices[0].message['content'].strip()
