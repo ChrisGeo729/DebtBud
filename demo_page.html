@@ -158,7 +158,6 @@
 </head>
 <body class="bg-gray-900 text-white">
   <!-- Header -->
-  <!-- Header -->
   <header class="bg-black text-white px-6 py-4 flex justify-between">
     <a href="#" class="text-2xl font-bold">DebtBud Dashboard</a>
     <nav class="flex space-x-4">
@@ -305,17 +304,6 @@
           <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
             <h3 class="text-xl font-semibold text-gray-200 mb-4">Set Your Budget Goals</h3>
             <form id="budget-goals-form" onsubmit="submitGoals(event)" class="space-y-6">
-              <!-- <div>
-                <label for="income-goal" class="block text-sm font-medium text-gray-400">Income Goal</label>
-                <input
-                  type="number"
-                  id="income-goal"
-                  name="income-goal"
-                  placeholder="Enter income goal"
-                  required
-                  class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
-                />
-              </div> -->
               <div>
                 <label for="rent-goal" class="block text-sm font-medium text-gray-400">Rent Goal</label>
                 <input
@@ -371,14 +359,24 @@
                   class="w-full p-3 bg-gray-700 text-white rounded focus:ring focus:ring-blue-500"
                 />
               </div>
-              <button
-                type="submit"
-                class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition"
-              >
-                Save Goals
-              </button>
+              <div class="flex space-x-4">
+                <button
+                  type="submit"
+                  class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-500 transition"
+                >
+                  Save Goals
+                </button>
+                <button
+                  type="button"
+                  onclick="fetchAIAdvice()"
+                  class="w-full bg-green-600 text-white py-3 rounded-full hover:bg-green-500 transition"
+                >
+                  Seek Advice
+                </button>
+              </div>
             </form>
           </div>
+          
           
       
           <!-- Right: AI Advice -->
@@ -461,8 +459,7 @@ window.addEventListener('load', () => {
 // Centralized transaction data
 const transactions = [
   { id: 1, date: "2024-12-01", category: "Income", description: "Salary", amount: 1500 },
-  { id: 2, date: "2024-12-02", category: "Rent", description: "Monthly rent payment", amount: -800 },
-  { id: 3, date: "2024-12-03", category: "Groceries", description: "Supermarket shopping", amount: -225 },
+  { id: 3, date: "2024-12-03", category: "Groceries", description: "Supermarket shopping", amount: -80 },
   { id: 4, date: "2024-12-04", category: "Entertainment", description: "Movie night", amount: -50 },
   { id: 5, date: "2024-12-05", category: "Transportation", description: "Bus fare", amount: -80 },
   { id: 6, date: "2024-12-06", category: "Savings", description: "Savings contribution", amount: -50 },
@@ -721,16 +718,16 @@ function addNewTransaction(event) {
 }
 // Fetch AI advice based on current expenses and budget goals
 async function fetchAIAdvice() {
-  const expenses = calculateCurrentExpenses();
-  const income = budgetGoals.income; // Hardcoded income goal
-  const totalExpenses = Object.values(expenses).reduce((acc, val) => acc + val, 0);
-  const balance = income - totalExpenses;
+  const expenses = calculateCurrentExpenses(); // Calculate expenses per category
+  const income = budgetGoals.income; // Fetch income goal from budgetGoals
+  const totalExpenses = Object.values(expenses).reduce((acc, val) => acc + val, 0); // Sum of all expenses
+  const balance = income - totalExpenses; // Remaining balance
 
   const payload = {
     income,
     expenses,
     budget_goals: budgetGoals,
-    balance,
+    balance, // Include the remaining balance
   };
 
   try {
@@ -753,6 +750,7 @@ async function fetchAIAdvice() {
       "Failed to connect to the server.";
   }
 }
+
 
 
 // Load goals and render charts on page load
