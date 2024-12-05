@@ -52,15 +52,17 @@ def get_ai_advice(income, expenses, budget_goals, balance):
     - Budget Goals:
     {budget_goals}
 
-    Analyze the expenses, the primary categories are: groceries and rent. the secondary are entertainment, 
-    transportation and savings(savings are only if all the other categories can be met).Identify categories that exceed budget goals, 
-    and suggest adjustments, in a concise manner, within the secondary category goals based on the expenses, so that the actual expenses of the main categories 
-    can be accomodated. 
-    If there are not enough funds to be re allocated for the primary categories, propose the minimum amount that needs to be borrowed 
-    from the government for the current month.
-    Make sure that the expenses exceeding the budget goals are actually bigger than the goals.
-    Make it as concise and as brief as possible(max 350 tokens)
+    Analyze the budget using the following guidelines:
+    1. Primary categories are groceries and rent. Secondary categories are entertainment, transportation, and savings (savings are prioritized only if other categories are met).
+    2. Focus only on categories where actual expenses exceed budget goals (expenses > goals).
+    3. If the remaining balance is negative, suggest adjustments within secondary categories to accommodate the primary categories.
+    4. If reallocating funds is insufficient for primary categories, propose the minimum amount required to be borrowed for the current month.
+    5. Ensure that adjustments and borrowing recommendations are clear, logical, and based on actual data. Avoid suggesting reductions in categories where expenses are within or below budget goals.
+    6. Ensure the response is concise and does not exceed 350 tokens.
+
+    Keep the recommendations as brief and actionable as possible.
     """
+
 
     response = openai.ChatCompletion.create(
         model="gpt-4-turbo",

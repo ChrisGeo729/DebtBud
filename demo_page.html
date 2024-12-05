@@ -467,8 +467,14 @@ const transactions = [
 
 // Budget goals object
 let budgetGoals = {
-  income: 1500, // Hardcoded income goal
+  income: 1500, // Fixed value for income
+  rent: 800,
+  groceries: 300,
+  entertainment: 200,
+  transportation: 200,
+  savings: 200,
 };
+
 
 // Load Budget Goals from Local Storage
 function loadBudgetGoals() {
@@ -511,9 +517,8 @@ function saveBudgetGoals() {
 function submitGoals(event) {
   event.preventDefault();
 
-  // Get budget goals from form inputs
-  budgetGoals = {
-    ...budgetGoals, // Preserve hardcoded income goal
+  // Validate inputs
+  const goals = {
     rent: parseFloat(document.getElementById("rent-goal").value) || 0,
     groceries: parseFloat(document.getElementById("groceries-goal").value) || 0,
     entertainment: parseFloat(document.getElementById("entertainment-goal").value) || 0,
@@ -521,17 +526,35 @@ function submitGoals(event) {
     savings: parseFloat(document.getElementById("savings-goal").value) || 0,
   };
 
-  // Save to localStorage
+  // Validate if all fields are greater than zero
+  for (const [key, value] of Object.entries(goals)) {
+    if (value <= 0) {
+      alert(`Please set a valid budget goal for ${key}.`);
+      return;
+    }
+  }
+
+  // Save validated goals
+  budgetGoals = { ...budgetGoals, ...goals };
   saveBudgetGoals();
-
-  // Render charts with updated goals
   renderBudgetingProgress();
-
-  // Trigger notifications
-  checkNotifications();
+  updateDashboard();
 
   alert("Budget goals saved! AI advice updated.");
-  updateDashboard();
+}
+
+function loadBudgetGoals() {
+  const savedGoals = localStorage.getItem("budgetGoals");
+  if (savedGoals) {
+    budgetGoals = { ...budgetGoals, ...JSON.parse(savedGoals) };
+  }
+
+  // Populate form fields with loaded goals
+  document.getElementById("rent-goal").value = budgetGoals.rent || 0;
+  document.getElementById("groceries-goal").value = budgetGoals.groceries || 0;
+  document.getElementById("entertainment-goal").value = budgetGoals.entertainment || 0;
+  document.getElementById("transportation-goal").value = budgetGoals.transportation || 0;
+  document.getElementById("savings-goal").value = budgetGoals.savings || 0;
 }
 
 
@@ -549,11 +572,10 @@ function renderAccountOverview() {
     const row = document.createElement("tr");
     row.classList.add("border-b", "border-gray-600");
 
-    // Update totals
     if (transaction.amount > 0) {
-      totalIncome += transaction.amount;
+      totalIncome += transaction.amount; // Add income as positive
     } else {
-      totalExpenses += Math.abs(transaction.amount);
+      totalExpenses += Math.abs(transaction.amount); // Add expenses as absolute value
     }
 
     row.innerHTML = `
@@ -568,10 +590,11 @@ function renderAccountOverview() {
     statementRows.appendChild(row);
   });
 
-  // Update summary totals
+  const remainingBalance = totalIncome - totalExpenses;
+
   document.getElementById("total-income").textContent = `€${totalIncome.toFixed(2)}`;
   document.getElementById("total-expenses").textContent = `€${totalExpenses.toFixed(2)}`;
-  document.getElementById("remaining-balance").textContent = `€${(totalIncome - totalExpenses).toFixed(2)}`;
+  document.getElementById("remaining-balance").textContent = `€${remainingBalance.toFixed(2)}`;
 }
 
 
@@ -588,7 +611,6 @@ function renderBudgetingProgress() {
 // Calculate current expenses from centralized transaction data
 function calculateCurrentExpenses() {
   const expenses = {
-    income: 0,
     rent: 0,
     groceries: 0,
     entertainment: 0,
@@ -599,16 +621,14 @@ function calculateCurrentExpenses() {
   transactions.forEach((transaction) => {
     const category = transaction.category.toLowerCase();
     if (transaction.amount < 0 && expenses.hasOwnProperty(category)) {
-      // Only count negative amounts as expenses
+      // Only count negative amounts as expenses (absolute value)
       expenses[category] += Math.abs(transaction.amount);
-    } else if (transaction.amount > 0 && category === "income") {
-      // Count positive amounts as income
-      expenses.income += transaction.amount;
     }
   });
 
   return expenses;
 }
+
 
 // Update progress charts dynamically
 function updateProgressCharts(expenses) {
@@ -718,38 +738,43 @@ function addNewTransaction(event) {
 }
 // Fetch AI advice based on current expenses and budget goals
 async function fetchAIAdvice() {
-  const expenses = calculateCurrentExpenses(); // Calculate expenses per category
-  const income = budgetGoals.income; // Fetch income goal from budgetGoals
-  const totalExpenses = Object.values(expenses).reduce((acc, val) => acc + val, 0); // Sum of all expenses
-  const balance = income - totalExpenses; // Remaining balance
+    const expenses = calculateCurrentExpenses(); // Get category-wise expenses
+    const income = budgetGoals.income || 1500; // Use default or fetched income
+    const totalExpenses = Object.values(expenses).reduce((acc, val) => acc + val, 0); // Sum of all expenses
+    const remainingBalance = income - totalExpenses; // Calculate remaining balance
 
-  const payload = {
-    income,
-    expenses,
-    budget_goals: budgetGoals,
-    balance, // Include the remaining balance
-  };
+    const payload = {
+        income,
+        expenses,
+        budget_goals: budgetGoals, // This should send the updated budget goals
+        remaining_balance: remainingBalance, // Pass correct balance
+    };
 
-  try {
-    const response = await fetch("http://127.0.0.1:5000/get-advice", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    console.log("Payload passed to AI Advice function:", payload);
 
-    if (response.ok) {
-      const result = await response.json();
-      document.getElementById("advice-text").innerText = result.advice;
-    } else {
-      document.getElementById("advice-text").innerText =
-        "Error fetching AI advice. Please try again.";
+    try {
+        const response = await fetch("http://127.0.0.1:5000/get-advice", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload), // Ensure this sends the correct payload
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log("AI Advice API Response:", result);
+            document.getElementById("advice-text").innerText = result.advice;
+        } else {
+            console.error("Error in response:", response);
+            document.getElementById("advice-text").innerText =
+                "Error fetching AI advice. Please try again.";
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("advice-text").innerText =
+            "Failed to connect to the server.";
     }
-  } catch (error) {
-    console.error("Error:", error);
-    document.getElementById("advice-text").innerText =
-      "Failed to connect to the server.";
-  }
 }
+
 
 
 

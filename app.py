@@ -46,16 +46,27 @@ def is_query_valid_semantic(user_message):
 @app.route('/get-advice', methods=['POST'])
 def get_advice():
     data = request.get_json()
-    income = float(data.get("income"))
-    expenses = data.get("expenses")
-    budget_goals = data.get("budgetGoals")  # Use budget goals from the request
+
+    # Debugging print statements to inspect incoming data
+    print("Received Payload:", data)
+
+    income = float(data.get("income", 0))
+    expenses = data.get("expenses", {})
+    budget_goals = data.get("budget_goals", {})  # Use correct key
+
+    # Debugging print statements to inspect parsed data
+    print("Income:", income)
+    print("Expenses:", expenses)
+    print("Budget Goals:", budget_goals)
 
     # Calculate remaining balance
     balance = income - sum(map(float, expenses.values()))
+    print("Calculated Balance:", balance)
 
     # Get AI advice using the imported function
     advice = get_ai_advice(income, expenses, budget_goals, balance)
     return jsonify({"advice": advice})
+
 
 
 @app.route('/chatbot', methods=['POST'])
